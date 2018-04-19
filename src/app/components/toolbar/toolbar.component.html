@@ -1,0 +1,26 @@
+<div fxHide fxShow.gt-sm>
+  <mat-toolbar color="primary">
+    <span>NutriVero </span>
+    <a mat-button [routerLink]="['home']"><mat-icon>list</mat-icon>Dietas</a>
+    <a mat-button [routerLink]="['pacientes']"><mat-icon>accessibility</mat-icon>Pacientes</a>
+    <a mat-button [routerLink]="['alimentos']"><mat-icon>restaurant</mat-icon>Alimentos</a>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>more_vert</mat-icon></button>
+  </mat-toolbar>
+</div>  
+
+<div fxShow fxHide.gt-sm>
+  <mat-toolbar color="primary">
+    <span>NutriVero </span>
+    <a mat-button [routerLink]="['home']"><mat-icon>list</mat-icon></a>
+    <a mat-button [routerLink]="['pacientes']"><mat-icon>accessibility</mat-icon></a>
+    <a mat-button [routerLink]="['alimentos']"><mat-icon>restaurant</mat-icon></a>
+    <span class="example-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="appMenu"><mat-icon>more_vert</mat-icon></button>
+  </mat-toolbar>
+</div>
+  
+<mat-menu #appMenu="matMenu">
+  <button mat-menu-item><mat-icon>settings</mat-icon>Administracion</button>
+  <button mat-menu-item><mat-icon>help</mat-icon>Ayuda</button>
+</mat-menu>
