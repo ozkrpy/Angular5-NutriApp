@@ -1,0 +1,243 @@
+<div *ngFor="let detalle of detallePacienteObservable | async" 
+     fxLayout="column" 
+     fxLayoutGap="10px"
+     fxLayoutAlign="center center">
+  <!-- 1 -->
+  <h2 mat-dialog-title fxHide fxShow.gt-sm>
+    {{ detalle.nombre | uppercase }} {{ detalle.apellido | uppercase }}
+    <small> (Cod. {{ detalle.codigo_paciente }})</small>
+  </h2>
+  <h2 mat-dialog-title fxShow fxHide.gt-sm>
+    <div>{{ detalle.nombre | uppercase }} {{ detalle.apellido | uppercase }}</div>
+    <small> (Cod. {{ detalle.codigo_paciente }})</small>
+  </h2>
+  <!-- 2 -->
+  <mat-dialog-content>
+      <!-- 2.1 -->
+      <mat-expansion-panel [expanded]="panelEditInfo">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>1. INFO PERSONAL</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Edad, sexo, estado civil, etc.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayoutAlign="space-evenly center" fxLayout="row wrap" fxLayout.xs="column">
+          <mat-form-field  >
+            <mat-select placeholder="Sexo" #sexo [disabled]="statusEditInfo" [value]="detalle.sexo">
+              <mat-option *ngFor="let sexo of sexos" [value]="sexo.valor">
+                {{sexo.facevalue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field  >
+            <mat-select placeholder="Estado civil" #civil [disabled]="statusEditInfo" [value]="detalle.estado_civil">
+              <mat-option *ngFor="let estado of estadosCiviles" [value]="estado.valor">
+                {{estado.facevalue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput #fechaNacimiento [max]="maxDate" [matDatepicker]="picker" [value]="detalle.fecha_nacimiento" [disabled]="statusEditInfo"
+              placeholder="Fecha de nacimiento">
+            <mat-datepicker-toggle matSuffix [for]="picker" [disabled]="statusEditInfo"></mat-datepicker-toggle>
+            <mat-datepicker #picker touchUi="true" [disabled]="statusEditInfo"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <mat-action-row>
+          <button mat-button (click)="editInfoPaciente(detalle.codigo_paciente, detalle.sexo, sexo.value, detalle.estado_civil, civil.value, detalle.fecha_nacimiento, fechaNacimiento.value)"><mat-icon>{{ statusEditInfo ? 'edit' : 'save' }}</mat-icon> {{ statusEditInfo ? 'Editar' : 'Guardar' }} </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <!-- 2.2 -->
+      <mat-expansion-panel [expanded]="panelEditPeso">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>2. PESO Y BIOTIPO</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Peso actual, habitual, ajustado, saludable, etc.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayoutAlign="space-evenly center" fxLayout="row wrap">
+          <mat-form-field >
+            <input matInput placeholder="Peso Actual(Kg.)" #actual value="{{ detalle.peso_actual | number:'1.1-2' }}" [disabled]="statusEditPeso">
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Peso Habitual(Kg.)" #habitual value="{{ detalle.peso_habitual | number:'1.1-2' }}" [disabled]="statusEditPeso">
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Peso Ajustado(Kg.)" value="{{ detalle.peso_ajusta | number:'1.1-2' }}" disabled>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Peso Saludable(Kg.)" value="{{ detalle.peso_saludable | number:'1.1-2' }}" disabled>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Porcentaje P.I.(%)" value="{{ detalle.porcentaje_peso_ideal | number:'1.1-2' }}" disabled>
+          </mat-form-field>
+          <mat-form-field >
+            <input matInput placeholder="Contextura" value="{{ detalle.biotipo }}" disabled>
+          </mat-form-field>
+        </div>
+        <mat-action-row>
+          <button mat-button (click)="editPesoPaciente(detalle.codigo_paciente, detalle.peso_actual, actual.value, detalle.peso_habitual, habitual.value)"><mat-icon>{{ statusEditPeso ? 'edit' : 'save' }}</mat-icon> {{ statusEditPeso ? 'Editar' : 'Guardar' }} </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <!-- 2.3 -->
+      <mat-expansion-panel [expanded]="panelEditTalla">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>3. TALLA Y MEDIDA</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Talla, circunferencia de muñeca, brazo, cintura.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayoutAlign="space-evenly center"  fxLayout="row wrap">
+          <mat-form-field  >
+            <input matInput placeholder="Talla (cm.)" #talla value="{{ detalle.talla | number:'1.0' }}" [disabled]="statusEditTalla">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Cia. Muñeca (cm.)" #muneca value="{{ detalle.cia_muneca | number:'1.0' }}" [disabled]="statusEditTalla">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Cia. Brazo (cm.)" #brazo value="{{ detalle.cia_brazo | number:'1.0' }}" [disabled]="statusEditTalla">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Cia. Cintura 1 (cm.)" #cintura1 value="{{ detalle.cia_cintura1 | number:'1.0' }}" [disabled]="statusEditTalla">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Cia. Cintura 2 (cm.)" #cintura2 value="{{ detalle.cia_cintura2 | number:'1.0' }}" [disabled]="statusEditTalla">
+          </mat-form-field>
+        </div>
+        <mat-action-row>
+          <button mat-button (click)="editTallaPaciente(detalle.codigo_paciente, detalle.talla, talla.value, detalle.cia_muneca, muneca.value, detalle.cia_brazo, brazo.value, detalle.cia_cintura1, cintura1.value, detalle.cia_cintura2, cintura2.value)"><mat-icon> {{ statusEditTalla ? 'edit' : 'save' }} </mat-icon> {{ statusEditTalla ? 'Editar' : 'Guardar' }} </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <!-- 2.4 -->
+      <mat-expansion-panel [expanded]="panelEditAntecedente">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>4. ANTECEDENTES</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Obesidad, medicacion, etc.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutGap="15px" fxLayoutAlign="space-evenly center">
+          <div fxLayout="column">
+            <mat-checkbox [disabled]="statusEditAntecedente" [checked]="detalle.antecedente_obesidad" #obesidad>Obesidad</mat-checkbox>
+            <mat-checkbox [disabled]="statusEditAntecedente" [checked]="detalle.antecedente_cardiopatias" #cardiopatias>Cardiopatias</mat-checkbox>
+            <mat-checkbox [disabled]="statusEditAntecedente" [checked]="detalle.antecedente_hta" #hta>HTA</mat-checkbox>
+            <mat-checkbox [disabled]="statusEditAntecedente" [checked]="detalle.antecedente_diabetes" #diabetes>Diabetes</mat-checkbox>
+          </div>
+          <div fxLayout="column">
+            <mat-form-field >
+              <input matInput #medicacion maxlength="1000" placeholder="Medicacion" #medicacion value="{{detalle.medicacion}}" [disabled]="statusEditAntecedente">
+              <mat-hint align="end">{{medicacion.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput #medico maxlength="1000" placeholder="Diagnostico medico" #medico value="{{detalle.diagnostico_medico}}"
+                [disabled]="statusEditAntecedente">
+              <mat-hint align="end">{{medico.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+            <mat-form-field >
+              <input matInput #nutricionista maxlength="1000" placeholder="Diagnostico nutricional" #nutricional value="{{detalle.diagnostico_nutricional}}"
+                [disabled]="statusEditAntecedente">
+              <mat-hint align="end">{{nutricional.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-action-row>
+          <button mat-button (click)="editAntecedentePaciente(detalle.codigo_paciente, detalle.antecedente_obesidad, obesidad.checked, detalle.antecedente_cardiopatias, cardiopatias.checked, detalle.antecedente_hta, hta.checked, detalle.antecedente_diabetes, diabetes.checked, detalle.medicacion, medicacion.value, detalle.diagnostico_medico, medico.value, detalle.diagnostico_nutricional, nutricionista.value)"><mat-icon>{{ statusEditAntecedente ? 'edit' : 'save' }} </mat-icon> {{ statusEditAntecedente ? 'Editar' : 'Guardar' }} </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+      <!-- 2.5 -->
+      <mat-expansion-panel [expanded]="panelEditLaboratorio">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            <strong>5. LABORATORIO</strong>
+          </mat-panel-title>
+          <mat-panel-description>
+            Analisis laboratoriales.
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div fxLayoutAlign="space-evenly center" fxLayout="row wrap">
+          <mat-form-field  >
+            <input matInput placeholder="Glicemia Basal (mg/dl)" #glicemia value="{{ detalle.laboratorio_glicemia_basal | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Creatinina (mg/dl)" #creatinina value="{{ detalle.laboratorio_creatinina | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Proteinas totales (mg/dl)" #proteinasTotales value="{{ detalle.laboratorio_proteinas_totales | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Urea (mg/dl)" #urea value="{{ detalle.laboratorio_urea | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Acido urico (Gramos/24hs)" #acidoUrico value="{{ detalle.laboratorio_acido_urico | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Proteinura" #proteinura value="{{ detalle.laboratorio_proteinuria | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Albumina (gramos %)" #albumina value="{{ detalle.laboratorio_albumina | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Trigliceridos (mg/dl)" #trigliceridos value="{{ detalle.laboratorio_triglicerios | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="LDL (mg/dl)" #ldl value="{{ detalle.laboratorio_ldl | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="HDL  (mg/dl)" #hdl value="{{ detalle.laboratorio_hdl | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Colesterol total (mg/dl)" #colesterolTotal value="{{ detalle.laboratorio_colesterol_total | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Glucosa (mg/24hs)" #glucosa value="{{ detalle.laboratorio_glucosa | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="HB (gramos/100ml)" #hb value="{{ detalle.laboratorio_hb | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Hematocrito (%)" #hematocrito value="{{ detalle.laboratorio_hematocrito | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Gobulos rojos (millones x mm3)" #globulosRojos value="{{ detalle.laboratorio_globulos_rojos | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Globulos blancos (millones x mm3)" #globulosBlancos value="{{ detalle.laboratorio_globulos_blancos | number:'1.1-2' }}"
+              [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Potasio (mEq/l)" #potasio value="{{ detalle.laboratorio_potasio | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="CI (mEq/l)" #ci value="{{ detalle.laboratorio_ci | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="Sodio (mEq/l)" #sodio value="{{ detalle.laboratorio_na | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+          <mat-form-field  >
+            <input matInput placeholder="HBA" #hba value="{{ detalle.laboratorio_hba | number:'1.1-2' }}" [disabled]="statusEditLaboratorio">
+          </mat-form-field>
+        </div>
+        <mat-action-row>
+          <button mat-button (click)="editLaboratorioPaciente(detalle, glicemia.value, creatinina.value, proteinasTotales.value, urea.value, acidoUrico.value, proteinura.value, albumina.value, trigliceridos.value, ldl.value, hdl.value, colesterolTotal.value, glucosa.value, hb.value, hematocrito.value, globulosRojos.value, globulosBlancos.value, potasio.value, ci.value, sodio.value, hba.value)"><mat-icon>{{ statusEditLaboratorio ? 'edit' : 'save' }} </mat-icon> {{ statusEditLaboratorio ? 'Editar' : 'Guardar' }} </button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-dialog-content>
+    <!-- 3 -->
+    <mat-dialog-actions>
+      <button mat-raised-button (click)="eliminarPaciente(detalle.codigo_paciente)"><mat-icon>delete</mat-icon>Eliminar</button>
+      <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
+    </mat-dialog-actions>
+</div>

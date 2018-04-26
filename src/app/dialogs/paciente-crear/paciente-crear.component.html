@@ -1,0 +1,314 @@
+<div>
+  <mat-horizontal-stepper fxLayout="column"
+                          [linear]="isLinear" >
+    <!-- 1 -->
+    <mat-step [stepControl]="firstFormGroup">
+      <form [formGroup]="firstFormGroup">
+        <ng-template matStepLabel>Datos Personales</ng-template>
+        
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+          <mat-form-field>
+            <input matInput placeholder="Nombres" formControlName="nombre" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Apellidos" formControlName="apellido" required>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Sexo" formControlName="sexo" required>
+              <mat-option *ngFor="let sexo of sexos" [value]="sexo.valor">
+                {{sexo.facevalue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-select placeholder="Estado civil" formControlName="civil" required>
+              <mat-option *ngFor="let estado of estadosCiviles" [value]="estado.valor">
+                {{estado.facevalue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="nacimiento" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker touchUi="true"></mat-datepicker>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="center center">
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- 2 -->
+    <mat-step [stepControl]="secondFormGroup">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Talla, Peso, Biotipo</ng-template>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+          <mat-form-field>
+            <input matInput placeholder="Talla (cm.)" formControlName="talla" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Peso Actual (Kg.)" formControlName="actual" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Peso Habitual (Kg.)" formControlName="habitual">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Cia. muñeca (cm.)" formControlName="muneca" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Cia. brazo (cm.)" formControlName="brazo" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required>
+          </mat-form-field>
+        </div>
+        <div fxLayoutAlign="center center">
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- 3 -->
+    <mat-step [stepControl]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup">
+        <ng-template matStepLabel>Antecedentes, medicacion</ng-template>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+          <section fxLayout="column" fxLayoutAlign="space-between">
+            <mat-checkbox formControlName="obesidad">Obesidad</mat-checkbox>
+            <mat-checkbox formControlName="cardiopatias">Cardiopatias</mat-checkbox>
+            <mat-checkbox formControlName="hta">HTA</mat-checkbox>
+            <mat-checkbox formControlName="diabetes">Diabetes</mat-checkbox>
+          </section>
+          <div fxLayout="column" fxLayoutAlign="space-evenly center">
+            <mat-form-field>
+              <input matInput formControlName="medicacion" maxlength="1000" placeholder="Medicacion" #medicacion>
+              <mat-hint align="start">
+                <strong>Farmacos que haya consumido.</strong>
+              </mat-hint>
+              <mat-hint align="end">{{medicacion.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="medico" maxlength="1000" placeholder="Diagnostico medico" #medico>
+              <mat-hint align="start">
+                <strong>Diagnostico del clinico tratante.</strong>
+              </mat-hint>
+              <mat-hint align="end">{{medico.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+            <mat-form-field>
+              <input matInput formControlName="nutricionista" maxlength="1000" placeholder="Diagnostico nutricional" #nutricional>
+              <mat-hint align="start">
+                <strong>Informacion relevante a su estado nutricional.</strong>
+              </mat-hint>
+              <mat-hint align="end">{{nutricional.value.length}} / 1000</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <br>
+        <div fxLayoutAlign="center center">
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- 4 -->
+    <mat-step [stepControl]="fourthFormGroup" Optional>
+      <form [formGroup]="fourthFormGroup">
+        <ng-template matStepLabel>Datos Laboratoriales</ng-template>
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+          <mat-form-field>
+            <input matInput placeholder="Glicemia Basal" formControlName="glicemiaBasal">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Creatinina" formControlName="creatinina">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Proteinas totales" formControlName="proteinasTotales">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Urea" formControlName="urea">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Acido urico" formControlName="acidoUrico">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Proteinura" formControlName="proteinura">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Albumina" formControlName="albumina">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Trigliceridos" formControlName="trigliceridos">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="LDL" formControlName="ldl">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="HDL" formControlName="hdl">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Colesterol total" formControlName="colesterolTotal">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Glucosa" formControlName="glucosa">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="HB" formControlName="hb">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Hematocrito" formControlName="hematocrito">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Gobulos rojos" formControlName="globulosRojos">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Globulos blancos" formControlName="globulosBlancos">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Potasio" formControlName="potasio">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="CI" formControlName="ci">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="Sodio" formControlName="sodio">
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput placeholder="HBA" formControlName="hba">
+          </mat-form-field>
+        </div>  
+        <div fxLayoutAlign="center center">
+          <button mat-button matStepperPrevious>
+            <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+          <button mat-button (click)="generarPaciente()" matStepperNext>Siguiente
+            <mat-icon>keyboard_arrow_right</mat-icon>
+          </button>
+        </div>
+      </form>
+    </mat-step>
+    <!-- 5 -->
+    <mat-step>
+      <ng-template matStepLabel>Completado</ng-template>
+      <div fxLayout="column" fxLayoutAlign="space-evenly center">
+        <strong>Carga del paciente completada.</strong>
+        <p>Favor verifique que los datos sean correctos</p>
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+        <div fxLayout="row" *ngIf="showPaciente">
+          <div fxLayout="column wrap" fxLayoutAlign="center center">
+            <strong>Informacion personal</strong>
+            <div>
+              <p>{{ paciente.nombre }} {{ paciente.apellido }}</p>
+              <p>{{ paciente.sexo == 'M' ? 'Masculino' : 'Femenino' }}</p>
+              <p>{{ paciente.estado_civil }}</p>
+              <p>{{ paciente.fecha_nacimiento | date:"dd/MM/yyyy" }}</p>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <strong>Perfil nutricional</strong>
+            <div>
+              <p>
+                <strong>Talla:</strong> {{ paciente.talla }} cm., 
+                <strong>Peso:</strong> {{ paciente.peso_actual }} kg.
+              </p>
+              <p>
+                <strong>Habitual:</strong> {{ paciente.peso_habitual }} kg., 
+                <strong>Saludable:</strong> {{ paciente.peso_saludable | number:'1.1-2' }} kg., 
+                <strong>Ajustado:</strong> {{ paciente.peso_ajusta | number:'1.1-2' }} kg.
+              </p>
+              <p>
+                <strong>% de PI:</strong> {{ paciente.porcentaje_peso_ideal | number:'1.1-2' }} %, 
+                <strong>IMC:</strong> {{ paciente.imc | number:'1.1-2' }}, 
+                <strong>Muñeca:</strong> {{ paciente.cia_muneca }} cm., 
+              </p>
+              <p>  
+                <strong>Brazo:</strong> {{ paciente.cia_brazo }} cm.,
+                <strong>Cintura 1:</strong> {{ paciente.cia_cintura1 }} cm., 
+                <strong>Cintura 2:</strong> {{ paciente.cia_cintura2 }} cm.
+              </p>
+              <p> 
+                <strong>Contextura:</strong> {{ paciente.biotipo }}
+              </p>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <strong>Antecedentes</strong>
+            <div>
+              <p>
+                <strong>Obesidad:</strong> {{ paciente.antecedente_obesidad ? 'Si' : 'No' }}
+                <strong>Cardiopatias:</strong> {{ paciente.antecedente_cardiopatias ? 'Si' : 'No' }}
+              </p>
+              <p>
+                <strong>HTA:</strong> {{ paciente.antecedente_hta ? 'Si' : 'No' }}
+                <strong>Diabetes:</strong> {{ paciente.antecedente_diabetes ? 'Si' : 'No' }}
+              </p>
+              <p>  
+                <strong>Medicacion:</strong> {{ paciente.medicacion == '' ? 'Sin informacion' : paciente.medicacion }}
+              </p>
+              <p>
+                <strong>Diagnostico Medico:</strong> {{ paciente.diagnostico_medico == '' ? 'Sin informacion' : paciente.diagnostico_medico }}
+              </p>
+              <p>
+                <strong>Diagnostico Nutricional:</strong> {{ paciente.diagnostico_nutricional == '' ? 'Sin informacion' : paciente.diagnostico_nutricional}}
+              </p>
+            </div>
+          </div>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <strong>Laboratorios</strong>
+            <div>
+              <p>    
+                <strong>Glicemia:</strong> {{ paciente.laboratorio_glicemia_basal }}, 
+                <strong>Creatinina:</strong> {{ paciente.laboratorio_creatinina }}
+                <strong>Urea:</strong> {{ paciente.laboratorio_urea }}, 
+              </p>  
+              <p>    
+                <strong>Proteinura:</strong> {{ paciente.laboratorio_proteinuria }}
+                <strong>Proteinas Totales:</strong> {{ paciente.laboratorio_proteinas_totales }}, 
+                <strong>Acido urico:</strong> {{ paciente.laboratorio_acido_urico }}
+              </p>  
+              <p>    
+                <strong>Albumina:</strong> {{ paciente.laboratorio_albumina }}, 
+                <strong>Colest. total:</strong> {{ paciente.laboratorio_colesterol_total }}, 
+                <strong>Triglicerios:</strong> {{ paciente.laboratorio_triglicerios }}, 
+              </p>  
+              <p>    
+                <strong>LDL:</strong> {{ paciente.laboratorio_ldl }},
+                <strong>HDL:</strong> {{ paciente.laboratorio_hdl }}
+                <strong>HB:</strong> {{ paciente.laboratorio_hb }}, 
+                <strong>HBA:</strong> {{ paciente.laboratorio_hba }}
+              </p>  
+              <p>    
+                <strong>Glucosa:</strong> {{ paciente.laboratorio_glucosa }}
+                <strong>Hematocrito:</strong> {{ paciente.laboratorio_hematocrito }}
+                <strong>CI:</strong> {{ paciente.laboratorio_ci }}, 
+              </p>  
+              <p>    
+                <strong>Potasio:</strong> {{ paciente.laboratorio_potasio }}, 
+                <strong>Sodio:</strong> {{ paciente.laboratorio_na }}
+                <strong>Globulos rojos:</strong> {{ paciente.laboratorio_globulos_rojos }}, 
+                <strong>Blancos:</strong> {{ paciente.laboratorio_globulos_blancos }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div fxLayoutAlign="center center">
+        <button mat-button matStepperPrevious>
+          <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
+        <button mat-button (click)="crearPaciente()">
+          <mat-icon>face</mat-icon>Guardar paciente</button>
+        <button mat-button>
+          <mat-icon>cancel</mat-icon>Cancelar</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

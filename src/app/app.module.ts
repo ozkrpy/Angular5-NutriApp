@@ -1,11 +1,11 @@
 /* IMPORTADOS AL PROYECTO DE FORMA MANUAL */
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
+import { FlexLayoutModule } from "@angular/flex-layout";
 import {  
   MatButtonModule, 
   MatMenuModule, 
@@ -40,6 +40,8 @@ import { DietasComponent } from './components/dietas/dietas.component';
 import { RutasNavegacion } from './rutas-navegacion';
 import { DbAPIService } from './db-api.service';
 import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { PacienteDetalleComponent } from './dialogs/paciente-detalle/paciente-detalle.component';
+import { PacienteCrearComponent } from './dialogs/paciente-crear/paciente-crear.component';
 
 
 
@@ -49,7 +51,9 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
     PacientesComponent,
     AlimentosComponent,
     DietasComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    PacienteDetalleComponent,
+    PacienteCrearComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +86,11 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
   ],
   providers: [
     DbAPIService
+  ],
+  entryComponents: [
+    PacienteDetalleComponent,
+    PacienteCrearComponent,
+    // AlimentosDetalleComponent
   ],
   bootstrap: [AppComponent]
 })

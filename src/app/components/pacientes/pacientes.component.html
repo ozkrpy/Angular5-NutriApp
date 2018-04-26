@@ -1,3 +1,44 @@
-<p>
-  pacientes works!
-</p>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="10px">
+  <div fxLayout="row">
+    <button color="primary" mat-raised-button (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
+  </div>
+  <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+    <mat-card  class="card-padding" *ngFor="let p of todosLosPacientes | async" #value>
+      <mat-card-header fxLayout="row" fxLayoutAlign="space-around">
+        <div mat-card-avatar>
+          <mat-icon>accessibility</mat-icon>
+        </div>
+        <mat-card-title> 
+          <strong>{{ p.apellido | uppercase }}, {{ p.nombre | uppercase }}</strong>
+        </mat-card-title>
+        <mat-card-subtitle>{{ p.talla }} cm., {{ p.peso_actual }} kg., IMC: {{ p.imc | number:'1.1-2'}}(Contextura <b>{{ p.biotipo }}</b>)</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content fxLayout="column">
+        <div fxHide fxShow.gt-sm>
+          <div>
+            <b>Peso habitual: </b>{{ p.peso_habitual | number:'1.1-2' }} kg.
+            <b>Peso ajustado: </b>{{ p.peso_ajusta | number:'1.1-2' }} kg.
+          </div>
+          <div>
+            <b>Peso saludable: </b>{{ p.peso_saludable | number:'1.1-1' }} kg. 
+            <b>% de PI: </b>{{ p.porcentaje_peso_ideal | number:'1.1-2' }}%.
+          </div>
+        </div>
+        <div fxShow fxHide.gt-sm>
+          <div>
+            <b>P.Habit.: </b>{{ p.peso_habitual | number:'1.1-2' }}kg.
+            <b>P.Ajust.: </b>{{ p.peso_ajusta | number:'1.1-2' }}kg.
+          </div>
+          <div>
+            <b>P.Salud: </b>{{ p.peso_saludable | number:'1.1-1' }}kg. 
+            <b>% P.I.: </b>{{ p.porcentaje_peso_ideal | number:'1.1-2' }}%.
+          </div>
+        </div>
+        <button mat-button color="accent" (click)="verDetallesPaciente(p.codigo_paciente)">Toda la informacion...</button>
+      </mat-card-content>
+      <mat-card-footer> 
+        <small>Ultima dieta creada: dd/MM/aaaa</small>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>
