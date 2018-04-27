@@ -25,7 +25,9 @@ import {
   MatProgressSpinnerModule,
   MatSnackBarModule,
   MatSidenavModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule,
+  MatSortModule
 } from '@angular/material';
 
 /* DEFAULT IMPORTS */
@@ -82,6 +84,8 @@ import { PacienteCrearComponent } from './dialogs/paciente-crear/paciente-crear.
     MatSnackBarModule,
     MatSidenavModule,
     MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     RouterModule.forRoot(RutasNavegacion, { useHash: true })
   ],
   providers: [

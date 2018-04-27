@@ -1,3 +1,53 @@
-<p>
-  alimentos works!
-</p>
+<div fxLayoutAlign="center center">
+  <mat-icon>search</mat-icon>
+  <mat-form-field>
+    <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alimento">
+  </mat-form-field>
+</div>
+<div>
+  <mat-table [dataSource]="dataSource" matSort fxLayout="column" fxLayoutAlign="space-evenly">
+      <ng-container matColumnDef="codigo">
+          <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cod. </mat-header-cell>
+          <mat-cell *matCellDef="let alimento" fxFlex="40px"> {{alimento.codigo_alimento}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="descripcion">
+          <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="25%"> Descripcion </mat-header-cell>
+          <mat-cell *matCellDef="let alimento" fxFlex="25%"> {{alimento.descripcion_alimento}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="tipo">
+          <mat-header-cell *matHeaderCellDef> Tipo </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.descripcion_tipo_alimento}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="medida">
+          <mat-header-cell *matHeaderCellDef> Medida </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.medida_casera}} {{ alimento.medida_casera_unidad}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="hidratos">
+          <mat-header-cell *matHeaderCellDef> Hidratos Carbono </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.hidratos_carbono}} {{ alimento.unidad_medida_hidratos_carbono}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="proteinas">
+          <mat-header-cell *matHeaderCellDef> Proteinas </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.proteina}} {{ alimento.unidad_medida_proteina}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="grasas">
+          <mat-header-cell *matHeaderCellDef> Grasas </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.grasa}} {{ alimento.unidad_medida_grasa}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="fibras">
+          <mat-header-cell *matHeaderCellDef> Fibra </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> {{alimento.fibra}} {{ alimento.unidad_medida_fibra}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="edicion">
+          <mat-header-cell *matHeaderCellDef> Detalles </mat-header-cell>
+          <mat-cell *matCellDef="let alimento"> <button  color="accent" mat-raised-button (click)="detalleAlimento(alimento.codigo_alimento)">Ver mas</button> </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 20]"
+                [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>
