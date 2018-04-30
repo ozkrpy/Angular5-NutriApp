@@ -245,6 +245,7 @@ export class DbAPIService {
                             return new AlimentoDetalle(
                                           item.codigo_alimento,
                                           item.descripcion_alimento,
+                                          item.tipo_alimento,
                                           item.descripcion_tipo_alimento,
                                           item.medida_casera,
                                           item.medida_casera_unidad,
@@ -286,5 +287,30 @@ export class DbAPIService {
                .get(apiURL)
                .map((r: Response) => r.json() as AlimentoDetalle) 
                .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  alimentoEdit(codigoAlimentoParam: number, descripcionParam: string, tipoParam: number, caseraParam: string,realParam: number,hidratoParam: number,proteinaParam: number,grasaParam: number,sodioParam: number,potasioParam: number,fosforoParam: number,calcioParam: number,hierroParam: number,colesterolParam: number,purinasParam:number,fibraParam: number,aguaParam: number,caloriasParam: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.alimentoActulizar;
+    let body: any = {codigoAlimento: codigoAlimentoParam, 
+                     descripcion: descripcionParam,
+                     tipo: tipoParam,
+                     medidaCasera: caseraParam,
+                     medidaReal: realParam,
+                     hidratosCarbono: hidratoParam,
+                     proteinas: proteinaParam,
+                     grasas: grasaParam,
+                     sodio: sodioParam,
+                     potasio: potasioParam,
+                     fosforo: fosforoParam,
+                     calcio: calcioParam,
+                     hierro: hierroParam,
+                     colesterol: colesterolParam,
+                     purinas: purinasParam,
+                     fibras: fibraParam,
+                     agua: aguaParam,
+                     calorias: caloriasParam};
+    console.log("metodo que actualiza alimentos: " + codigoAlimentoParam + ", URL: " + apiURL + " Body: " + body.json);
+    return this.httpRequest.post(apiURL, body)
+    ;
   }
 }

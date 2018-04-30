@@ -3,6 +3,8 @@ import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { Observable } from 'rxjs';
+import { AlimentoDetalleComponent } from '../../dialogs/alimento-detalle/alimento-detalle.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-alimentos',
@@ -11,6 +13,7 @@ import { Observable } from 'rxjs';
 })
 export class AlimentosComponent implements OnInit {
 
+  dialogResult: string = "";
   private alimentos: Observable<AlimentoDetalle[]>;
 
   // displayedColumns = ['position', 'name', 'weight', 'symbol'];
@@ -19,7 +22,8 @@ export class AlimentosComponent implements OnInit {
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
   
 
-  constructor(private ws: DbAPIService) {
+  constructor(private ws: DbAPIService, 
+              public dialog: MatDialog) {
 
   }
 
@@ -47,5 +51,16 @@ export class AlimentosComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  
+
+  detalleAlimento(codigo: number) {
+    console.log("metodo para detalle de alimento: " + codigo);
+    let dialogRef = this.dialog.open( 
+                                      AlimentoDetalleComponent, 
+                                      { width: '80%', height: '', data: codigo}
+    );
+    dialogRef.afterClosed().subscribe(result => {
+                                        console.log(`Dialogo cerrado: ${result}`);
+                                        this.dialogResult = result;
+    });
+  }
 }

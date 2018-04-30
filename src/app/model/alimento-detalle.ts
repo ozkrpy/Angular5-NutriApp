@@ -2,6 +2,7 @@ export class AlimentoDetalle {
     constructor(
         public codigo_alimento: any,
         public descripcion_alimento: string,
+        public tipo_alimento: number,
         public descripcion_tipo_alimento: any,
         public medida_casera: string,
         public medida_casera_unidad: string,
