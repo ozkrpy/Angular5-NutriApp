@@ -313,4 +313,54 @@ export class DbAPIService {
     return this.httpRequest.post(apiURL, body)
     ;
   }
+
+  alimentoAlta(alimento: AlimentoDetalle) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.alimentoAgregar;
+    let body: any = {codigoParam: null,
+                     descripcionParam: alimento.descripcion_alimento,
+                     tipoParam: alimento.tipo_alimento,
+                     caseraParam: alimento.medida_casera,
+                     caseraMedidaParam: alimento.medida_casera_unidad,
+                     realParam: alimento.medida_real,
+                     realMedidaParam: alimento.medida_real_unidad,
+                     hidratosParam: alimento.hidratos_carbono,
+                     hidratosMedidaParam: alimento.unidad_medida_hidratos_carbono,
+                     proteinaParam: alimento.proteina,
+                     proteinaMedidaParam: alimento.unidad_medida_proteina,
+                     grasaParam: alimento.grasa,
+                     grasaMedidaParam: alimento.unidad_medida_grasa,
+                     sodioParam: alimento.sodio,
+                     sodioMedidaParam: alimento.unidad_medida_sodio,
+                     potasioParam: alimento.potasio,
+                     potasioMedidaParam: alimento.unidad_medida_potasio,
+                     fosforoParam: alimento.fosforo,
+                     fosforoMedidaParam: alimento.unidad_medida_fosforo,
+                     calcioParam: alimento.calcio,
+                     calcioMedidaParam: alimento.unidad_medida_calcio,
+                     hierroParam: alimento.hierro,
+                     hierroMedidaParam: alimento.unidad_medida_hierro,
+                     colesterolParam: alimento.colesterol,
+                     colesterolMedidaParam: alimento.unidad_medida_colesterol,
+                     purinaParam: alimento.purinas,
+                     purinasMedidaParam: alimento.unidad_medida_purinas,
+                     fibraParam: alimento.fibra,
+                     fibraMedidaParam: alimento.unidad_medida_fibra,
+                     aguaParam: alimento.agua,
+                     aguaMedidaParam: alimento.unidad_medida_agua,
+                     caloriasParam: alimento.calorias};
+    console.log("alta de alimento, URL: ", apiURL, " Body: ", body);
+    return this.httpRequest.put(apiURL, body)
+                           .map(res => { console.log(res); })
+                           .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
+  }
+
+  eliminarAlimento(idAlimento: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.alimentoEliminar ;
+    let body: any = {codigoParam: idAlimento}; 
+    console.log("metodo para eliminar un alimento: ", apiURL, " codigo paciente:", body);
+    return this.httpRequest
+               .post(apiURL, body)
+               .map(res => { console.log("MAP inside API",res); })
+               .catch((error:any) => Observable.throw(error.json() || 'catch en la API Server error')); 
+  }
 }

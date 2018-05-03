@@ -27,7 +27,8 @@ import {
   MatSidenavModule,
   MatTableModule,
   MatPaginatorModule,
-  MatSortModule
+  MatSortModule,
+  MatTooltipModule
 } from '@angular/material';
 
 /* DEFAULT IMPORTS */
@@ -45,6 +46,7 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { PacienteDetalleComponent } from './dialogs/paciente-detalle/paciente-detalle.component';
 import { PacienteCrearComponent } from './dialogs/paciente-crear/paciente-crear.component';
 import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-detalle.component';
+import { AlimentoCrearComponent } from './dialogs/alimento-crear/alimento-crear.component';
 
 
 
@@ -57,7 +59,8 @@ import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-de
     ToolbarComponent,
     PacienteDetalleComponent,
     PacienteCrearComponent,
-    AlimentoDetalleComponent
+    AlimentoDetalleComponent,
+    AlimentoCrearComponent
   ],
   imports: [
     BrowserModule,
@@ -88,6 +91,7 @@ import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-de
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTooltipModule,
     RouterModule.forRoot(RutasNavegacion, { useHash: true })
   ],
   providers: [
@@ -96,7 +100,8 @@ import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-de
   entryComponents: [
     PacienteDetalleComponent,
     PacienteCrearComponent,
-    AlimentoDetalleComponent
+    AlimentoDetalleComponent,
+    AlimentoCrearComponent
   ],
   bootstrap: [AppComponent]
 })

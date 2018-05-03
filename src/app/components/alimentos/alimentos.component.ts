@@ -4,6 +4,7 @@ import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { Observable } from 'rxjs';
 import { AlimentoDetalleComponent } from '../../dialogs/alimento-detalle/alimento-detalle.component';
+import { AlimentoCrearComponent } from '../../dialogs/alimento-crear/alimento-crear.component';
 import { MatDialog } from '@angular/material';
 
 @Component({
@@ -38,14 +39,17 @@ export class AlimentosComponent implements OnInit {
    * be able to query its view for the initialized paginator.
    */
   ngAfterViewInit() {
+    this.cargarAlimentos();
+  }
+
+  cargarAlimentos() {
     this.ws.todosLosAlimentos().subscribe(data => {
       this.dataSource.data = data;
-      // console.log(this.dataSource.data);
+      console.log(this.dataSource.data);
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
-
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
@@ -61,6 +65,20 @@ export class AlimentosComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
                                         console.log(`Dialogo cerrado: ${result}`);
                                         this.dialogResult = result;
+                                        this.cargarAlimentos();
     });
   }
+
+  agregarAlimento() {
+    console.log("metodo para alta de alimento");
+    let dialogRef = this.dialog.open( 
+                                      AlimentoCrearComponent, 
+                                      { width: '70%', height: ''}
+    );
+    dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialogo cerrado: ${result}`);
+            this.dialogResult = result;
+    });    
+  }
+
 }

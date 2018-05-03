@@ -1,8 +1,11 @@
-<div fxLayoutAlign="center center">
-  <mat-icon>search</mat-icon>
-  <mat-form-field>
-    <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alimento">
-  </mat-form-field>
+<div fxLayoutAlign="space-around center">
+    <div fxLayoutAlign="center center">
+        <mat-icon>search</mat-icon>
+        <mat-form-field>
+            <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alimento">
+        </mat-form-field>
+    </div>  
+    <button color="primary" mat-raised-button (click)="agregarAlimento()">AGREGAR ALIMENTO</button>
 </div>
 <div>
   <mat-table [dataSource]="dataSource" matSort fxLayout="column" fxLayoutAlign="space-evenly">

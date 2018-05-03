@@ -80,4 +80,17 @@ export class AlimentoDetalleComponent implements OnInit {
     this.snackbar.open(message, "OK", { duration: 5000 });
   }
 
+  eliminarAlimento(codigo: number) {
+    this.ws.eliminarAlimento(codigo)
+           .subscribe(res => {
+                        console.log(res);
+                        this.openSnackbar('El alimento ha sido dado eliminado correctamente');
+                        this.thisDialogRef.close('Delete food');
+                      }, err => {
+                        console.log("[ERROR] component PacienteDetalle", err);
+                        this.openSnackbar('El alimento existe en dietas activas, no se puede eliminar.');
+                        this.thisDialogRef.close('Delete food');
+                      });
+  }
+
 }

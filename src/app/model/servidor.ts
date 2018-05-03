@@ -22,6 +22,8 @@ export const Servidor = [
                 alimentos: '/alimentos',
                 alimentoPorId: '/alimentoPorId/',
                 alimentoActulizar: '/alimentoActualizar/',
+                alimentoAgregar:'/alimentoAgregar',
+                alimentoEliminar:'/alimentoEliminar',
                 dietas: '/dietas',
                 dietasById: '/dietas/'
             }
