@@ -28,7 +28,8 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatSortModule,
-  MatTooltipModule
+  MatTooltipModule,
+  MatDividerModule
 } from '@angular/material';
 
 /* DEFAULT IMPORTS */
@@ -94,6 +95,7 @@ import { SettingsComponent } from './settings/settings.component';
     MatPaginatorModule,
     MatSortModule,
     MatTooltipModule,
+    MatDividerModule,
     RouterModule.forRoot(RutasNavegacion, { useHash: true })
   ],
   providers: [

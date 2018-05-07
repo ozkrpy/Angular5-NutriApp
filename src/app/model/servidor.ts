@@ -24,8 +24,8 @@ export const Servidor = [
                 alimentoActulizar: '/alimentoActualizar/',
                 alimentoAgregar:'/alimentoAgregar',
                 alimentoEliminar:'/alimentoEliminar',
-                dietas: '/dietas',
-                dietasById: '/dietas/'
+                dietasReferencia: '/dietasReferencia',
+
             }
         }
     }

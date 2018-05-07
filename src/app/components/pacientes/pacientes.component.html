@@ -3,7 +3,7 @@
     <button color="primary" mat-raised-button (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
   </div>
   <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
-    <mat-card  class="card-padding" *ngFor="let p of todosLosPacientes | async" #value>
+    <mat-card class="card-padding" *ngFor="let p of todosLosPacientes | async" #value>
       <mat-card-header fxLayout="row" fxLayoutAlign="space-around">
         <div mat-card-avatar>
           <mat-icon>accessibility</mat-icon>

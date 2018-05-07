@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { DbAPIService } from '../../db-api.service';
+
+import { ReferenciaDieta } from '../../model/referencia-dieta';
 
 @Component({
   selector: 'app-dietas',
@@ -7,9 +11,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DietasComponent implements OnInit {
 
-  constructor() { }
+  todasDietas: Observable<ReferenciaDieta[]>;
+  constructor(private ws: DbAPIService) { }
 
   ngOnInit() {
+    this.recuperaDietas();
   }
 
+  recuperaDietas() {
+    this.todasDietas = this.ws.todasDietasReferencia();
+  }
 }

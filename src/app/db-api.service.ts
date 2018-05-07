@@ -8,6 +8,8 @@ import * as moment from 'moment';
 import { PacienteDetalle } from './model/paciente-detalle';
 import { Servidor } from './model/servidor';
 import { AlimentoDetalle } from './model/alimento-detalle';
+import { ReferenciaDieta } from './model/referencia-dieta';
+
 
 @Injectable()
 export class DbAPIService {
@@ -362,5 +364,31 @@ export class DbAPIService {
                .post(apiURL, body)
                .map(res => { console.log("MAP inside API",res); })
                .catch((error:any) => Observable.throw(error.json() || 'catch en la API Server error')); 
+  }
+
+  todasDietasReferencia(): Observable<ReferenciaDieta[]> {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasReferencia;
+    console.log("metodo recupera todas las referencias de dieta: " + apiURL);
+    return  this.httpRequest
+                .get(apiURL)
+                .map(
+                      res => {
+                        let result = res.json().map(
+                          item => {
+                            return new ReferenciaDieta(
+                              item.codigo_referencia_x_dieta,
+                              item.codigo_dieta,
+                              item.hidratos_carbono,
+                              item.proteinas,
+                              item.grasas,
+                              item.fibras,
+                              item.codigo_paciente,
+                              item.nombre,
+                              item.apellido,
+                              item.fecha_creacion,
+                              item.fecha_ultima_modificacion )
+                          });
+                        return result;
+                });
   }
 }

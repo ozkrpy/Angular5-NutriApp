@@ -1,3 +1,29 @@
-<p>
-  dietas works!
-</p>
+<div fxLayout="column wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
+  <mat-card *ngFor="let d of todasDietas | async" fxLayout="column" >
+    <mat-card-header fxLayout="column">
+        <mat-card-title><strong>#{{ d.codigo_dieta }}.</strong> {{ d.nombre | uppercase }} {{ d.apellido | uppercase }}</mat-card-title>
+        <mat-card-subtitle><strong>Fecha de creacion:</strong> {{ d.fecha_creacion | date: 'dd/MM/yyyy' }}</mat-card-subtitle>
+        <mat-card-subtitle><strong>Ultima modificacion:</strong> {{ d.fecha_ultima_modificacion | date: 'dd/MM/yyyy HH:mm' }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-divider></mat-divider>
+        <br>
+        <div><strong>Hidratos de Carbono:</strong> {{ d.hidratos_carbono }}</div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div><strong>Proteinas</strong> {{ d.proteinas }}</div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div><strong>Grasas:</strong> {{ d.grasas }}</div>
+        <mat-divider [inset]="true"></mat-divider>
+        <div><strong>Fibras:</strong> {{ d.fibras }}</div>
+        <br>
+        <mat-divider></mat-divider>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button><mat-icon>note_add</mat-icon>DETALLES</button>
+      <button mat-button><mat-icon>edit</mat-icon>MODIFICAR</button>
+    </mat-card-actions>
+    <mat-card-footer>
+        <button mat-button><mat-icon>delete_forever</mat-icon>ELIMINAR</button>
+    </mat-card-footer>
+  </mat-card>
+</div>
