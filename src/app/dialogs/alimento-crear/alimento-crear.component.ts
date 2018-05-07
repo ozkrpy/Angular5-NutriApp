@@ -39,7 +39,6 @@ export class AlimentoCrearComponent implements OnInit {
       proteinas: ['', Validators.required],
       grasas: ['', Validators.required],
       sodio: ['', Validators.required],
-      sodioMedida: ['', Validators.required],
       potasio: ['', Validators.required],
       fosforo: ['', Validators.required],
       calcio: ['', Validators.required],
@@ -63,7 +62,6 @@ export class AlimentoCrearComponent implements OnInit {
                 "proteinas", this.firstFormGroup.controls.proteinas.value,
                 "grasas", this.firstFormGroup.controls.grasas.value,
                 "sodio", this.firstFormGroup.controls.sodio.value,
-                "medida", this.firstFormGroup.controls.sodioMedida.value,
                 "potasio", this.firstFormGroup.controls.potasio.value,
                 "fosforo", this.firstFormGroup.controls.fosforo.value,
                 "calcio", this.firstFormGroup.controls.calcio.value,
@@ -77,7 +75,7 @@ export class AlimentoCrearComponent implements OnInit {
     this.alimento = new AlimentoDetalle(null, 
                                         this.firstFormGroup.controls.descripcion.value,
                                         this.firstFormGroup.controls.tipo.value,
-                                        null,
+                                        null,//descricpcion de tipo de alimento
                                         this.firstFormGroup.controls.casera.value,
                                         this.firstFormGroup.controls.caseraMedida.value,
                                         this.firstFormGroup.controls.real.value,
@@ -89,7 +87,7 @@ export class AlimentoCrearComponent implements OnInit {
                                         this.firstFormGroup.controls.grasas.value,
                                         "g",
                                         this.firstFormGroup.controls.sodio.value,
-                                        this.firstFormGroup.controls.sodioMedida.value,
+                                        "mg",
                                         this.firstFormGroup.controls.potasio.value,
                                         "mg",
                                         this.firstFormGroup.controls.fosforo.value,
@@ -111,8 +109,7 @@ export class AlimentoCrearComponent implements OnInit {
            .subscribe(res => {
                               console.log(res);
                               this.openSnackbar("Se dio de alta el alimento: " + this.firstFormGroup.controls.descripcion.value);
-                              this.thisDialogRef.close('OK');});
-      
+                              this.thisDialogRef.close('OK');}); 
   }
 
   openSnackbar(message: string) {

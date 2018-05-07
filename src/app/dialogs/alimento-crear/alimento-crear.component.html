@@ -1,48 +1,56 @@
-<div fxLayout="column" fxLayoutAlign="space-evenly center">
+<div fxLayout="column" fxLayoutAlign="space-around center" fxFlex="100%">
   <h2 mat-dialog-title>
     <strong>DETALLES NUTRITIVOS DEL ALIMENTO</strong>
   </h2>
   <mat-dialog-content>
     <form [formGroup]="firstFormGroup">
-      <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
-        <!-- DESCRIPCION -->
-        <mat-form-field>
-          <input matInput placeholder="Descripcion del alimento" formControlName="descripcion" required>
-        </mat-form-field>
-        <!-- TIPO DE ALIMENTO -->
-        <mat-form-field>
-          <mat-select placeholder="Tipo" formControlName="tipo" required>
-            <mat-option *ngFor="let tipo of tiposAlimento" [value]="tipo.valor">
-              {{tipo.facevalue}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <!-- MEDIDA CASERA Y UNIDAD -->
-        <div>
-          <mat-form-field>
-            <input matInput placeholder="Medida casera" formControlName="casera" required>
+      <div fxLayout="column">
+        <!-- PARTE 1 -->
+        <div fxLayoutAlign="space-evenly center" fxLayout.xs="column">
+          <!-- DESCRIPCION -->
+          <mat-form-field fxFlex="50%">
+            <input matInput placeholder="Descripcion del alimento" formControlName="descripcion" required>
           </mat-form-field>
+          <!-- TIPO DE ALIMENTO -->
           <mat-form-field>
-            <mat-select placeholder="Unidad de medida" formControlName="caseraMedida" required>
-              <mat-option *ngFor="let medida of medidasCaseras" [value]="medida.valor">
-                {{medida.facevalue}}
+            <mat-select placeholder="Tipo" formControlName="tipo" required>
+              <mat-option *ngFor="let tipo of tiposAlimento" [value]="tipo.valor">
+                {{tipo.facevalue}}
               </mat-option>
             </mat-select>
           </mat-form-field>
         </div>
-        <!-- MEDIDA REAL Y UNIDAD -->
-        <div>
-            <mat-form-field>
+        <!-- PARTE 2 -->
+        <div fxLayoutAlign="space-evenly center" fxLayout.xs="column">
+          <!-- MEDIDA CASERA Y UNIDAD -->
+          <div fxLayout="row" fxLayoutAlign="center">
+            <mat-form-field fxFlex="35%">
+              <input matInput placeholder="Medida casera" formControlName="casera" required>
+            </mat-form-field>
+            <mat-form-field fxFlex="20%">
+              <mat-select placeholder="Unid." formControlName="caseraMedida" required>
+                <mat-option *ngFor="let medida of medidasCaseras" [value]="medida.valor">
+                  {{medida.facevalue}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <!-- MEDIDA REAL Y UNIDAD -->
+          <div fxLayout="row" fxLayoutAlign="center">
+            <mat-form-field fxFlex="35%">
               <input matInput placeholder="Medida real" formControlName="real" required>
             </mat-form-field>
-            <mat-form-field>
-              <mat-select placeholder="Unidad de medida" formControlName="realMedida" required>
+            <mat-form-field fxFlex="20%">
+              <mat-select placeholder="Unid." formControlName="realMedida" required>
                 <mat-option *ngFor="let medida of medidasReal" [value]="medida.facevalue">
                   {{medida.facevalue}}
                 </mat-option>
               </mat-select>
             </mat-form-field> 
           </div>
+        </div>
+        <!-- PARTE 3 -->
+        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
           <!-- HIDRATOS CARBONO -->
           <mat-form-field>
             <input matInput placeholder="Hidratos de Carbono" formControlName="hidratos" required>
@@ -65,17 +73,13 @@
             </mat-hint>
           </mat-form-field>
           <!-- SODIO -->
-          <div>
+          <div fxLayout="row">
             <mat-form-field>
               <input matInput placeholder="Sodio" formControlName="sodio" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
             </mat-form-field>      
-            <mat-form-field>
-              <mat-select placeholder="Unidad de medida" formControlName="sodioMedida" required>
-                <mat-option *ngFor="let medida of gramos" [value]="medida.facevalue">
-                  {{medida.facevalue}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field> 
           </div>
           <!-- POTASIO -->
           <mat-form-field>
@@ -137,12 +141,12 @@
           <mat-form-field>
             <input matInput placeholder="Calorias" formControlName="calorias" required>
           </mat-form-field>
-        </div>    
+        </div>
+      </div>    
     </form>
-    
   </mat-dialog-content>
   <mat-dialog-actions>
-    <div fxLayoutAlign="center center">
+    <div fxLayout.xs="column" fxLayoutAlign="center center">
       <button mat-button (click)="agregarAlimento()">
         <mat-icon>restaurant_menu</mat-icon>Guardar Alimento</button>
       <button mat-button>

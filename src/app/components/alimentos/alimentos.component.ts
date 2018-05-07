@@ -34,10 +34,7 @@ export class AlimentosComponent implements OnInit {
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  /**
-   * Set the paginator after the view init since this component will
-   * be able to query its view for the initialized paginator.
-   */
+  
   ngAfterViewInit() {
     this.cargarAlimentos();
   }
@@ -45,7 +42,7 @@ export class AlimentosComponent implements OnInit {
   cargarAlimentos() {
     this.ws.todosLosAlimentos().subscribe(data => {
       this.dataSource.data = data;
-      console.log(this.dataSource.data);
+      // console.log(this.dataSource.data);
     });
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
