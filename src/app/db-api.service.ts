@@ -9,6 +9,7 @@ import { PacienteDetalle } from './model/paciente-detalle';
 import { Servidor } from './model/servidor';
 import { AlimentoDetalle } from './model/alimento-detalle';
 import { ReferenciaDieta } from './model/referencia-dieta';
+import { DietaAlimentos } from './model/dieta-alimentos';
 
 
 @Injectable()
@@ -390,5 +391,76 @@ export class DbAPIService {
                           });
                         return result;
                 });
+  }
+
+  dietasReferencia(codigo: number): Observable<ReferenciaDieta> {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasReferenciaPorId + codigo;
+    console.log("metodo recupera la referencia de dieta:", codigo, apiURL);
+    return this.httpRequest
+               .get(apiURL)
+               .map((r: Response) => r.json() as ReferenciaDieta) 
+               .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
+  dietasAlimentos(codigo: number): Observable<DietaAlimentos[]> {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasAlimentosPorId + codigo;
+    console.log("metodo recupera todos los alimentos de dieta:", codigo, apiURL);
+    return  this.httpRequest
+                .get(apiURL)
+                .map(
+                      res => {
+                        let result = res.json().map(
+                          item => {
+                            let alimentoDieta = new DietaAlimentos(
+                                                                    item.numero_item,
+                                                                    item.cantidad_alimento,
+                                                                    new AlimentoDetalle(item.codigo_alimento,
+                                                                                        item.descripcion_alimento,
+                                                                                        item.tipo_alimento,
+                                                                                        item.descripcion_tipo_alimento,
+                                                                                        item.medida_casera,
+                                                                                        item.medida_casera_unidad,
+                                                                                        item.medida_real,
+                                                                                        item.medida_real_unidad,
+                                                                                        item.hidratos_carbono,
+                                                                                        item.unidad_medida_hidratos_carbono,
+                                                                                        item.proteina,
+                                                                                        item.unidad_medida_proteina,
+                                                                                        item.grasa,
+                                                                                        item.unidad_medida_grasa,
+                                                                                        item.sodio,
+                                                                                        item.unidad_medida_sodio,
+                                                                                        item.potasio,
+                                                                                        item.unidad_medida_potasio,
+                                                                                        item.fosforo,
+                                                                                        item.unidad_medida_fosforo,
+                                                                                        item.calcio,
+                                                                                        item.unidad_medida_calcio,
+                                                                                        item.hierro,
+                                                                                        item.unidad_medida_hierro,
+                                                                                        item.colesterol,
+                                                                                        item.unidad_medida_colesterol,
+                                                                                        item.purinas,
+                                                                                        item.unidad_medida_purinas,
+                                                                                        item.fibra,
+                                                                                        item.unidad_medida_fibra,
+                                                                                        item.agua,
+                                                                                        item.unidad_medida_agua,
+                                                                                        item.calorias))
+                            return alimentoDieta; 
+                          });
+                        return result;
+                });
+  }
+
+  dietasAgregarAlimento(codigoDietaParam: number, codigoAlimentoParam: number, cantidadParam: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasInsertarAlimento;
+    let body: any = {codigoDieta: codigoDietaParam,
+                     codigoAlimento: codigoAlimentoParam,
+                     cantidad: cantidadParam};
+    console.log("dietasInsertarAlimento, URL: ", apiURL, " Body: ", body);
+    return this.httpRequest.put(apiURL, body)
+                           .map(res => { console.log(res); })
+                           .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
   }
 }
