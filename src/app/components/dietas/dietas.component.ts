@@ -34,10 +34,11 @@ export class DietasComponent implements OnInit {
                                       DietaDetalleComponent, 
                                       { width: '90%', height: '', data: codigo}
                                     );
-                                    dialogRef.afterClosed().subscribe(result => {
-                                                            console.log(`Dialogo cerrado: ${result}`);
-                                                            this.dialogResult = result;
-                                                            this.recuperaDietas();
-                                    });
+    dialogRef.afterClosed()
+             .subscribe(result => {
+                                    console.log(`Dialogo cerrado: ${result}`);
+                                    this.dialogResult = result;
+                                    this.recuperaDietas();
+    });
   }
 }

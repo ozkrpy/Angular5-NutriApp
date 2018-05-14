@@ -14,11 +14,14 @@ import { AlimentoDetalle } from '../../model/alimento-detalle';
 })
 export class AlimentoCrearComponent implements OnInit {
   
+  // Formulario agrupado
   firstFormGroup: FormGroup;
+  // Opciones para el ddl
   tiposAlimento = TipoAlimento;
   medidasCaseras = MedidasCaseras;
   medidasReal = MedidasReal;
   gramos = Gramos;
+  // Alimento generado a partir de la informacion ingresada
   alimento: AlimentoDetalle;
   
   constructor(

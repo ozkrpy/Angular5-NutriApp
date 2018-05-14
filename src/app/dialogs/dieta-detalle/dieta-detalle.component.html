@@ -3,111 +3,113 @@
   <div fxLayoutAlign="center center">
     <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
   </div>
-  <!-- TABLA DE REFERENCIAS -->
-  <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
-    <div fxLayout="column">
-      <mat-form-field>
-        <input matInput placeholder="Hidratos de Carbono (g)" #hidratosCarbono value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
-        <mat-hint align="start">
-          <strong>Minimo:</strong>{{ referencia.hidratos_carbono - 5}}
-        </mat-hint>
-        <mat-hint align="end">
-          <strong>Maximo:</strong>{{ referencia.hidratos_carbono + 5}}
-        </mat-hint>
-      </mat-form-field>
+  <form [formGroup]="referenciasFormGroup">
+    <!-- TABLA DE REFERENCIAS -->
+    <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+      <div fxLayout="column">
+        <mat-form-field>
+          <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" #hidratosCarbono value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
+          <mat-hint align="start">
+            <strong>Minimo:</strong>{{ referencia.hidratos_carbono - 5}}
+          </mat-hint>
+          <mat-hint align="end">
+            <strong>Maximo:</strong>{{ referencia.hidratos_carbono + 5}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <mat-form-field >
+          <input matInput formControlName="proteinasForm" placeholder="Proteinas (g)" #proteinas value="{{ referencia.proteinas | number:'1.1-2' }}">
+          <mat-hint align="start">
+            <strong>Minimo:</strong>{{ referencia.proteinas - 5}}
+          </mat-hint>
+          <mat-hint align="end">
+            <strong>Maximo:</strong>{{ referencia.proteinas + 5}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <mat-form-field >
+          <input matInput formControlName="grasasForm" placeholder="Grasas (g)" #grasas value="{{ referencia.grasas | number:'1.1-2' }}">
+          <mat-hint align="start">
+            <strong>Minimo:</strong>{{ referencia.grasas - 5}}
+          </mat-hint>
+          <mat-hint align="end">
+            <strong>Maximo:</strong>{{ referencia.grasas + 5}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column">
+        <mat-form-field >
+          <input matInput formControlName="fibrasForm" placeholder="Fibras (g)" #fibras value="{{ referencia.fibras | number:'1.1-2' }}">
+          <mat-hint align="start">
+            <strong>Minimo:</strong>{{ referencia.fibras * 0.95 }}
+          </mat-hint>
+          <mat-hint align="end">
+            <strong>Maximo:</strong>{{ referencia.fibras * 1.05}}
+          </mat-hint>
+        </mat-form-field>
+      </div>
     </div>
-    <div fxLayout="column">
-      <mat-form-field >
-        <input matInput placeholder="Proteinas (g)" #proteinas value="{{ referencia.proteinas | number:'1.1-2' }}">
-        <mat-hint align="start">
-          <strong>Minimo:</strong>{{ referencia.proteinas - 5}}
-        </mat-hint>
-        <mat-hint align="end">
-          <strong>Maximo:</strong>{{ referencia.proteinas + 5}}
-        </mat-hint>
-      </mat-form-field>
+    <br>
+    <!-- TABLA DE SUMATORIAS -->
+    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center">
+      <div fxLayout="column">
+        <strong>TOTALES</strong>
+        <small>Segun Alimentos</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Hidratos</strong>
+        <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
+        <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Proteinas</strong>
+        <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Grasas</strong>
+        <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Fibras</strong>
+        <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Sodio</strong>
+        <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Potasio</strong>
+        <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Fosforo</strong>
+        <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Calcio</strong>
+        <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Hierro</strong>
+        <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Colesterol</strong>
+        <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Purinas</strong>
+        <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
+      </div>
+      <div fxLayout="column">
+        <strong>Agua</strong>
+        <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
+      </div>
     </div>
-    <div fxLayout="column">
-      <mat-form-field >
-        <input matInput placeholder="Grasas (g)" #grasas value="{{ referencia.grasas | number:'1.1-2' }}">
-        <mat-hint align="start">
-          <strong>Minimo:</strong>{{ referencia.grasas - 5}}
-        </mat-hint>
-        <mat-hint align="end">
-          <strong>Maximo:</strong>{{ referencia.grasas + 5}}
-        </mat-hint>
-      </mat-form-field>
-    </div>
-    <div fxLayout="column">
-      <mat-form-field >
-        <input matInput placeholder="Fibras (g)" #fibras value="{{ referencia.fibras | number:'1.1-2' }}">
-        <mat-hint align="start">
-          <strong>Minimo:</strong>{{ referencia.fibras * 0.95 }}
-        </mat-hint>
-        <mat-hint align="end">
-          <strong>Maximo:</strong>{{ referencia.fibras * 1.05}}
-        </mat-hint>
-      </mat-form-field>
-    </div>
-  </div>
-  <br>
-  <!-- TABLA DE SUMATORIAS -->
-  <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center">
-    <div fxLayout="column">
-      <strong>TOTALES</strong>
-      <small>Segun Alimentos</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Hidratos</strong>
-      <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
-      <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Proteinas</strong>
-      <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Grasas</strong>
-      <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Fibras</strong>
-      <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Sodio</strong>
-      <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Potasio</strong>
-      <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Fosforo</strong>
-      <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Calcio</strong>
-      <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Hierro</strong>
-      <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Colesterol</strong>
-      <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Purinas</strong>
-      <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
-    </div>
-    <div fxLayout="column">
-      <strong>Agua</strong>
-      <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
-    </div>
-  </div>
-  <br>
+    <br>
+  </form>
   <!-- AGREGAR UN NUEVO ALIMENTO -->
   <div fxLayoutAlign="space-evenly center">
     <button color="primary" mat-raised-button (click)="agregarAlimento()">AGREGAR ALIMENTOS A LA DIETA</button>

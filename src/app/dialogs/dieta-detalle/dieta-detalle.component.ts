@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
@@ -19,6 +20,8 @@ import { AgregarAlimentoDietaComponent } from '../agregar-alimento-dieta/agregar
 export class DietaDetalleComponent implements OnInit {
 
   dietaReferencia: Observable<ReferenciaDieta>;
+  referenciasFormGroup: FormGroup;
+  
 
   dialogAddFoodResult: string = "";
 
@@ -50,9 +53,21 @@ export class DietaDetalleComponent implements OnInit {
               public entrada: number,
               private ws: DbAPIService,
               public snackbar: MatSnackBar,
-              public AddFoodDialog: MatDialog) { }
+              public AddFoodDialog: MatDialog,
+              private _formBuilder: FormBuilder) {  }
 
   ngOnInit() {
+    this.referenciasFormGroup = this._formBuilder.group({
+      hidratosCarbonoForm: [''],//, Validators.required
+      proteinasForm: [''],
+      grasasForm: [''],
+      fibrasForm: [''],
+    });
+    this.referenciasFormGroup.valueChanges.subscribe(  
+      (form: any) => {  
+        console.log('form changed to:', form);  
+      }
+    );
   }
 
   ngAfterViewInit() {
@@ -115,4 +130,6 @@ export class DietaDetalleComponent implements OnInit {
                                       this.recuperaReferenciasDieta();
       });    
   }
+
+  
 }
