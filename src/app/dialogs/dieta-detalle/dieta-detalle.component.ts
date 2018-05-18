@@ -2,8 +2,10 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
 import * as moment from 'moment';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { DbAPIService } from '../../db-api.service';
 import { ReferenciaDieta } from '../../model/referencia-dieta';
@@ -19,33 +21,33 @@ import { AgregarAlimentoDietaComponent } from '../agregar-alimento-dieta/agregar
 })
 export class DietaDetalleComponent implements OnInit {
 
-  dietaReferencia: Observable<ReferenciaDieta>;
+  // dietaReferencia: Observable<ReferenciaDieta>;
+  dietaReferencia: ReferenciaDieta;
   referenciasFormGroup: FormGroup;
-  
 
   dialogAddFoodResult: string = "";
 
   dataSource = new MatTableDataSource<DietaAlimentos>();
-  displayedColumns = ['numero_item','cantidad_alimento','descripcion','tipo','hidratos','proteinas','grasas','fibras','sodio','potasio','fosforo','calcio','hierro','colesterol','purinas','agua','calorias'];//, 'cantidad_alimento', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'
+  displayedColumns = ['cantidad_alimento','descripcion','tipo','hidratos','proteinas','grasas','fibras','sodio','potasio','fosforo','calcio','hierro','colesterol','purinas','agua','calorias','eliminar'];
 
-  sumatoriaHC: number = 0.0;
-  sumatoriaProteinas: number = 0.0;
-  sumatoriaGrasas: number = 0.0;
-  sumatoriaFibras: number = 0.0;
-  sumatoriaCalorias: number = 0.0;
-  sumatoriaSodio: number = 0.0;
-  sumatoriaPotasio: number = 0.0;
-  sumatoriaFosforo: number = 0.0;
-  sumatoriaCalcio: number = 0.0;
-  sumatoriaHierro: number = 0.0;
-  sumatoriaColesterol: number = 0.0;
-  sumatoriaPurinas: number = 0.0;
-  sumatoriaAgua: number = 0.0;
+  sumatoriaHC: number;
+  sumatoriaProteinas: number;
+  sumatoriaGrasas: number;
+  sumatoriaFibras: number;
+  sumatoriaCalorias: number;
+  sumatoriaSodio: number;
+  sumatoriaPotasio: number;
+  sumatoriaFosforo: number;
+  sumatoriaCalcio: number;
+  sumatoriaHierro: number;
+  sumatoriaColesterol: number;
+  sumatoriaPurinas: number;
+  sumatoriaAgua: number;
 
-  kcalHC: number = 0.0;
-  kcalProteinas: number = 0.0;
-  kcalGrasas: number = 0.0;
-  kcalFibras: number = 0.0;
+  kcalHC: number;
+  kcalProteinas: number;
+  kcalGrasas: number;
+  kcalFibras: number;
 
   constructor(
               public thisDialogRef: MatDialogRef<DietaDetalleComponent>,
@@ -57,51 +59,71 @@ export class DietaDetalleComponent implements OnInit {
               private _formBuilder: FormBuilder) {  }
 
   ngOnInit() {
-    this.referenciasFormGroup = this._formBuilder.group({
-      hidratosCarbonoForm: [''],//, Validators.required
-      proteinasForm: [''],
-      grasasForm: [''],
-      fibrasForm: [''],
-    });
-    this.referenciasFormGroup.valueChanges.subscribe(  
-      (form: any) => {  
-        console.log('form changed to:', form);  
-      }
-    );
   }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  
   ngAfterViewInit() {
+    this.cereoSumatorias();
     this.recuperaReferenciasDieta();
+    this.referenciasFormGroup = this._formBuilder.group({
+      hidratosCarbonoForm: ['0.0'],//, Validators.required
+      proteinasForm: ['0.0'],
+      grasasForm: ['0.0'],
+      fibrasForm: ['0.0'],
+    });
+    this.referenciasFormGroup
+        .valueChanges
+        .debounceTime(1000)
+        .distinctUntilChanged()
+        .subscribe((form: any) => {  
+                                    this.ws.dietasEditReferencias(this.entrada, 
+                                                                  this.referenciasFormGroup.controls.hidratosCarbonoForm.value,  
+                                                                  this.referenciasFormGroup.controls.proteinasForm.value,  
+                                                                  this.referenciasFormGroup.controls.grasasForm.value,  
+                                                                  this.referenciasFormGroup.controls.fibrasForm.value)
+                                          .subscribe(res => {
+                                            // console.log("se actualizaron las referencias");
+                                            this.recuperaReferenciasDieta();
+                                          });  
+                                  }
+    );
   }
   
   recuperaReferenciasDieta() {
-    this.dietaReferencia = this.ws.dietasReferencia(this.entrada);
-    this.ws.dietasAlimentos(this.entrada)
-           .subscribe(data => {
-                                for (let entry of data) {
-                                  // sumatorias 
-                                  this.sumatoriaHC = this.sumatoriaHC + (entry.alimento.hidratos_carbono * entry.cantidad_alimento);
-                                  this.sumatoriaProteinas = this.sumatoriaProteinas + (entry.alimento.proteina * entry.cantidad_alimento);
-                                  this.sumatoriaGrasas = this.sumatoriaGrasas + (entry.alimento.grasa * entry.cantidad_alimento);
-                                  this.sumatoriaFibras = this.sumatoriaFibras + (entry.alimento.fibra * entry.cantidad_alimento);
-                                  this.sumatoriaCalorias = this.sumatoriaCalorias + (entry.alimento.calorias * entry.cantidad_alimento);
-                                  this.sumatoriaSodio = this.sumatoriaSodio + (entry.cantidad_alimento * entry.alimento.sodio);
-                                  this.sumatoriaPotasio = this.sumatoriaPotasio + (entry.cantidad_alimento * entry.alimento.potasio);
-                                  this.sumatoriaFosforo = this.sumatoriaFosforo + (entry.cantidad_alimento * entry.alimento.fosforo);
-                                  this.sumatoriaCalcio = this.sumatoriaCalcio + (entry.cantidad_alimento * entry.alimento.calcio);
-                                  this.sumatoriaHierro = this.sumatoriaHierro + (entry.cantidad_alimento * entry.alimento.hierro);
-                                  this.sumatoriaColesterol = this.sumatoriaColesterol + (entry.cantidad_alimento * entry.alimento.colesterol);
-                                  this.sumatoriaPurinas = this.sumatoriaPurinas + (entry.cantidad_alimento * entry.alimento.purinas);
-                                  this.sumatoriaAgua = this.sumatoriaAgua + (entry.cantidad_alimento * entry.alimento.agua);
-                                }
-                                // totales de kilocalorias
-                                this.kcalHC = this.sumatoriaHC * 4;
-                                this.kcalProteinas = this.sumatoriaProteinas * 4;
-                                this.kcalGrasas = this.sumatoriaGrasas * 9;
-                                this.kcalFibras = this.kcalHC + this.kcalProteinas + this.kcalGrasas;
-                                //seteo del datasource
-                                this.dataSource.data = data;
-                              });
+    this.ws.dietasReferencia(this.entrada)
+           .subscribe(res => { 
+                              this.dietaReferencia = res;
+                              this.ws.dietasAlimentos(this.entrada)
+                                     .subscribe(data => {  
+                                                          this.cereoSumatorias();                                                          
+                                                          for (let entry of data) {
+                                                            // sumatorias 
+                                                            this.sumatoriaHC = this.sumatoriaHC + (entry.alimento.hidratos_carbono * entry.cantidad_alimento);
+                                                            this.sumatoriaProteinas = this.sumatoriaProteinas + (entry.alimento.proteina * entry.cantidad_alimento);
+                                                            this.sumatoriaGrasas = this.sumatoriaGrasas + (entry.alimento.grasa * entry.cantidad_alimento);
+                                                            this.sumatoriaFibras = this.sumatoriaFibras + (entry.alimento.fibra * entry.cantidad_alimento);
+                                                            this.sumatoriaCalorias = this.sumatoriaCalorias + (entry.alimento.calorias * entry.cantidad_alimento);
+                                                            this.sumatoriaSodio = this.sumatoriaSodio + (entry.cantidad_alimento * entry.alimento.sodio);
+                                                            this.sumatoriaPotasio = this.sumatoriaPotasio + (entry.cantidad_alimento * entry.alimento.potasio);
+                                                            this.sumatoriaFosforo = this.sumatoriaFosforo + (entry.cantidad_alimento * entry.alimento.fosforo);
+                                                            this.sumatoriaCalcio = this.sumatoriaCalcio + (entry.cantidad_alimento * entry.alimento.calcio);
+                                                            this.sumatoriaHierro = this.sumatoriaHierro + (entry.cantidad_alimento * entry.alimento.hierro);
+                                                            this.sumatoriaColesterol = this.sumatoriaColesterol + (entry.cantidad_alimento * entry.alimento.colesterol);
+                                                            this.sumatoriaPurinas = this.sumatoriaPurinas + (entry.cantidad_alimento * entry.alimento.purinas);
+                                                            this.sumatoriaAgua = this.sumatoriaAgua + (entry.cantidad_alimento * entry.alimento.agua);
+                                                          }
+                                                          // totales de kilocalorias
+                                                          this.kcalHC = this.sumatoriaHC * 4;
+                                                          this.kcalProteinas = this.sumatoriaProteinas * 4;
+                                                          this.kcalGrasas = this.sumatoriaGrasas * 9;
+                                                          this.kcalFibras = this.kcalHC + this.kcalProteinas + this.kcalGrasas;
+                                                          //seteo del datasource
+                                                          this.dataSource.data = data;
+                                                        });
+                                      });
+    
+    
   }
 
   openSnackbar(message: string) {
@@ -117,19 +139,56 @@ export class DietaDetalleComponent implements OnInit {
   }
 
   agregarAlimento() {
-    console.log("agregar alimento")
-      console.log("detalles de la dieta: ");
-      let dialogRef = this.AddFoodDialog.open( 
-                                                AgregarAlimentoDietaComponent, 
-                                                { width: '65%', height: '70%', data: this.entrada}
-                                             );
-      dialogRef.afterClosed()
-               .subscribe(result => {
-                                      console.log(`Dialogo cerrado: ${result}`);
-                                      this.dialogAddFoodResult = result;
-                                      this.recuperaReferenciasDieta();
-      });    
+    // console.log("agregar alimento")
+    let dialogRef = this.AddFoodDialog.open( 
+                                              AgregarAlimentoDietaComponent, 
+                                              { width: '65%', height: '70%', data: this.entrada}
+                                            );
+    dialogRef.afterClosed()
+              .subscribe(result => {
+                                    // console.log(`Dialogo cerrado: ${result}`);
+                                    this.dialogAddFoodResult = result;
+                                    this.recuperaReferenciasDieta();
+    });    
   }
 
+  quitarAlimento(item: number) {
+    // console.log("quitar un alimento, dieta:", this.entrada, " item:", item);
+      this.ws.dietaEliminarAlimento(this.entrada, item)
+             .subscribe(res => {
+                          // console.log(res);
+                          this.openSnackbar('El alimento ha sido dado eliminado correctamente');
+                          // this.thisDialogRef.close('Delete food');
+                          // this.cereoSumatorias();
+                          this.recuperaReferenciasDieta();
+                          // this.ngAfterViewInit();
+                        }, err => {
+                          // console.log("[ERROR] component PacienteDetalle", err);
+                          this.openSnackbar('Error al eliminar, favor notifique al soporte.');
+                          // this.thisDialogRef.close('Delete food');
+                          this.recuperaReferenciasDieta();
+                        });
+    
+  }
+
+  cereoSumatorias() {
+    this.sumatoriaHC = 0.0;
+    this.sumatoriaProteinas = 0.0;
+    this.sumatoriaGrasas = 0.0;
+    this.sumatoriaFibras = 0.0;
+    this.sumatoriaCalorias = 0.0;
+    this.sumatoriaSodio = 0.0;
+    this.sumatoriaPotasio = 0.0;
+    this.sumatoriaFosforo = 0.0;
+    this.sumatoriaCalcio = 0.0;
+    this.sumatoriaHierro = 0.0;
+    this.sumatoriaColesterol = 0.0;
+    this.sumatoriaPurinas = 0.0;
+    this.sumatoriaAgua = 0.0;
   
+    this.kcalHC = 0.0;
+    this.kcalProteinas = 0.0;
+    this.kcalGrasas = 0.0;
+    this.kcalFibras = 0.0;
+  }
 }

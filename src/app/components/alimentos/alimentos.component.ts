@@ -45,6 +45,8 @@ export class AlimentosComponent implements OnInit {
       // console.log(this.dataSource.data);
     });
     this.dataSource.paginator = this.paginator;
+    // console.log("paginator:", this.paginator);    
+    // console.log("paginator data source:", this.dataSource.paginator);
     this.dataSource.sort = this.sort;
   }
   applyFilter(filterValue: string) {

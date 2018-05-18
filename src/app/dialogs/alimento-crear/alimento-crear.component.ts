@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
@@ -55,26 +55,6 @@ export class AlimentoCrearComponent implements OnInit {
   }
 
   agregarAlimento() {
-    // console.log("descripcion", this.firstFormGroup.controls.descripcion.value,
-    //             "tipo", this.firstFormGroup.controls.tipo.value,
-    //             "casera", this.firstFormGroup.controls.casera.value,
-    //             "medida", this.firstFormGroup.controls.caseraMedida.value,
-    //             "real", this.firstFormGroup.controls.real.value,
-    //             "medida", this.firstFormGroup.controls.realMedida.value,
-    //             "hidratos", this.firstFormGroup.controls.hidratos.value,
-    //             "proteinas", this.firstFormGroup.controls.proteinas.value,
-    //             "grasas", this.firstFormGroup.controls.grasas.value,
-    //             "sodio", this.firstFormGroup.controls.sodio.value,
-    //             "potasio", this.firstFormGroup.controls.potasio.value,
-    //             "fosforo", this.firstFormGroup.controls.fosforo.value,
-    //             "calcio", this.firstFormGroup.controls.calcio.value,
-    //             "hierro", this.firstFormGroup.controls.hierro.value,
-    //             "colesterol", this.firstFormGroup.controls.colesterol.value,
-    //             "purinas", this.firstFormGroup.controls.purinas.value,
-    //             "fibras", this.firstFormGroup.controls.fibras.value,
-    //             "agua", this.firstFormGroup.controls.agua.value,
-    //             "calorias", this.firstFormGroup.controls.calorias.value);
-
     this.alimento = new AlimentoDetalle(null, 
                                         this.firstFormGroup.controls.descripcion.value,
                                         this.firstFormGroup.controls.tipo.value,

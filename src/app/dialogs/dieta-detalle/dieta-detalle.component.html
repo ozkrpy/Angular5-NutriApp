@@ -1,4 +1,4 @@
-<div *ngFor="let referencia of dietaReferencia | async" fxLayout="column" fxLayoutAlign="center">
+<div *ngFor="let referencia of dietaReferencia" fxLayout="column">
   <!-- TITULO -->
   <div fxLayoutAlign="center center">
     <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
@@ -8,7 +8,7 @@
     <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
       <div fxLayout="column">
         <mat-form-field>
-          <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" #hidratosCarbono value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
+          <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
           <mat-hint align="start">
             <strong>Minimo:</strong>{{ referencia.hidratos_carbono - 5}}
           </mat-hint>
@@ -19,7 +19,7 @@
       </div>
       <div fxLayout="column">
         <mat-form-field >
-          <input matInput formControlName="proteinasForm" placeholder="Proteinas (g)" #proteinas value="{{ referencia.proteinas | number:'1.1-2' }}">
+          <input matInput formControlName="proteinasForm" placeholder="Proteinas (g)" value="{{ referencia.proteinas | number:'1.1-2' }}">
           <mat-hint align="start">
             <strong>Minimo:</strong>{{ referencia.proteinas - 5}}
           </mat-hint>
@@ -30,7 +30,7 @@
       </div>
       <div fxLayout="column">
         <mat-form-field >
-          <input matInput formControlName="grasasForm" placeholder="Grasas (g)" #grasas value="{{ referencia.grasas | number:'1.1-2' }}">
+          <input matInput formControlName="grasasForm" placeholder="Grasas (g)" value="{{ referencia.grasas | number:'1.1-2' }}">
           <mat-hint align="start">
             <strong>Minimo:</strong>{{ referencia.grasas - 5}}
           </mat-hint>
@@ -41,19 +41,19 @@
       </div>
       <div fxLayout="column">
         <mat-form-field >
-          <input matInput formControlName="fibrasForm" placeholder="Fibras (g)" #fibras value="{{ referencia.fibras | number:'1.1-2' }}">
+          <input matInput formControlName="fibrasForm" placeholder="Fibras (g)" value="{{ referencia.fibras | number:'1.1-2' }}">
           <mat-hint align="start">
-            <strong>Minimo:</strong>{{ referencia.fibras * 0.95 }}
+            <strong>Minimo:</strong>{{ referencia.fibras * 0.95 | number:'1.1-2' }}
           </mat-hint>
           <mat-hint align="end">
-            <strong>Maximo:</strong>{{ referencia.fibras * 1.05}}
+            <strong>Maximo:</strong>{{ referencia.fibras * 1.05 | number:'1.1-2' }}
           </mat-hint>
         </mat-form-field>
       </div>
     </div>
     <br>
     <!-- TABLA DE SUMATORIAS -->
-    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center">
+    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px">
       <div fxLayout="column">
         <strong>TOTALES</strong>
         <small>Segun Alimentos</small>
@@ -116,12 +116,8 @@
   </div>
   <br>
   <!-- TABLA DE ALIMENTOS -->
-  <div>
-    <mat-table [dataSource]="dataSource" matSort>
-      <ng-container matColumnDef="numero_item">
-          <mat-header-cell *matHeaderCellDef fxFlex="40px"> Item </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="40px"> {{ detalle.numero_item }} </mat-cell>
-      </ng-container>
+  <div fxFlex="1 1 100%">
+    <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="cantidad_alimento">
           <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
           <mat-cell *matCellDef="let detalle" fxFlex="40px"> {{ detalle.cantidad_alimento }} </mat-cell>
@@ -186,13 +182,21 @@
           <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calorias </mat-header-cell>
           <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calorias }} {{ detalle.alimento.unidad_medida_calorias }}</mat-cell>
       </ng-container>
+      <ng-container matColumnDef="eliminar">
+        <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
+        <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
+          <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+    </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
   </div>
+  <br>
   <!-- BOTONES ELIMINAR / CANCELAR -->
   <div  fxLayoutAlign="center center">
-    <button mat-raised-button (click)="eliminarDieta(referencia.codigo_dieta)"><mat-icon>delete</mat-icon>Eliminar</button>
     <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
   </div>
 </div>

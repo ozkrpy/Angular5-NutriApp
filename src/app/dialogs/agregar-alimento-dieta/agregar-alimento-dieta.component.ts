@@ -5,6 +5,8 @@ import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalleComponent } from '../../dialogs/alimento-detalle/alimento-detalle.component';
+import { FormControl, Validators } from '@angular/forms';
+import { ErrorStateMatcher } from '../../model/error-state-matcher';
 
 @Component({
   selector: 'app-agregar-alimento-dieta',
@@ -16,6 +18,13 @@ export class AgregarAlimentoDietaComponent implements OnInit {
   dataSource = new MatTableDataSource<AlimentoDetalle>();
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
   private alimentos: Observable<AlimentoDetalle[]>;
+
+  cantidadFormControl = new FormControl('0.0', [
+    Validators.required,
+    Validators.min(0.1)
+  ]);
+
+  matcher = new ErrorStateMatcher();
 
   constructor(public thisDialogRef: MatDialogRef<AgregarAlimentoDietaComponent>,
               @Inject(MAT_DIALOG_DATA)
@@ -51,28 +60,33 @@ export class AgregarAlimentoDietaComponent implements OnInit {
   }
 
   detalleAlimento(codigo: number) {
-    console.log("metodo para detalle de alimento: " + codigo);
+    // console.log("metodo para detalle de alimento: " + codigo);
     let dialogRef = this.dialog.open( 
                                       AlimentoDetalleComponent, 
                                       { width: '90%', height: '', data: codigo}
     );
     dialogRef.afterClosed().subscribe(result => {
-                                        console.log(`Dialogo cerrado: ${result}`);
+                                        // console.log(`Dialogo cerrado: ${result}`);
                                         this.AddFoodDialog = result;
                                         this.cargarAlimentos();
     });
   }
 
   agregarAlimento(alimento: number, cantidad: number) {
-    console.log("DIETA:", this.dieta, "ALIMENTO:", alimento, "CANTIDAD:", cantidad)
+    // console.log("DIETA:", this.dieta, "ALIMENTO:", alimento, "CANTIDAD:", cantidad)
     this.ws.dietasAgregarAlimento(this.dieta, alimento, cantidad)
            .subscribe(res => {
-                              console.log(res);
-                              this.openSnackbar("Se agrego el alimento " + alimento + " a la dieta " + this.dieta);
+                              // console.log(res);
+                              this.openSnackbar("Se agrego correctamente el alimento a la dieta: " + this.dieta);
                               this.thisDialogRef.close('OK');});
   }
 
   openSnackbar(message: string) {
     this.snackbar.open(message, "OK", { duration: 4000 });
   }
+
+  onCloseCancel() {
+    this.thisDialogRef.close('Cancel');
+  }
+
 }

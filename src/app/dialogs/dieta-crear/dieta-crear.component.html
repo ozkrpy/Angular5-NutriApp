@@ -1,0 +1,60 @@
+<div fxLayout="column" fxLayoutAlign="space-evenly center">
+  <!-- TITULO -->
+  <div fxLayoutAlign="center center">
+    <h3>DATOS PARA LA NUEVA DIETA</h3>
+  </div>
+  <!-- CAMPOS -->
+  <mat-dialog-content>
+      <form [formGroup]="dietaFormGroup">
+        <div>
+          <!-- PACIENTE -->
+          <mat-form-field>
+            <mat-select placeholder="Paciente" formControlName="paciente" required>
+              <mat-option *ngFor="let paciente of pacientes | async" [value]="paciente.codigo_paciente">
+                {{ paciente.apellido | uppercase }}, {{ paciente.nombre | uppercase }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          </div>
+          <div>
+          <!-- HIDRATOS -->
+          <mat-form-field>
+            <input matInput placeholder="Hidratos de Carbono" formControlName="hidratos" required>
+            <mat-hint align="start">
+              <strong>(en gramos)</strong>
+            </mat-hint>
+          </mat-form-field>
+          <!-- PROTEINAS -->
+          <mat-form-field>
+            <input matInput placeholder="Proteinas" formControlName="proteinas" required>
+            <mat-hint align="start">
+              <strong>(en gramos)</strong>
+            </mat-hint>
+          </mat-form-field>
+          <!-- GRASAS -->
+          <mat-form-field>
+            <input matInput placeholder="Grasas" formControlName="grasas" required>
+            <mat-hint align="start">
+              <strong>(en gramos)</strong>
+            </mat-hint>
+          </mat-form-field>
+          <!-- FIBRAS -->
+          <mat-form-field>
+            <input matInput placeholder="Fibras" formControlName="fibras" required>
+            <mat-hint align="start">
+              <strong>(en gramos)</strong>
+            </mat-hint>
+          </mat-form-field>
+          
+        </div>    
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <div fxLayout.xs="column" fxLayoutAlign="center center">
+        <button mat-button (click)="agregarNuevaDieta()">
+          <mat-icon>restaurant_menu</mat-icon>Guardar Dieta</button>
+        <button mat-button>
+          <mat-icon>cancel</mat-icon>Cancelar</button>
+      </div>
+    </mat-dialog-actions>
+</div>

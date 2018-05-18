@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { ReferenciaDieta } from '../../model/referencia-dieta';
 
 import { DietaDetalleComponent } from '../../dialogs/dieta-detalle/dieta-detalle.component';
+import { DietaCrearComponent } from '../../dialogs/dieta-crear/dieta-crear.component';
 
 @Component({
   selector: 'app-dietas',
@@ -18,7 +19,8 @@ export class DietasComponent implements OnInit {
   dialogResult: string = "";
   
   constructor(private ws: DbAPIService, 
-              public dialog: MatDialog) { }
+              public dialog: MatDialog,
+              public snackbar: MatSnackBar) { }
 
   ngOnInit() {
     this.recuperaDietas();
@@ -29,16 +31,47 @@ export class DietasComponent implements OnInit {
   }
 
   verDetallesDieta(codigo: number) {
-    console.log("detalles de la dieta: " + codigo);
+    // console.log("detalles de la dieta: " + codigo);
     let dialogRef = this.dialog.open( 
                                       DietaDetalleComponent, 
-                                      { width: '90%', height: '', data: codigo}
+                                      { width: '90%', height: '100%', data: codigo}
                                     );
     dialogRef.afterClosed()
              .subscribe(result => {
-                                    console.log(`Dialogo cerrado: ${result}`);
+                                    // console.log(`Dialogo cerrado: ${result}`);
                                     this.dialogResult = result;
                                     this.recuperaDietas();
     });
+  }
+
+  eliminarDietaCompleta(codigo: number) {
+    this.ws.dietaEliminarTotal(codigo)
+           .subscribe(res => {
+             console.log(res);
+             this.openSnackbar('La dieta se ha eliminado correctamente');
+             this.recuperaDietas();
+            //  this.thisDialogRef.close('Delete patient');
+           }, err => {
+             console.log("[ERROR] component Dietas", err);
+             this.openSnackbar('Ocurrio un error, favor contactar al soporte.');
+            //  this.thisDialogRef.close('Delete patient');
+           });
+  }
+
+  openSnackbar(message: string) {
+    this.snackbar.open(message, "OK", { duration: 5000 });
+  }
+
+  agregarNuevaDieta() {
+    console.log("metodo para alta de dieta");
+    let dialogRef = this.dialog.open( 
+                                      DietaCrearComponent, 
+                                      { width: '70%', height: ''}
+    );
+    dialogRef.afterClosed().subscribe(result => {
+            console.log(`Dialogo cerrado: ${result}`);
+            this.dialogResult = result;
+            this.recuperaDietas();
+    }); 
   }
 }

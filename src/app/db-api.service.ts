@@ -463,4 +463,59 @@ export class DbAPIService {
                            .map(res => { console.log(res); })
                            .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
   }
+
+  dietasEditReferencias(codigoDietaParam: number, hidratosParam: number, proteinasParam: number, grasasParam: number, fibrasParam: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasActualizarReferencias;
+    let body: any = {hidratos: hidratosParam, 
+                     proteinas: proteinasParam,
+                     grasas: grasasParam,
+                     fibras: fibrasParam,
+                     codigoDieta: codigoDietaParam};
+    console.log("metodo que actualiza referencias de dieta:", codigoDietaParam + ", URL: " + apiURL + " Body: " + body.json);
+    return this.httpRequest.post(apiURL, body)
+    ;
+  }
+
+  dietaEliminarAlimento(codigoDieta: number, item: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasEliminarAlimento ;
+    let body: any = {codigoDietaParam: codigoDieta,
+                     itemParam: item}; 
+    console.log("metodo para eliminar un alimento de la dieta: ", body, "URL:", apiURL);
+    return this.httpRequest
+               .post(apiURL, body)
+               .map(res => { console.log("MAP inside API",res); })
+               .catch((error:any) => Observable.throw(error.json() || 'catch en la API Server error')); 
+  }
+
+  dietaEliminarTotal(codigoDieta: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasEliminar ;
+    let body: any = {codigoDietaParam: codigoDieta}; 
+    console.log("metodo para eliminar la dieta: ", body, "URL:", apiURL);
+    return this.httpRequest
+               .post(apiURL, body)
+               .map(res => { console.log("MAP inside API",res); })
+               .catch((error:any) => Observable.throw(error.json() || 'catch en la API Server error')); 
+  }
+
+  dietasAlta(codigoDieta: number, hidratos: number, proteinas: number, grasas: number, fibras: number, paciente: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasAgregar;
+    let body: any = {codigoDietaParam: codigoDieta,
+                      hidratosParam: hidratos,
+                      proteinasParam: proteinas,
+                      grasasParam: grasas,
+                      fibrasParam: fibras,
+                      pacienteParam: paciente};
+    console.log("alta de dieta, URL: ", apiURL, " Body: ", body);
+    return this.httpRequest.put(apiURL, body)
+                           .map(res => { console.log(res); })
+                           .catch((error:any) => Observable.throw(error.json().error || 'Server error')); 
+  }
+
+  dietasRecuperaSecuencia(){
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasSecuencia;
+    console.log("metodo recupera secuencia de dieta: " + apiURL);
+    return  this.httpRequest
+                .get(apiURL)
+                .map(res => { return res.json(); });
+  }
 }
