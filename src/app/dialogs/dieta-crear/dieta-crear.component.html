@@ -6,9 +6,9 @@
   <!-- CAMPOS -->
   <mat-dialog-content>
       <form [formGroup]="dietaFormGroup">
-        <div>
+        <div fxLayoutAlign="center center" fxFlex="100%">
           <!-- PACIENTE -->
-          <mat-form-field>
+          <mat-form-field fxFlex="50%">
             <mat-select placeholder="Paciente" formControlName="paciente" required>
               <mat-option *ngFor="let paciente of pacientes | async" [value]="paciente.codigo_paciente">
                 {{ paciente.apellido | uppercase }}, {{ paciente.nombre | uppercase }}
@@ -16,6 +16,7 @@
             </mat-select>
           </mat-form-field>
           </div>
+          <br>
           <div>
           <!-- HIDRATOS -->
           <mat-form-field>
@@ -45,15 +46,15 @@
               <strong>(en gramos)</strong>
             </mat-hint>
           </mat-form-field>
-          
-        </div>    
+        </div>
+        <br>    
       </form>
     </mat-dialog-content>
     <mat-dialog-actions>
       <div fxLayout.xs="column" fxLayoutAlign="center center">
         <button mat-button (click)="agregarNuevaDieta()">
           <mat-icon>restaurant_menu</mat-icon>Guardar Dieta</button>
-        <button mat-button>
+        <button mat-button (click)="onCloseCancel()">
           <mat-icon>cancel</mat-icon>Cancelar</button>
       </div>
     </mat-dialog-actions>

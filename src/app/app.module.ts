@@ -50,7 +50,6 @@ import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-de
 import { AlimentoCrearComponent } from './dialogs/alimento-crear/alimento-crear.component';
 import { SettingsComponent } from './settings/settings.component';
 import { DietaDetalleComponent } from './dialogs/dieta-detalle/dieta-detalle.component';
-import { DummyComponent } from './dummy/dummy.component';
 import { AgregarAlimentoDietaComponent } from './dialogs/agregar-alimento-dieta/agregar-alimento-dieta.component';
 import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component';
 
@@ -69,7 +68,6 @@ import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component
     AlimentoCrearComponent,
     SettingsComponent,
     DietaDetalleComponent,
-    DummyComponent,
     AgregarAlimentoDietaComponent,
     DietaCrearComponent
   ],

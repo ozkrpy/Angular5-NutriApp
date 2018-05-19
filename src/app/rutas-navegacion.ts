@@ -6,7 +6,7 @@ import { SettingsComponent } from './settings/settings.component';
 
 export const RutasNavegacion: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full' },
-    { path: 'home', component: DietasComponent },//for now, this should be a page about the items of the site
+    { path: 'home', component: DietasComponent },//for now, this should be a dashboard of the site
     { path: 'pacientes', component: PacientesComponent },
     { path: 'alimentos', component: AlimentosComponent },
     { path: 'settings', component:  SettingsComponent},

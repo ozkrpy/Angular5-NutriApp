@@ -66,7 +66,7 @@ export class DietasComponent implements OnInit {
     console.log("metodo para alta de dieta");
     let dialogRef = this.dialog.open( 
                                       DietaCrearComponent, 
-                                      { width: '70%', height: ''}
+                                      { width: '60%', height: ''}
     );
     dialogRef.afterClosed().subscribe(result => {
             console.log(`Dialogo cerrado: ${result}`);

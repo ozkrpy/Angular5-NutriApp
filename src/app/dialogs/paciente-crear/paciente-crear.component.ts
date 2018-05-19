@@ -19,7 +19,7 @@ import { SexosArray, EstadoCivil, Contextura } from '../../model/datos-varios';
 export class PacienteCrearComponent implements OnInit {
   
   private loading: boolean = false;
-  private showPaciente: boolean = false;
+  public showPaciente: boolean = false;
   private paciente: PacienteDetalle = null;
 
   pesosIdealesObsevable: Observable<Object[]>;
@@ -219,7 +219,7 @@ calcularPesoIdeal(edad: number, biotipo: string, sexo: string, talla: number) {
   this.ws.pacientePesosIdeales(sexo, talla)
          .map(
               res => { 
-                this.loading = true;
+                // this.loading = true;
                 console.log("invoco al WS para recuperar pesos ideales segun sexo y talla");
                 if (this.isBetween(edad, 0, 19)) {
                   pesoIdeal = res[0]["edad17_19"];
@@ -243,7 +243,7 @@ calcularPesoIdeal(edad: number, biotipo: string, sexo: string, talla: number) {
                 return pesoIdeal;
           })
           .subscribe(res => {
-            this.loading = false;
+            // this.loading = false;
             this.calcularPesoAjustadoPorcentaje(this.secondFormGroup.controls.actual.value, pesoIdeal);
             this.pacienteDetalle();
             this.showPaciente = true;
@@ -326,12 +326,12 @@ pacienteDetalle() {
 
 // Alta del paciente creado
 crearPaciente() {
-  this.loading = true;
+  // this.loading = true;
   this.ws.pacienteAlta(this.paciente)
          .subscribe(res => {
                               console.log("resultado del subscribe paciente alta");
                               this.openSnackbar("El paciente ha sido registrado exitosamente");
-                              this.loading = false;
+                              // this.loading = false;
                               this.thisDialogRef.close('OK');
                             }, err => {
                               console.log("[ERROR] component crearPaciente", err);
