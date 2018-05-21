@@ -58,20 +58,20 @@
         <strong>TOTALES</strong>
         <small>Segun Alimentos</small>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <strong>Hidratos</strong>
         <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
         <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <strong>Proteinas</strong>
         <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <strong>Grasas</strong>
         <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <strong>Fibras</strong>
         <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
       </div>

@@ -191,4 +191,48 @@ export class DietaDetalleComponent implements OnInit {
     this.kcalGrasas = 0.0;
     this.kcalFibras = 0.0;
   }
+
+  calculaColorHidrato (valor: number) {
+    let minimo = valor - 5;
+    let maximo = valor + 5;
+    if (this.sumatoriaHC > maximo) {
+      return 'red';
+    } else if (this.sumatoriaHC < minimo) {
+      return 'blue';
+    }
+    return 'green';
+  }
+
+  calculaColorProteina(valor: number) {
+    let minimo = valor - 5;
+    let maximo = valor + 5;
+    if (this.sumatoriaProteinas > maximo) {
+      return 'red';
+    } else if (this.sumatoriaProteinas < minimo) {
+      return 'blue';
+    }
+    return 'green';
+  }
+
+  calculaColorGrasa(valor: number) {
+    let minimo = valor - 5;
+    let maximo = valor + 5;
+    if (this.sumatoriaGrasas > maximo) {
+      return 'red';
+    } else if (this.sumatoriaGrasas < minimo) {
+      return 'blue';
+    }
+    return 'green';
+  }
+
+  calculaColorFibra(hc: number) {
+    let minimo = hc * 0.95;
+    let maximo = hc * 1.05;
+    if (this.sumatoriaFibras > maximo) {
+      return 'red';
+    } else if (this.sumatoriaFibras < minimo) {
+      return 'blue';
+    }
+    return 'green';
+  }
 }
