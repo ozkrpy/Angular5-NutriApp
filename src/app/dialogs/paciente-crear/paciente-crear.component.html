@@ -1,4 +1,7 @@
 <div>
+  <div fxLayoutAlign="end">
+      <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon></button>
+  </div>
   <mat-horizontal-stepper fxLayout="column"
                           [linear]="isLinear" >
     <!-- 1 -->

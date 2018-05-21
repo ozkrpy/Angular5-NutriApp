@@ -3,8 +3,10 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
+import { MatDialog } from '@angular/material';
 
 import { PacienteDetalle } from '../../model/paciente-detalle';
+import { PacienteCrearComponent } from '../../dialogs/paciente-crear/paciente-crear.component';
 
 
 @Component({
@@ -16,12 +18,14 @@ export class DietaCrearComponent implements OnInit {
 
   dietaFormGroup: FormGroup;
   pacientes: Observable<PacienteDetalle[]>;
-
+  dialogResult: string = "";
+  
   constructor(
     public thisDialogRef: MatDialogRef<DietaCrearComponent>,
     private ws: DbAPIService,
     private _formBuilder: FormBuilder,
-    public snackbar: MatSnackBar) { }
+    public snackbar: MatSnackBar, 
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.dietaFormGroup = this._formBuilder.group({
@@ -60,5 +64,17 @@ export class DietaCrearComponent implements OnInit {
     this.thisDialogRef.close('Cancel');
   }
   
+  agregarPaciente() {
+    console.log("agregar nuevo paciente");
+    let dialogRef = this.dialog.open( 
+                                     PacienteCrearComponent, 
+                                     { width: '80%', height: ''}
+    );
+    dialogRef.afterClosed().subscribe(result => {
+                                        console.log(`Dialogo cerrado: ${result}`);
+                                        this.dialogResult = result;
+                                        this.pacientes = this.ws.todosLosPacientes();
+    });
+  }
 }
 

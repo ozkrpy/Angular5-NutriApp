@@ -6,7 +6,7 @@
   <!-- CAMPOS -->
   <mat-dialog-content>
       <form [formGroup]="dietaFormGroup">
-        <div fxLayoutAlign="center center" fxFlex="100%">
+        <div fxLayoutAlign="center center" fxFlex="100%" fxLayoutGap="10px">
           <!-- PACIENTE -->
           <mat-form-field fxFlex="50%">
             <mat-select placeholder="Paciente" formControlName="paciente" required>
@@ -15,9 +15,12 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
+          <div fxLayout="row">
+            <button color="primary" mat-raised-button (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
           </div>
-          <br>
-          <div>
+        </div>
+        <br>
+        <div>
           <!-- HIDRATOS -->
           <mat-form-field>
             <input matInput placeholder="Hidratos de Carbono" formControlName="hidratos" required>
