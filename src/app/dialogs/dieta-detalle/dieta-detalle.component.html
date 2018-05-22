@@ -1,9 +1,9 @@
-<div *ngFor="let referencia of dietaReferencia" fxLayout="column">
+<div *ngFor="let referencia of dietaReferencia" fxLayout="column" id="contenido">
   <!-- TITULO -->
-  <div fxLayoutAlign="center center">
+  <div fxLayoutAlign="center center" id="titulo">
     <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
   </div>
-  <form [formGroup]="referenciasFormGroup">
+  <form [formGroup]="referenciasFormGroup" id="referencias">
     <!-- TABLA DE REFERENCIAS -->
     <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
       <div fxLayout="column">
@@ -198,5 +198,6 @@
   <!-- BOTONES ELIMINAR / CANCELAR -->
   <div  fxLayoutAlign="center center">
     <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
+    <button mat-raised-button (click)="descargarPDF(referencia.codigo_dieta)"><mat-icon>save_alt</mat-icon>Exportar a PDF..</button>
   </div>
 </div>

@@ -14,6 +14,9 @@ import { AlimentoDetalle } from '../../model/alimento-detalle';
 
 import { AgregarAlimentoDietaComponent } from '../agregar-alimento-dieta/agregar-alimento-dieta.component';
 
+import * as html2canvas from 'html2canvas';
+import * as jsPDF from 'jspdf';
+
 @Component({
   selector: 'app-dieta-detalle',
   templateUrl: './dieta-detalle.component.html',
@@ -234,5 +237,15 @@ export class DietaDetalleComponent implements OnInit {
       return 'blue';
     }
     return 'green';
+  }
+
+  descargarPDF(id: number) {
+      html2canvas(document.getElementById('contenido'))
+                          .then(function(canvas) {
+                                                    var img = canvas.toDataURL("image/png");
+                                                    var doc = new jsPDF('p', 'mm', 'a2');
+                                                    doc.addImage(img,'JPEG',5,20);
+                                                    doc.save('Dieta_'+id+'.pdf');
+                          }); 
   }
 }
