@@ -1,9 +1,12 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { DbAPIService } from '../../db-api.service';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { TipoAlimento } from '../../model/datos-varios';
+
+import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
+import { AFIRMATIVO, NEGATIVO } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-alimento-detalle',
@@ -15,13 +18,15 @@ export class AlimentoDetalleComponent implements OnInit {
   detalleAlimentoObservable: Observable<AlimentoDetalle>;
   modificarAlimento: boolean = true;
   tipos = TipoAlimento;
+  dialogResult: string = "";
   
   constructor(
     public thisDialogRef: MatDialogRef<AlimentoDetalleComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: number,
     private ws: DbAPIService,
-    public snackbar: MatSnackBar) { }
+    public snackbar: MatSnackBar, 
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.actualizaDatosAlimento();
@@ -81,16 +86,31 @@ export class AlimentoDetalleComponent implements OnInit {
   }
 
   eliminarAlimento(codigo: number) {
-    this.ws.eliminarAlimento(codigo)
-           .subscribe(res => {
-                        console.log(res);
-                        this.openSnackbar('El alimento ha sido dado eliminado correctamente');
-                        this.thisDialogRef.close('Delete food');
-                      }, err => {
-                        console.log("[ERROR] component PacienteDetalle", err);
-                        this.openSnackbar('El alimento existe en dietas activas, no se puede eliminar.');
-                        this.thisDialogRef.close('Delete food');
-                      });
+    let confirmacionRef = this.dialog.open( 
+                                      ConfirmacionComponent, 
+                                      { width: '20%', height: '', data: ''}
+                                    );
+    confirmacionRef.afterClosed()
+                .subscribe(result => {
+                                        console.log(`Dialogo cerrado: ${result}`);
+                                        this.dialogResult = result;
+                                        if(this.dialogResult == AFIRMATIVO) {
+                                          this.ws.eliminarAlimento(codigo)
+                                                  .subscribe(res => {
+                                                                console.log(res);
+                                                                this.openSnackbar('El alimento ha sido dado eliminado correctamente');
+                                                                this.thisDialogRef.close('Delete food');
+                                                              }, err => {
+                                                                console.log("[ERROR] component PacienteDetalle", err);
+                                                                this.openSnackbar('El alimento existe en dietas activas, no se puede eliminar.');
+                                                                this.thisDialogRef.close('Delete food');
+                                                              });
+                                        }
+                });
+
+
+
+    
   }
 
 }

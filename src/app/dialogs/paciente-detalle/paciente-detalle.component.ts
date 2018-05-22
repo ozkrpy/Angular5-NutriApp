@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import * as moment from 'moment';
 import { MatCheckbox } from '@angular/material';
@@ -9,6 +9,9 @@ import { DbAPIService } from '../../db-api.service';
 import { PacienteDetalle } from '../../model/paciente-detalle';
 
 import { SexosArray, EstadoCivil } from '../../model/datos-varios';
+
+import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
+import { AFIRMATIVO, NEGATIVO } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-paciente-detalle',
@@ -37,12 +40,15 @@ export class PacienteDetalleComponent implements OnInit {
   statusEditLaboratorio: boolean = true;
   panelEditLaboratorio: boolean = false;
 
+  dialogResult: string = "";
+ 
   constructor(
     public thisDialogRef: MatDialogRef<PacienteDetalleComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: number,
     private ws: DbAPIService,
-    public snackbar: MatSnackBar) { }
+    public snackbar: MatSnackBar, 
+    public dialog: MatDialog) { }
 
   ngOnInit() {
     this.actualizaDatosPaciente(this.data);
@@ -177,16 +183,31 @@ export class PacienteDetalleComponent implements OnInit {
   }
 
   eliminarPaciente(idPaciente: number) {
-    this.ws.eliminarPaciente(idPaciente)
-           .subscribe(res => {
-             console.log(res);
-             this.openSnackbar('El paciente ha sido dado eliminado correctamente');
-             this.thisDialogRef.close('Delete patient');
-           }, err => {
-             console.log("[ERROR] component PacienteDetalle", err);
-             this.openSnackbar('El paciente cuenta con dietas activas, no se puede eliminar.');
-             this.thisDialogRef.close('Delete patient');
-           });
+    let confirmacionRef = this.dialog.open( 
+                                            ConfirmacionComponent, 
+                                            { width: '20%', height: '', data: ''}
+                                          );
+    confirmacionRef.afterClosed()
+                    .subscribe(result => {
+                            console.log(`Dialogo cerrado: ${result}`);
+                            this.dialogResult = result;
+                            if(this.dialogResult == AFIRMATIVO) {
+                              this.ws.eliminarPaciente(idPaciente)
+                                      .subscribe(res => {
+                                        console.log(res);
+                                        this.openSnackbar('El paciente ha sido dado eliminado correctamente');
+                                        this.thisDialogRef.close('Delete patient');
+                                      }, err => {
+                                        console.log("[ERROR] component PacienteDetalle", err);
+                                        this.openSnackbar('El paciente cuenta con dietas activas, no se puede eliminar.');
+                                        this.thisDialogRef.close('Delete patient');
+                                      });
+                            }
+                    });
+
+
+
+    
   }
 
   actualizaDatosPaciente(idPaciente: number) {

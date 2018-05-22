@@ -102,3 +102,6 @@ export const Gramos = [
     {valor:"1", facevalue:"mg"},
     {valor:"2", facevalue:"g"}
 ];
+
+export const AFIRMATIVO = 'SI';
+export const NEGATIVO = 'NO';

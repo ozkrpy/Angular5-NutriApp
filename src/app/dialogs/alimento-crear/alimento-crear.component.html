@@ -42,7 +42,7 @@
             </mat-form-field>
             <mat-form-field fxFlex="20%">
               <mat-select placeholder="Unid." formControlName="realMedida" required>
-                <mat-option *ngFor="let medida of medidasReal" [value]="medida.value">
+                <mat-option *ngFor="let medida of medidasReal" [value]="medida.valor">
                   {{medida.facevalue}}
                 </mat-option>
               </mat-select>

@@ -52,6 +52,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { DietaDetalleComponent } from './dialogs/dieta-detalle/dieta-detalle.component';
 import { AgregarAlimentoDietaComponent } from './dialogs/agregar-alimento-dieta/agregar-alimento-dieta.component';
 import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component';
+import { ConfirmacionComponent } from './dialogs/confirmacion/confirmacion.component';
 
 
 
@@ -69,7 +70,8 @@ import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component
     SettingsComponent,
     DietaDetalleComponent,
     AgregarAlimentoDietaComponent,
-    DietaCrearComponent
+    DietaCrearComponent,
+    ConfirmacionComponent
   ],
   imports: [
     BrowserModule,
@@ -114,7 +116,8 @@ import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component
     AlimentoCrearComponent,
     DietaDetalleComponent,
     AgregarAlimentoDietaComponent,
-    DietaCrearComponent
+    DietaCrearComponent,
+    ConfirmacionComponent
   ],
   bootstrap: [AppComponent]
 })
