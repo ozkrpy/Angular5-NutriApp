@@ -248,4 +248,11 @@ export class DietaDetalleComponent implements OnInit {
                                                     doc.save('Dieta_'+id+'.pdf');
                           }); 
   }
+
+  alimentoTipo(row: any){
+    if (row.alimento.tipo_alimento <= 5) {
+      return 'lightblue';
+    }
+    
+  }
 }

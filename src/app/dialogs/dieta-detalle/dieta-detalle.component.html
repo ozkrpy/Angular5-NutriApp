@@ -1,9 +1,9 @@
 <div *ngFor="let referencia of dietaReferencia" fxLayout="column" id="contenido">
   <!-- TITULO -->
-  <div fxLayoutAlign="center center" id="titulo">
+  <div fxLayoutAlign="center center">
     <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
   </div>
-  <form [formGroup]="referenciasFormGroup" id="referencias">
+  <form [formGroup]="referenciasFormGroup">
     <!-- TABLA DE REFERENCIAS -->
     <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
       <div fxLayout="column">
@@ -53,25 +53,25 @@
     </div>
     <br>
     <!-- TABLA DE SUMATORIAS -->
-    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px">
+    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
       <div fxLayout="column">
         <strong>TOTALES</strong>
         <small>Segun Alimentos</small>
       </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}">
         <strong>Hidratos</strong>
         <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
         <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}">
         <strong>Proteinas</strong>
         <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
         <strong>Grasas</strong>
         <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
       </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}">
         <strong>Fibras</strong>
         <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
       </div>
@@ -116,7 +116,7 @@
   </div>
   <br>
   <!-- TABLA DE ALIMENTOS -->
-  <div fxFlex="1 1 100%">
+  <div fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
     <mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="cantidad_alimento">
           <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
@@ -191,13 +191,13 @@
         </mat-cell>
     </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" [style.background]="alimentoTipo(row)"></mat-row>
     </mat-table>
   </div>
   <br>
   <!-- BOTONES ELIMINAR / CANCELAR -->
-  <div  fxLayoutAlign="center center">
+  <div  fxLayoutAlign="space-evenly center">
     <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
-    <button mat-raised-button (click)="descargarPDF(referencia.codigo_dieta)"><mat-icon>save_alt</mat-icon>Exportar a PDF..</button>
+    <button mat-raised-button color="accent" (click)="descargarPDF(referencia.codigo_dieta)"><mat-icon>save_alt</mat-icon>Exportar a PDF..</button>
   </div>
 </div>
