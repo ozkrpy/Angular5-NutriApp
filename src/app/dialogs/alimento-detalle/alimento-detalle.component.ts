@@ -72,10 +72,10 @@ export class AlimentoDetalleComponent implements OnInit {
   }
 
   actualizaDatosAlimento() {
-    console.log("entro a recuperar informacion del alimento: " + this.data)
+    // console.log("entro a recuperar informacion del alimento: " + this.data)
     this.detalleAlimentoObservable = this.ws.alimentoPorCodigo(this.data)
       .map(res => {
-        console.log("tipo alimento:", res[0]["tipo_alimento"]);
+        // console.log("tipo alimento:", res[0]["tipo_alimento"]);
         return res;
       });
 

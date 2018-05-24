@@ -3,6 +3,7 @@ import { Jsonp, Http, HttpModule, RequestOptions, Response, Headers, URLSearchPa
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
+import 'rxjs/add/observable/throw';
 import * as moment from 'moment';
 
 import { PacienteDetalle } from './model/paciente-detalle';
@@ -29,54 +30,21 @@ export class DbAPIService {
                         let result = res.json().map(
                           item => {
                             return new PacienteDetalle(
-                              item.codigo_paciente,
-                              item.nombre,
-                              item.apellido,
-                              item.sexo,
-                              item.talla,
-                              item.estado_civil,
-                              item.fecha_nacimiento,
-                              item.peso_actual,
-                              item.peso_habitual,
-                              item.peso_ajusta,
-                              item.peso_saludable,
-                              item.porcentaje_peso_ideal,
-                              item.imc,
-                              item.cia_muneca,
-                              item.cia_brazo,
-                              item.biotipo,
-                              item.antecedente_obesidad,
-                              item.antecedente_cardiopatias,
-                              item.antecedente_hta,
-                              item.antecedente_diabetes,
-                              item.medicacion,
-                              item.diagnostico_medico,
-                              item.diagnostico_nutricional,
-                              item.laboratorio_glicemia_basal,
-                              item.laboratorio_creatinina,
-                              item.laboratorio_proteinas_totales,
-                              item.laboratorio_urea,
-                              item.laboratorio_acido_urico,
-                              item.laboratorio_proteinuria,
-                              item.laboratorio_albumina,
-                              item.laboratorio_triglicerios,
-                              item.laboratorio_colesterol_total,
-                              item.laboratorio_ldl,
-                              item.laboratorio_hdl,
-                              item.laboratorio_glucosa,
-                              item.laboratorio_hb,
-                              item.laboratorio_hematocrito,
-                              item.laboratorio_globulos_rojos,
-                              item.laboratorio_potasio,
-                              item.laboratorio_ci,
-                              item.laboratorio_na,
-                              item.laboratorio_globulos_blancos,
-                              item.laboratorio_hba,
-                              item.cia_cintura1,
-                              item.cia_cintura2)
+                                                        item.codigo_paciente,item.nombre,item.apellido,
+                                                        item.sexo,item.talla,item.estado_civil,item.fecha_nacimiento,
+                                                        item.peso_actual,item.peso_habitual,item.peso_ajusta,item.peso_saludable,
+                                                        item.porcentaje_peso_ideal,item.imc,item.cia_muneca,item.cia_brazo,
+                                                        item.biotipo,item.antecedente_obesidad,item.antecedente_cardiopatias,item.antecedente_hta,
+                                                        item.antecedente_diabetes,item.medicacion,item.diagnostico_medico,item.diagnostico_nutricional,
+                                                        item.laboratorio_glicemia_basal,item.laboratorio_creatinina,item.laboratorio_proteinas_totales,item.laboratorio_urea,
+                                                        item.laboratorio_acido_urico,item.laboratorio_proteinuria,item.laboratorio_albumina,item.laboratorio_triglicerios,
+                                                        item.laboratorio_colesterol_total,item.laboratorio_ldl,item.laboratorio_hdl,item.laboratorio_glucosa,
+                                                        item.laboratorio_hb,item.laboratorio_hematocrito,item.laboratorio_globulos_rojos,item.laboratorio_potasio,
+                                                        item.laboratorio_ci,item.laboratorio_na,item.laboratorio_globulos_blancos,item.laboratorio_hba,item.cia_cintura1,item.cia_cintura2)
                           });
                         return result;
-                });
+                })
+                .catch((error:any) => Observable.throw('Error al recuperar la lista de pacientes, no hubo respuesta del servidor.'));
   }
 
   pacientePorCodigo(codigoPaciente: number): Observable<PacienteDetalle> {
@@ -246,42 +214,18 @@ export class DbAPIService {
                         let result = res.json().map(
                           item => {
                             return new AlimentoDetalle(
-                                          item.codigo_alimento,
-                                          item.descripcion_alimento,
-                                          item.tipo_alimento,
-                                          item.descripcion_tipo_alimento,
-                                          item.medida_casera,
-                                          item.medida_casera_unidad,
-                                          item.medida_real,
-                                          item.medida_real_unidad,
-                                          item.hidratos_carbono,
-                                          item.unidad_medida_hidratos_carbono,
-                                          item.proteina,
-                                          item.unidad_medida_proteina,
-                                          item.grasa,
-                                          item.unidad_medida_grasa,
-                                          item.sodio,
-                                          item.unidad_medida_sodio,
-                                          item.potasio,
-                                          item.unidad_medida_potasio,
-                                          item.fosforo,
-                                          item.unidad_medida_fosforo,
-                                          item.calcio,
-                                          item.unidad_medida_calcio,
-                                          item.hierro,
-                                          item.unidad_medida_hierro,
-                                          item.colesterol,
-                                          item.unidad_medida_colesterol,
-                                          item.purinas,
-                                          item.unidad_medida_purinas,
-                                          item.fibra,
-                                          item.unidad_medida_fibra,
-                                          item.agua,
-                                          item.unidad_medida_agua,
-                                          item.calorias)
+                                                        item.codigo_alimento,item.descripcion_alimento,item.tipo_alimento,item.descripcion_tipo_alimento,
+                                                        item.medida_casera,item.medida_casera_unidad,item.medida_real,item.medida_real_unidad,
+                                                        item.hidratos_carbono,item.unidad_medida_hidratos_carbono,item.proteina,item.unidad_medida_proteina,
+                                                        item.grasa,item.unidad_medida_grasa,item.sodio,item.unidad_medida_sodio,
+                                                        item.potasio,item.unidad_medida_potasio,item.fosforo,item.unidad_medida_fosforo,
+                                                        item.calcio,item.unidad_medida_calcio,item.hierro,item.unidad_medida_hierro,
+                                                        item.colesterol,item.unidad_medida_colesterol,item.purinas,item.unidad_medida_purinas,
+                                                        item.fibra,item.unidad_medida_fibra,item.agua,item.unidad_medida_agua,item.calorias)
                           });
                         return result;
-                });
+                })
+                .catch((error:any) => Observable.throw('Error al recuperar la lista de alimentos, no hubo respuesta del servidor.'));
   }
 
   alimentoPorCodigo(codigoAlimento: number): Observable<AlimentoDetalle> {
@@ -377,20 +321,13 @@ export class DbAPIService {
                         let result = res.json().map(
                           item => {
                             return new ReferenciaDieta(
-                              item.codigo_referencia_x_dieta,
-                              item.codigo_dieta,
-                              item.hidratos_carbono,
-                              item.proteinas,
-                              item.grasas,
-                              item.fibras,
-                              item.codigo_paciente,
-                              item.nombre,
-                              item.apellido,
-                              item.fecha_creacion,
-                              item.fecha_ultima_modificacion )
+                                                        item.codigo_referencia_x_dieta,item.codigo_dieta,item.hidratos_carbono,item.proteinas,
+                                                        item.grasas,item.fibras,item.codigo_paciente,item.nombre,
+                                                        item.apellido,item.fecha_creacion,item.fecha_ultima_modificacion )
                           });
                         return result;
-                });
+                })
+                .catch((error:any) => Observable.throw('Error al recuperar dietas, no hubo respuesta del servidor.'));
   }
 
   dietasReferencia(codigo: number): Observable<ReferenciaDieta> {

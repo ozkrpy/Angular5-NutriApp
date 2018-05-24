@@ -1,7 +1,10 @@
 <div fxLayout="column" fxLayoutAlign="space-evenly center">
   <button color="primary" mat-raised-button (click)="agregarNuevaDieta()">CREAR NUEVA DIETA</button>
+  <div>
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+  </div>
   <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
-    <mat-card class="card-padding mat-elevation-z4" *ngFor="let d of todasDietas | async" fxLayout="column" >
+    <mat-card class="card-padding mat-elevation-z4" *ngFor="let d of todasDietas" fxLayout="column" >
       <mat-card-header fxLayout="column">
           <mat-divider></mat-divider>
           <mat-card-title><h3><strong>#{{ d.codigo_dieta }}.</strong> {{ d.nombre | uppercase }} {{ d.apellido | uppercase }}</h3></mat-card-title>

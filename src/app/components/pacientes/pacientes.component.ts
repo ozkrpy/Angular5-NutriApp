@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
 import { DbAPIService } from '../../db-api.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 import { PacienteDetalleComponent } from '../../dialogs/paciente-detalle/paciente-detalle.component';
 import { PacienteCrearComponent } from '../../dialogs/paciente-crear/paciente-crear.component';
@@ -15,12 +18,14 @@ import { PacienteDetalle } from '../../model/paciente-detalle';
 })
 export class PacientesComponent implements OnInit {
 
+  loading: boolean = false;
   dialogResult: string = "";
   
-  todosLosPacientes: Observable<PacienteDetalle[]>;
+  todosLosPacientes: PacienteDetalle[];
   
   constructor(private ws: DbAPIService, 
-              public dialog: MatDialog
+              public dialog: MatDialog,
+              public snackbar: MatSnackBar
              ) {
   }
  
@@ -31,12 +36,11 @@ export class PacientesComponent implements OnInit {
   verDetallesPaciente(idPaciente: number) {
     let dialogRef = this.dialog.open( 
                                       PacienteDetalleComponent, 
-                                      { width: '70%', height: '', data: idPaciente}
+                                      { width: '90%', height: '', data: idPaciente}
     );
     dialogRef.afterClosed().subscribe(result => {
-                                        console.log(`Dialogo cerrado: ${result}`);
                                         this.dialogResult = result;
-                                        this.actualizaListaPacientes();//this.todosLosPacientes = this.ws.todosLosPacientes();
+                                        this.actualizaListaPacientes();
     });
   }
 
@@ -54,7 +58,22 @@ export class PacientesComponent implements OnInit {
   }
 
   actualizaListaPacientes() {
-    this.todosLosPacientes = this.ws.todosLosPacientes();
+    this.loading = true;    
+    this.ws.todosLosPacientes()
+           .subscribe(res => {
+                              // console.log(res);
+                              this.todosLosPacientes = res;
+                              this.loading = false;
+                      }, err => {
+                                  console.log(err);
+                                  this.openSnackbar(err);
+                                  this.loading = false;
+
+           });
+  }
+
+  openSnackbar(message: string) {
+    this.snackbar.open(message, "OK", { duration: 5000 });
   }
 
 }

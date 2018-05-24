@@ -6,6 +6,10 @@
         </mat-form-field>
     </div>  
     <button color="primary" mat-raised-button (click)="agregarAlimento()">AGREGAR ALIMENTO</button>
+    <div>
+        <br>
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
+    </div>
 </div>
 <div>
   <mat-table [dataSource]="dataSource" matSort fxLayout="column" fxLayoutAlign="space-evenly">

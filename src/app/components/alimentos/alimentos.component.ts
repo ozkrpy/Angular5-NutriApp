@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatSnackBar } from '@angular/material';
 import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { Observable } from 'rxjs';
@@ -21,32 +21,38 @@ export class AlimentosComponent implements OnInit {
   // dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
   dataSource = new MatTableDataSource<AlimentoDetalle>();
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
+  loading: boolean = false;
   
 
   constructor(private ws: DbAPIService, 
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public snackbar: MatSnackBar) {
 
   }
 
   ngOnInit() {
-
+    this.cargarAlimentos();
+    
   }
   
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
   
   ngAfterViewInit() {
-    this.cargarAlimentos();
   }
 
   cargarAlimentos() {
-    this.ws.todosLosAlimentos().subscribe(data => {
-      this.dataSource.data = data;
-      // console.log(this.dataSource.data);
-    });
+    this.loading = true;    
+    this.ws.todosLosAlimentos()
+           .subscribe(data => {
+                                this.dataSource.data = data;
+                                this.loading = false;
+           }, err => {
+                      console.log(err);                                  
+                      this.openSnackbar(err);
+                      this.loading = false;
+           });
     this.dataSource.paginator = this.paginator;
-    // console.log("paginator:", this.paginator);    
-    // console.log("paginator data source:", this.dataSource.paginator);
     this.dataSource.sort = this.sort;
   }
   applyFilter(filterValue: string) {
@@ -56,28 +62,27 @@ export class AlimentosComponent implements OnInit {
   }
 
   detalleAlimento(codigo: number) {
-    console.log("metodo para detalle de alimento: " + codigo);
     let dialogRef = this.dialog.open( 
                                       AlimentoDetalleComponent, 
                                       { width: '80%', height: '', data: codigo}
     );
     dialogRef.afterClosed().subscribe(result => {
-                                        console.log(`Dialogo cerrado: ${result}`);
                                         this.dialogResult = result;
                                         this.cargarAlimentos();
     });
   }
 
   agregarAlimento() {
-    console.log("metodo para alta de alimento");
     let dialogRef = this.dialog.open( 
                                       AlimentoCrearComponent, 
                                       { width: '70%', height: ''}
     );
     dialogRef.afterClosed().subscribe(result => {
-            console.log(`Dialogo cerrado: ${result}`);
             this.dialogResult = result;
     });    
   }
 
+  openSnackbar(message: string) {
+    this.snackbar.open(message, "OK", { duration: 5000 });
+  }
 }

@@ -18,8 +18,10 @@ import { AFIRMATIVO, NEGATIVO } from '../../model/datos-varios';
 })
 export class DietasComponent implements OnInit {
 
-  todasDietas: Observable<ReferenciaDieta[]>;
+  // todasDietas: Observable<ReferenciaDieta[]>;
+  todasDietas: ReferenciaDieta[];
   dialogResult: string = "";
+  loading: boolean = false;
   
   constructor(private ws: DbAPIService, 
               public dialog: MatDialog,
@@ -30,7 +32,18 @@ export class DietasComponent implements OnInit {
   }
 
   recuperaDietas() {
-    this.todasDietas = this.ws.todasDietasReferencia();
+    this.loading = true;    
+    
+    // this.todasDietas = this.ws.todasDietasReferencia();
+    this.ws.todasDietasReferencia()
+           .subscribe(res => {
+                              this.todasDietas = res;
+                              this.loading = false;
+                      }, err => {
+                                  console.log(err);                                  
+                                  this.openSnackbar(err);
+                                  this.loading = false;
+                      });
   }
 
   verDetallesDieta(codigo: number) {
