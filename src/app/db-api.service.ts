@@ -455,4 +455,12 @@ export class DbAPIService {
                 .get(apiURL)
                 .map(res => { return res.json(); });
   }
+
+  pacienteRecuperaUltimaDieta(codigo: number){
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.pacienteUltimaDieta + codigo;
+    console.log("metodo recupera ultima dieta del paciente:", codigo, "URL:", apiURL);
+    return  this.httpRequest
+                .get(apiURL)
+                .map(res => { return res.json(); });
+  }
 }
