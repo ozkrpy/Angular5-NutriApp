@@ -88,7 +88,7 @@ export class AlimentoDetalleComponent implements OnInit {
   eliminarAlimento(codigo: number) {
     let confirmacionRef = this.dialog.open( 
                                       ConfirmacionComponent, 
-                                      { width: '20%', height: '', data: ''}
+                                      { width: '', height: '', data: ''}
                                     );
     confirmacionRef.afterClosed()
                 .subscribe(result => {

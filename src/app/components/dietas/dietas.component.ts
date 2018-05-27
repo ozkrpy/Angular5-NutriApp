@@ -63,7 +63,7 @@ export class DietasComponent implements OnInit {
   eliminarDietaCompleta(codigo: number) {
     let dialogRef = this.dialog.open( 
                                       ConfirmacionComponent, 
-                                      { width: '20%', height: '', data: codigo}
+                                      { width: '', height: '', data: codigo}
                                     );
     dialogRef.afterClosed()
               .subscribe(result => {

@@ -185,7 +185,7 @@ export class PacienteDetalleComponent implements OnInit {
   eliminarPaciente(idPaciente: number) {
     let confirmacionRef = this.dialog.open( 
                                             ConfirmacionComponent, 
-                                            { width: '20%', height: '', data: ''}
+                                            { width: '', height: '', data: ''}
                                           );
     confirmacionRef.afterClosed()
                     .subscribe(result => {
