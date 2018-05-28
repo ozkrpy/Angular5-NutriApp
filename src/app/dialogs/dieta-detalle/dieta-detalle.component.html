@@ -1,203 +1,207 @@
-<div *ngFor="let referencia of dietaReferencia" fxLayout="column" id="contenido">
-  <!-- TITULO -->
-  <div fxLayoutAlign="center center">
-    <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
-  </div>
-  <form [formGroup]="referenciasFormGroup">
-    <!-- TABLA DE REFERENCIAS -->
-    <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
-      <div fxLayout="column">
-        <mat-form-field>
-          <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
-          <mat-hint align="start">
-            <strong>Minimo:</strong>{{ referencia.hidratos_carbono - 5}}
-          </mat-hint>
-          <mat-hint align="end">
-            <strong>Maximo:</strong>{{ referencia.hidratos_carbono + 5}}
-          </mat-hint>
-        </mat-form-field>
+<div *ngFor="let referencia of dietaReferencia">
+  <div fxLayout="column" id="contenido">
+    <!-- TITULO -->
+    <div fxLayoutAlign="center center">
+      <h3>DETALLES PARA LA DIETA #{{ referencia.codigo_dieta }}</h3>
+    </div>
+    <form [formGroup]="referenciasFormGroup">
+      <!-- TABLA DE REFERENCIAS -->
+      <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+        <div fxLayout="column">
+          <mat-form-field>
+            <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
+            <mat-hint align="start">
+              <strong>Minimo:</strong>{{ referencia.hidratos_carbono - 5}}
+            </mat-hint>
+            <mat-hint align="end">
+              <strong>Maximo:</strong>{{ referencia.hidratos_carbono + 5}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field >
+            <input matInput formControlName="proteinasForm" placeholder="Proteinas (g)" value="{{ referencia.proteinas | number:'1.1-2' }}">
+            <mat-hint align="start">
+              <strong>Minimo:</strong>{{ referencia.proteinas - 5}}
+            </mat-hint>
+            <mat-hint align="end">
+              <strong>Maximo:</strong>{{ referencia.proteinas + 5}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field >
+            <input matInput formControlName="grasasForm" placeholder="Grasas (g)" value="{{ referencia.grasas | number:'1.1-2' }}">
+            <mat-hint align="start">
+              <strong>Minimo:</strong>{{ referencia.grasas - 5}}
+            </mat-hint>
+            <mat-hint align="end">
+              <strong>Maximo:</strong>{{ referencia.grasas + 5}}
+            </mat-hint>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column">
+          <mat-form-field >
+            <input matInput formControlName="fibrasForm" placeholder="Fibras (g)" value="{{ referencia.fibras | number:'1.1-2' }}">
+            <mat-hint align="start">
+              <strong>Minimo:</strong>{{ referencia.fibras * 0.95 | number:'1.1-2' }}
+            </mat-hint>
+            <mat-hint align="end">
+              <strong>Maximo:</strong>{{ referencia.fibras * 1.05 | number:'1.1-2' }}
+            </mat-hint>
+          </mat-form-field>
+        </div>
       </div>
-      <div fxLayout="column">
-        <mat-form-field >
-          <input matInput formControlName="proteinasForm" placeholder="Proteinas (g)" value="{{ referencia.proteinas | number:'1.1-2' }}">
-          <mat-hint align="start">
-            <strong>Minimo:</strong>{{ referencia.proteinas - 5}}
-          </mat-hint>
-          <mat-hint align="end">
-            <strong>Maximo:</strong>{{ referencia.proteinas + 5}}
-          </mat-hint>
-        </mat-form-field>
+      <br>
+      <!-- TABLA DE SUMATORIAS -->
+      <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+        <div fxLayout="column">
+          <strong>TOTALES</strong>
+          <small>Segun Alimentos</small>
+        </div>
+        <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}">
+          <strong>Hidratos</strong>
+          <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
+          <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
+        </div>
+        <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}">
+          <strong>Proteinas</strong>
+          <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
+        </div>
+        <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
+          <strong>Grasas</strong>
+          <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
+        </div>
+        <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}">
+          <strong>Fibras</strong>
+          <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Sodio</strong>
+          <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Potasio</strong>
+          <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Fosforo</strong>
+          <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Calcio</strong>
+          <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Hierro</strong>
+          <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Colesterol</strong>
+          <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Purinas</strong>
+          <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
+        </div>
+        <div fxLayout="column">
+          <strong>Agua</strong>
+          <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
+        </div>
       </div>
-      <div fxLayout="column">
-        <mat-form-field >
-          <input matInput formControlName="grasasForm" placeholder="Grasas (g)" value="{{ referencia.grasas | number:'1.1-2' }}">
-          <mat-hint align="start">
-            <strong>Minimo:</strong>{{ referencia.grasas - 5}}
-          </mat-hint>
-          <mat-hint align="end">
-            <strong>Maximo:</strong>{{ referencia.grasas + 5}}
-          </mat-hint>
-        </mat-form-field>
-      </div>
-      <div fxLayout="column">
-        <mat-form-field >
-          <input matInput formControlName="fibrasForm" placeholder="Fibras (g)" value="{{ referencia.fibras | number:'1.1-2' }}">
-          <mat-hint align="start">
-            <strong>Minimo:</strong>{{ referencia.fibras * 0.95 | number:'1.1-2' }}
-          </mat-hint>
-          <mat-hint align="end">
-            <strong>Maximo:</strong>{{ referencia.fibras * 1.05 | number:'1.1-2' }}
-          </mat-hint>
-        </mat-form-field>
-      </div>
+      <br>
+    </form>
+    
+    <br>
+    <!-- TABLA DE ALIMENTOS -->
+    <div fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
+      <mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="cantidad_alimento">
+            <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="40px"> {{ detalle.cantidad_alimento }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
+            <mat-cell *matCellDef="let detalle"> {{ detalle.alimento.descripcion_alimento }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="tipo">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Tipo </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.descripcion_tipo_alimento }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="hidratos">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hidratos </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hidratos_carbono }} {{ detalle.alimento.unidad_medida_hidratos_carbono }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="proteinas">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Proteinas </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.proteina }}  {{ detalle.alimento.unidad_medida_proteina }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="grasas">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Grasas </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.grasa }} {{ detalle.alimento.unidad_medida_grasa }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fibras">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fibras </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fibra }} {{ detalle.alimento.unidad_medida_fibra }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="sodio">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Sodio </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.sodio }} {{ detalle.alimento.unidad_medida_sodio }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="potasio">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Potasio </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.potasio }} {{ detalle.alimento.unidad_medida_potasio }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="fosforo">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fosforo </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fosforo }} {{ detalle.alimento.unidad_medida_fosforo }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="calcio">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calcio </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calcio }} {{ detalle.alimento.unidad_medida_calcio }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="hierro">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hierro </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hierro }} {{ detalle.alimento.unidad_medida_hierro }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="colesterol">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Colesterol </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.colesterol }} {{ detalle.alimento.unidad_medida_colesterol }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="purinas">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Purinas </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.purinas }} {{ detalle.alimento.unidad_medida_purinas }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="agua">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Agua </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.agua }} {{ detalle.alimento.unidad_medida_agua }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="calorias">
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calorias </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calorias }} {{ detalle.alimento.unidad_medida_calorias }}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="eliminar">
+          <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
+          <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
+            <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </mat-cell>
+      </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" [style.background]="alimentoTipo(row)"></mat-row>
+      </mat-table>
     </div>
     <br>
-    <!-- TABLA DE SUMATORIAS -->
-    <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
-      <div fxLayout="column">
-        <strong>TOTALES</strong>
-        <small>Segun Alimentos</small>
-      </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}">
-        <strong>Hidratos</strong>
-        <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
-        <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
-      </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}">
-        <strong>Proteinas</strong>
-        <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
-      </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
-        <strong>Grasas</strong>
-        <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
-      </div>
-      <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}">
-        <strong>Fibras</strong>
-        <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Sodio</strong>
-        <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Potasio</strong>
-        <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Fosforo</strong>
-        <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Calcio</strong>
-        <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Hierro</strong>
-        <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Colesterol</strong>
-        <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Purinas</strong>
-        <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
-      </div>
-      <div fxLayout="column">
-        <strong>Agua</strong>
-        <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
-      </div>
-    </div>
-    <br>
-  </form>
-  <!-- AGREGAR UN NUEVO ALIMENTO -->
-  <div fxLayoutAlign="space-evenly center">
-    <button color="primary" mat-raised-button (click)="agregarAlimento()">AGREGAR ALIMENTOS A LA DIETA</button>
   </div>
-  <br>
-  <!-- TABLA DE ALIMENTOS -->
-  <div fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
-    <mat-table [dataSource]="dataSource">
-      <ng-container matColumnDef="cantidad_alimento">
-          <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="40px"> {{ detalle.cantidad_alimento }} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="descripcion">
-          <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
-          <mat-cell *matCellDef="let detalle"> {{ detalle.alimento.descripcion_alimento }} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="tipo">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Tipo </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.descripcion_tipo_alimento }} </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="hidratos">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hidratos </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hidratos_carbono }} {{ detalle.alimento.unidad_medida_hidratos_carbono }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="proteinas">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Proteinas </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.proteina }}  {{ detalle.alimento.unidad_medida_proteina }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="grasas">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Grasas </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.grasa }} {{ detalle.alimento.unidad_medida_grasa }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="fibras">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fibras </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fibra }} {{ detalle.alimento.unidad_medida_fibra }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="sodio">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Sodio </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.sodio }} {{ detalle.alimento.unidad_medida_sodio }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="potasio">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Potasio </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.potasio }} {{ detalle.alimento.unidad_medida_potasio }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="fosforo">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fosforo </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fosforo }} {{ detalle.alimento.unidad_medida_fosforo }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="calcio">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calcio </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calcio }} {{ detalle.alimento.unidad_medida_calcio }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="hierro">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hierro </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hierro }} {{ detalle.alimento.unidad_medida_hierro }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="colesterol">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Colesterol </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.colesterol }} {{ detalle.alimento.unidad_medida_colesterol }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="purinas">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Purinas </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.purinas }} {{ detalle.alimento.unidad_medida_purinas }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="agua">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Agua </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.agua }} {{ detalle.alimento.unidad_medida_agua }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="calorias">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calorias </mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calorias }} {{ detalle.alimento.unidad_medida_calorias }}</mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="eliminar">
-        <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
-        <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
-          <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-cell>
-    </ng-container>
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;" [style.background]="alimentoTipo(row)"></mat-row>
-    </mat-table>
-  </div>
-  <br>
   <!-- BOTONES ELIMINAR / CANCELAR -->
-  <div  fxLayoutAlign="space-evenly center">
-    <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
-    <button mat-raised-button color="accent" (click)="descargarPDF(referencia.codigo_dieta)"><mat-icon>save_alt</mat-icon>Exportar a PDF..</button>
+  <div fxLayout="column">
+    <!-- AGREGAR UN NUEVO ALIMENTO -->
+    <button color="primary" mat-raised-button (click)="agregarAlimento()"><mat-icon>playlist_add</mat-icon>AGREGAR ALIMENTOS A LA DIETA</button>
+    <br>
+    <div fxLayout="row" fxLayoutAlign="space-around center">
+      <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
+      <button mat-raised-button color="accent" (click)="descargarPDF(referencia.codigo_dieta)"><mat-icon>save_alt</mat-icon>Exportar a PDF..</button>
+    </div>
   </div>
 </div>
