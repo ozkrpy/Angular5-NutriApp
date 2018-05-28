@@ -9,7 +9,7 @@ import { DietaDetalleComponent } from '../../dialogs/dieta-detalle/dieta-detalle
 import { DietaCrearComponent } from '../../dialogs/dieta-crear/dieta-crear.component';
 
 import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
-import { AFIRMATIVO, NEGATIVO } from '../../model/datos-varios';
+import { AFIRMATIVO, NEGATIVO, DIETA } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-dietas',
@@ -72,13 +72,13 @@ export class DietasComponent implements OnInit {
                   if(this.dialogResult == AFIRMATIVO) {
                     this.ws.dietaEliminarTotal(codigo)
                             .subscribe(res => {
-                                                console.log(res);
-                                                this.openSnackbar('La dieta se ha eliminado correctamente');
+                                                // console.log(res);
+                                                this.openSnackbar(DIETA.deleteOK);
                                                 this.recuperaDietas();
                                                 //  this.thisDialogRef.close('Delete patient');
                             }, err => {
-                                        console.log("[ERROR] component Dietas", err);
-                                        this.openSnackbar('Ocurrio un error, favor contactar al soporte.');
+                                        // console.log("[ERROR] component Dietas", err);
+                                        this.openSnackbar(DIETA.deleteERR);
                                         //  this.thisDialogRef.close('Delete patient');
                             });
                   }

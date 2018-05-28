@@ -2,6 +2,7 @@ import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
+import { DIETA } from '../../model/datos-varios';
 import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalleComponent } from '../../dialogs/alimento-detalle/alimento-detalle.component';
@@ -77,7 +78,7 @@ export class AgregarAlimentoDietaComponent implements OnInit {
     this.ws.dietasAgregarAlimento(this.dieta, alimento, cantidad)
            .subscribe(res => {
                               // console.log(res);
-                              this.openSnackbar("Se agrego correctamente el alimento a la dieta: " + this.dieta);
+                              this.openSnackbar(DIETA.addAlimentoOK + this.dieta);
                               this.thisDialogRef.close('OK');});
   }
 

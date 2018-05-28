@@ -6,7 +6,7 @@ import { AlimentoDetalle } from '../../model/alimento-detalle';
 import { TipoAlimento } from '../../model/datos-varios';
 
 import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
-import { AFIRMATIVO, NEGATIVO } from '../../model/datos-varios';
+import { AFIRMATIVO, NEGATIVO, ALIMENTO } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-alimento-detalle',
@@ -63,7 +63,7 @@ export class AlimentoDetalleComponent implements OnInit {
         console.log("existen datos con diferencias");
         this.ws.alimentoEdit(alimento.codigo_alimento,descripcion,tipo,casera,real,hidrato,proteina,grasa,sodio,potasio,fosforo,calcio,hierro,colesterol,purinas,fibra,agua,calorias)
               .subscribe(res => {
-                this.openSnackbar('Los datos del alimento han sido actualizados.');
+                this.openSnackbar(ALIMENTO.updateDatosOK);
                 this.actualizaDatosAlimento();
               });
     }
@@ -98,12 +98,12 @@ export class AlimentoDetalleComponent implements OnInit {
                                           this.ws.eliminarAlimento(codigo)
                                                   .subscribe(res => {
                                                                 console.log(res);
-                                                                this.openSnackbar('El alimento ha sido dado eliminado correctamente');
-                                                                this.thisDialogRef.close('Delete food');
+                                                                this.openSnackbar(ALIMENTO.deleteOK);
+                                                                this.thisDialogRef.close('Delete food OK');
                                                               }, err => {
                                                                 console.log("[ERROR] component PacienteDetalle", err);
-                                                                this.openSnackbar('El alimento existe en dietas activas, no se puede eliminar.');
-                                                                this.thisDialogRef.close('Delete food');
+                                                                this.openSnackbar(ALIMENTO.deleteERR);
+                                                                this.thisDialogRef.close('Delete food ERR');
                                                               });
                                         }
                 });

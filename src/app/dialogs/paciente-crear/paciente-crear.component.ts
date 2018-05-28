@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
 import { PacienteDetalle } from '../../model/paciente-detalle';
 
-import { SexosArray, EstadoCivil, Contextura } from '../../model/datos-varios';
+import { SexosArray, EstadoCivil, Contextura, PACIENTE } from '../../model/datos-varios';
 
 
 @Component({
@@ -104,15 +104,15 @@ export class PacienteCrearComponent implements OnInit {
   calcularInfoPaciente() {
     // Paso 1
     this.calculado.edad = this.calcularEdad();
-    console.log("calcular edad", this.calculado.edad);
+    // console.log("calcular edad", this.calculado.edad);
     
     // Paso 2
     this.calculado.biotipo = this.calcularBiotipo(this.calculado.edad);
-    console.log("calcular biotipo", this.calculado.biotipo);
+    // console.log("calcular biotipo", this.calculado.biotipo);
     
     // Paso 3
     this.calculado.imc = this.calcularImc(this.secondFormGroup.controls.actual.value, this.secondFormGroup.controls.talla.value);
-    console.log("calcular imc", this.calculado.imc);
+    // console.log("calcular imc", this.calculado.imc);
     
     // Paso 4
     this.calcularPesoIdeal(this.calculado.edad, this.calculado.biotipo, this.firstFormGroup.controls.sexo.value, this.secondFormGroup.controls.talla.value);
@@ -215,27 +215,27 @@ export class PacienteCrearComponent implements OnInit {
   // 4. Calcular peso ideal / peso saludable
   calcularPesoIdeal(edad: number, biotipo: string, sexo: string, talla: number) {
     let pesoIdeal: number = 0;
-    console.log("parametros edad:", edad, "biotipo:", biotipo, "sexo:", sexo, "talla:", talla);
+    // console.log("parametros edad:", edad, "biotipo:", biotipo, "sexo:", sexo, "talla:", talla);
     this.ws.pacientePesosIdeales(sexo, talla)
           .map(
                 res => { 
                   // this.loading = true;
-                  console.log("invoco al WS para recuperar pesos ideales segun sexo y talla");
+                  // console.log("invoco al WS para recuperar pesos ideales segun sexo y talla");
                   if (this.isBetween(edad, 0, 19)) {
                     pesoIdeal = res[0]["edad17_19"];
-                    console.log("testing case 17 to 19", "Recupero peso ideal de: " + pesoIdeal);
+                    // console.log("testing case 17 to 19", "Recupero peso ideal de: " + pesoIdeal);
                   } else if (this.isBetween(edad, 20, 24)) {
                     pesoIdeal = res[0]["edad20_24"];
-                    console.log("testing case 20 to 24", "Recupero peso ideal de: " + pesoIdeal);
+                    // console.log("testing case 20 to 24", "Recupero peso ideal de: " + pesoIdeal);
                   } else if ((edad >= 25) && (biotipo == Contextura.pequena)) {
                     pesoIdeal = res[0]["pequena"];
-                    console.log("testing case", Contextura.pequena, "Recupero peso ideal de: " + pesoIdeal);
+                    // console.log("testing case", Contextura.pequena, "Recupero peso ideal de: " + pesoIdeal);
                   } else if ((edad >= 25) && (biotipo == Contextura.mediana)) {
                     pesoIdeal = res[0]["mediana"];
-                    console.log("testing case", Contextura.mediana, "Recupero peso ideal de: " + pesoIdeal);
+                    // console.log("testing case", Contextura.mediana, "Recupero peso ideal de: " + pesoIdeal);
                   } else if ((edad >= 25) && (biotipo == Contextura.grande)) {
                     pesoIdeal = res[0]["grande"];
-                    console.log("testing case", Contextura.grande, "Recupero peso ideal de: " + pesoIdeal);
+                    // console.log("testing case", Contextura.grande, "Recupero peso ideal de: " + pesoIdeal);
                   } else {
                     throw new Error;
                   }
@@ -261,13 +261,13 @@ export class PacienteCrearComponent implements OnInit {
   // 5. Calcular peso ajustado 
   // 6. Calcular porcentaje de peso ideal
   calcularPesoAjustadoPorcentaje(pesoActualParam: number, pesoIdealParam: number) {
-    console.log("calcular peso ajustado y porcentaje de peso ideal", pesoActualParam, pesoIdealParam);
+    // console.log("calcular peso ajustado y porcentaje de peso ideal", pesoActualParam, pesoIdealParam);
     if ((pesoActualParam != 0) && (pesoIdealParam != 0)) {
-      console.log("calcularPesoAjustadoPorcentaje datos entrada - peso actual: " + pesoActualParam + " peso ideal: " + pesoIdealParam + " peso ajustado: " + this.calculado.pesoAjustado, "porcentaje peso ideal:", this.calculado.porcentajePesoIdeal);
+      // console.log("calcularPesoAjustadoPorcentaje datos entrada - peso actual: " + pesoActualParam + " peso ideal: " + pesoIdealParam + " peso ajustado: " + this.calculado.pesoAjustado, "porcentaje peso ideal:", this.calculado.porcentajePesoIdeal);
       this.calculado.pesoAjustado = ((pesoActualParam - pesoIdealParam) * 0.25 + pesoIdealParam);
       this.calculado.porcentajePesoIdeal = (pesoActualParam / pesoIdealParam) * 100;
     }
-    console.log("calcularPesoAjustadoPorcentaje datos entrada - peso actual: " + pesoActualParam + " peso ideal: " + pesoIdealParam + " peso ajustado: " + this.calculado.pesoAjustado, "porcentaje peso ideal:", this.calculado.porcentajePesoIdeal);
+    // console.log("calcularPesoAjustadoPorcentaje datos entrada - peso actual: " + pesoActualParam + " peso ideal: " + pesoIdealParam + " peso ajustado: " + this.calculado.pesoAjustado, "porcentaje peso ideal:", this.calculado.porcentajePesoIdeal);
   }
 
   // Compila todos los datos del paciente
@@ -320,7 +320,7 @@ export class PacienteCrearComponent implements OnInit {
         this.secondFormGroup.controls.cintura1.value,
         this.secondFormGroup.controls.cintura2.value    
       );
-      console.log(this.paciente);
+      // console.log(this.paciente);
     }
   } 
 
@@ -329,13 +329,13 @@ export class PacienteCrearComponent implements OnInit {
     // this.loading = true;
     this.ws.pacienteAlta(this.paciente)
           .subscribe(res => {
-                                console.log("resultado del subscribe paciente alta");
-                                this.openSnackbar("El paciente ha sido registrado exitosamente");
+                                // console.log("resultado del subscribe paciente alta");
+                                this.openSnackbar(PACIENTE.altaOK);
                                 // this.loading = false;
-                                this.thisDialogRef.close('OK');
+                                this.thisDialogRef.close('Alta Paciente OK');
                               }, err => {
                                 console.log("[ERROR] component crearPaciente", err);
-                                this.openSnackbar('El paciente no pudo ser registrado');
+                                this.openSnackbar(PACIENTE.altaERR);
                                 this.thisDialogRef.close('Error al registrar paciente');
                               }
                     );

@@ -105,3 +105,34 @@ export const Gramos = [
 
 export const AFIRMATIVO = 'SI';
 export const NEGATIVO = 'NO';
+
+export const PACIENTE = {
+    deleteOK: 'El paciente ha sido eliminado correctamente',
+    deleteERR: 'El paciente cuenta con dietas activas, no se puede eliminar.',
+    updateDatosOK: 'Los datos personales del paciente han sido actualizados.',
+    updatePesoOK: 'Los datos de peso del paciente han sido actualizados.',
+    updateTallaOK: 'Los datos de talla y medidas del paciente han sido actualizados.',
+    updateAntecedentesOK: 'Los datos de antecedentes del paciente han sido actualizados.',
+    updateLaboratorioOK: 'Los datos de laboratorio del paciente han sido actualizados.',
+    altaOK: 'El paciente ha sido registrado exitosamente.',
+    altaERR: 'El paciente no ha sido registrado, consulte con SOPORTE.',
+};
+
+export const DIETA = {
+    deleteOK: 'La dieta se ha eliminado correctamente',
+    deleteERR: 'Ocurrio un error, favor contactar al soporte.',
+    updateDatosOK: '',
+    altaOK: 'Nueva dieta creada, codigo: ',
+    altaERR: '',
+    addAlimentoOK: 'Se agrego correctamente el alimento a la dieta: ',
+    delAlimentoOK: 'El alimento ha sido dado eliminado correctamente.',
+    delAlimentoERR: 'Error al eliminar, favor notifique al soporte.',
+};
+
+export const ALIMENTO = {
+    deleteOK: 'El alimento ha sido eliminado correctamente.',
+    deleteERR: 'El alimento existe en dietas activas, no se puede eliminar.',
+    updateDatosOK: 'Los datos del alimento han sido actualizados.',
+    altaOK: 'Se dio de alta el alimento: ',
+    altaERR: '',
+};

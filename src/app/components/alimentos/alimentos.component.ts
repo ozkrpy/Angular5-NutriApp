@@ -17,8 +17,6 @@ export class AlimentosComponent implements OnInit {
   dialogResult: string = "";
   private alimentos: Observable<AlimentoDetalle[]>;
 
-  // displayedColumns = ['position', 'name', 'weight', 'symbol'];
-  // dataSource = new MatTableDataSource<Element>(ELEMENT_DATA);
   dataSource = new MatTableDataSource<AlimentoDetalle>();
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
   loading: boolean = false;
@@ -55,6 +53,7 @@ export class AlimentosComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+  
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches

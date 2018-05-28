@@ -1,8 +1,8 @@
 export const Servidor = [
     {
         server: {
-            // host: 'localhost',
-            host: '192.168.1.4',
+            host: 'localhost',
+            // host: '192.168.1.4',
             port: '9092',
             typeGET: 'GET',
             typePOST: 'POST',

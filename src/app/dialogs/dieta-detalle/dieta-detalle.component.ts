@@ -11,6 +11,7 @@ import { DbAPIService } from '../../db-api.service';
 import { ReferenciaDieta } from '../../model/referencia-dieta';
 import { DietaAlimentos } from '../../model/dieta-alimentos';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
+import { DIETA } from '../../model/datos-varios';
 
 import { AgregarAlimentoDietaComponent } from '../agregar-alimento-dieta/agregar-alimento-dieta.component';
 
@@ -160,14 +161,14 @@ export class DietaDetalleComponent implements OnInit {
       this.ws.dietaEliminarAlimento(this.entrada, item)
              .subscribe(res => {
                           // console.log(res);
-                          this.openSnackbar('El alimento ha sido dado eliminado correctamente');
+                          this.openSnackbar(DIETA.delAlimentoOK);
                           // this.thisDialogRef.close('Delete food');
                           // this.cereoSumatorias();
                           this.recuperaReferenciasDieta();
                           // this.ngAfterViewInit();
                         }, err => {
                           // console.log("[ERROR] component PacienteDetalle", err);
-                          this.openSnackbar('Error al eliminar, favor notifique al soporte.');
+                          this.openSnackbar(DIETA.delAlimentoERR);
                           // this.thisDialogRef.close('Delete food');
                           this.recuperaReferenciasDieta();
                         });

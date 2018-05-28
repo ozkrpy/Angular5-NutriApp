@@ -6,6 +6,7 @@ import { DbAPIService } from '../../db-api.service';
 
 import { TipoAlimento, MedidasCaseras, MedidasReal, Gramos } from '../../model/datos-varios';
 import { AlimentoDetalle } from '../../model/alimento-detalle';
+import { ALIMENTO } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-alimento-crear',
@@ -91,7 +92,7 @@ export class AlimentoCrearComponent implements OnInit {
     this.ws.alimentoAlta(this.alimento)
            .subscribe(res => {
                               console.log(res);
-                              this.openSnackbar("Se dio de alta el alimento: " + this.firstFormGroup.controls.descripcion.value);
+                              this.openSnackbar(ALIMENTO.altaOK + this.firstFormGroup.controls.descripcion.value);
                               this.thisDialogRef.close('OK');}); 
   }
 

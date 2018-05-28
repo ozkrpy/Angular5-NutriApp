@@ -6,6 +6,7 @@ import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { MatDialog } from '@angular/material';
 
 import { PacienteDetalle } from '../../model/paciente-detalle';
+import { DIETA } from '../../model/datos-varios';
 import { PacienteCrearComponent } from '../../dialogs/paciente-crear/paciente-crear.component';
 
 
@@ -50,7 +51,7 @@ export class DietaCrearComponent implements OnInit {
                                                   this.dietaFormGroup.controls.paciente.value)
                                      .subscribe(res => {
                                                           console.log(res);
-                                                          this.openSnackbar("Nueva dieta creada, codigo: " + codigoDieta);
+                                                          this.openSnackbar(DIETA.altaOK + codigoDieta);
                                                           this.thisDialogRef.close('OK');}
                                                        ); 
     });
