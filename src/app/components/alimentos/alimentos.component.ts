@@ -19,6 +19,7 @@ export class AlimentosComponent implements OnInit {
 
   dataSource = new MatTableDataSource<AlimentoDetalle>();
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
+  displayedColumnsMobile = ['descripcion', 'distribucion', 'edicion'];
   loading: boolean = false;
   
 

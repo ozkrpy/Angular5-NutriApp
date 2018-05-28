@@ -33,7 +33,8 @@ export class DietaDetalleComponent implements OnInit {
 
   dataSource = new MatTableDataSource<DietaAlimentos>();
   displayedColumns = ['cantidad_alimento','descripcion','tipo','hidratos','proteinas','grasas','fibras','sodio','potasio','fosforo','calcio','hierro','colesterol','purinas','agua','calorias','eliminar'];
-
+  displayedColumnsMobile = ['descripcion', 'distribucion', 'eliminar'];
+  
   sumatoriaHC: number;
   sumatoriaProteinas: number;
   sumatoriaPAVB: number;
@@ -150,7 +151,7 @@ export class DietaDetalleComponent implements OnInit {
     // console.log("agregar alimento")
     let dialogRef = this.AddFoodDialog.open( 
                                               AgregarAlimentoDietaComponent, 
-                                              { width: '65%', height: '70%', data: this.entrada}
+                                              { width: '70%', height: '70%', data: this.entrada}
                                             );
     dialogRef.afterClosed()
               .subscribe(result => {

@@ -50,7 +50,7 @@ export class DietasComponent implements OnInit {
     // console.log("detalles de la dieta: " + codigo);
     let dialogRef = this.dialog.open( 
                                       DietaDetalleComponent, 
-                                      { width: '90%', height: '100%', data: codigo}
+                                      { width: '', height: '100%', data: codigo}
                                     );
     dialogRef.afterClosed()
              .subscribe(result => {

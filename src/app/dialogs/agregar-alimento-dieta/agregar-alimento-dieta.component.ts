@@ -18,6 +18,7 @@ export class AgregarAlimentoDietaComponent implements OnInit {
   
   dataSource = new MatTableDataSource<AlimentoDetalle>();
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
+  displayedColumnsMobile = ['descripcion', 'distribucion', 'eliminar'];
   private alimentos: Observable<AlimentoDetalle[]>;
 
   cantidadFormControl = new FormControl('0.0', [

@@ -1,4 +1,4 @@
-<div fxLayoutAlign="space-evenly center">
+<div fxLayoutAlign="space-evenly center" fxLayout.xs="column">
     <div fxLayoutAlign="center center">
         <mat-icon>search</mat-icon>
         <mat-form-field>
@@ -11,14 +11,14 @@
         <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
     </div>
 </div>
-<div>
+<div fxShow fxHide.xs>
   <mat-table [dataSource]="dataSource" matSort fxLayout="column" fxLayoutAlign="space-evenly">
       <ng-container matColumnDef="codigo">
-          <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cod. </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef fxFlex="40px"><strong>Cod.</strong></mat-header-cell>
           <mat-cell *matCellDef="let alimento" fxFlex="40px"> {{alimento.codigo_alimento}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="descripcion">
-          <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="25%"> Descripcion </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="25%"><strong>Descripcion</strong></mat-header-cell>
           <mat-cell *matCellDef="let alimento" fxFlex="25%"> {{alimento.descripcion_alimento}} </mat-cell>
       </ng-container>
       <ng-container matColumnDef="tipo">
@@ -52,9 +52,32 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-  <mat-paginator #paginator
-                [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 20]"
-                [showFirstLastButtons]="true">
-  </mat-paginator>
 </div>
+<div fxShow.xs fxHide.gt-sm>
+    <mat-table [dataSource]="dataSource" matSort fxLayout="column" fxLayoutAlign="space-evenly">
+        <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header><strong>Descripcion</strong></mat-header-cell>
+            <mat-cell *matCellDef="let alimento"> {{alimento.descripcion_alimento}} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="distribucion">
+            <mat-header-cell *matHeaderCellDef><strong>Distribucion</strong></mat-header-cell>
+            <mat-cell *matCellDef="let alimento"> 
+                <div><strong>HC: </strong>{{ alimento.hidratos_carbono }}</div>
+                <div><strong>Proteina: </strong>{{ alimento.proteina }}</div>
+                <div><strong>Grasas: </strong>{{ alimento.grasas }}</div>
+                <div><strong>Fibra: </strong>{{ alimento.fibra }}</div>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="edicion">
+            <mat-header-cell *matHeaderCellDef><strong>Detalles</strong></mat-header-cell>
+            <mat-cell *matCellDef="let alimento"> <button  color="accent" mat-raised-button (click)="detalleAlimento(alimento.codigo_alimento)">Ver mas</button> </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumnsMobile;"></mat-row>
+    </mat-table>
+</div>
+<mat-paginator #paginator
+    [pageSize]="10"
+    [pageSizeOptions]="[5, 10, 20]"
+    [showFirstLastButtons]="true">
+</mat-paginator>

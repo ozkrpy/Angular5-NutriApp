@@ -114,8 +114,8 @@
     </form>
     
     <br>
-    <!-- TABLA DE ALIMENTOS -->
-    <div fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
+    <!-- TABLA DE ALIMENTOS FULLSCREEN-->
+    <div fxShow fxHide.xs fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="cantidad_alimento">
             <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
@@ -194,10 +194,39 @@
       </mat-table>
     </div>
     <br>
+    <!-- TABLA DE ALIMENTOS MOBILE-->
+    <div fxShow.xs fxHide.gt-sm matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
+        <mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="descripcion">
+              <mat-header-cell *matHeaderCellDef> Cant. </mat-header-cell>
+              <mat-cell *matCellDef="let detalle"> {{ detalle.alimento.descripcion_alimento }} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="distribucion">
+              <mat-header-cell *matHeaderCellDef> Distribucion </mat-header-cell>
+              <mat-cell *matCellDef="let detalle">  
+                <div><strong>Cant: </strong>{{ detalle.cantidad_alimento }}</div>
+                <div><strong>HC: </strong>{{ detalle.alimento.hidratos_carbono }}</div>
+                <div><strong>Prot.: </strong>{{ detalle.alimento.proteina }}</div>
+                <div><strong>Grasa: </strong>{{ detalle.alimento.grasa }}</div>
+                <div><strong>Fibra: </strong>{{ detalle.alimento.fibra }}</div>
+              </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="eliminar">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let detalle"> 
+              <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
+          <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumnsMobile;" [style.background]="alimentoTipo(row)"></mat-row>
+        </mat-table>
+      </div>
+      <br>
   </div>
-  <!-- BOTONES ELIMINAR / CANCELAR -->
+  <!-- BOTONES AGREGAR / ELIMINAR / CANCELAR -->
   <div fxLayout="column">
-    <!-- AGREGAR UN NUEVO ALIMENTO -->
     <button color="primary" mat-raised-button (click)="agregarAlimento()"><mat-icon>playlist_add</mat-icon>AGREGAR ALIMENTOS  </button>
     <br>
     <div fxLayout="row" fxLayoutAlign="space-around center">
