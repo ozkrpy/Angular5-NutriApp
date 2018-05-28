@@ -36,6 +36,7 @@ export class DietaDetalleComponent implements OnInit {
 
   sumatoriaHC: number;
   sumatoriaProteinas: number;
+  sumatoriaPAVB: number;
   sumatoriaGrasas: number;
   sumatoriaFibras: number;
   sumatoriaCalorias: number;
@@ -116,6 +117,9 @@ export class DietaDetalleComponent implements OnInit {
                                                             this.sumatoriaColesterol = this.sumatoriaColesterol + (entry.cantidad_alimento * entry.alimento.colesterol);
                                                             this.sumatoriaPurinas = this.sumatoriaPurinas + (entry.cantidad_alimento * entry.alimento.purinas);
                                                             this.sumatoriaAgua = this.sumatoriaAgua + (entry.cantidad_alimento * entry.alimento.agua);
+                                                            if (entry.alimento.tipo_alimento <= 5) {
+                                                              this.sumatoriaPAVB = this.sumatoriaPAVB + (entry.alimento.proteina * entry.cantidad_alimento);
+                                                            }
                                                           }
                                                           // totales de kilocalorias
                                                           this.kcalHC = this.sumatoriaHC * 4;
@@ -178,6 +182,7 @@ export class DietaDetalleComponent implements OnInit {
   cereoSumatorias() {
     this.sumatoriaHC = 0.0;
     this.sumatoriaProteinas = 0.0;
+    this.sumatoriaPAVB = 0.0;
     this.sumatoriaGrasas = 0.0;
     this.sumatoriaFibras = 0.0;
     this.sumatoriaCalorias = 0.0;

@@ -6,7 +6,7 @@
     </div>
     <form [formGroup]="referenciasFormGroup">
       <!-- TABLA DE REFERENCIAS -->
-      <div fxLayout="row" fxLayoutAlign="center center"  fxLayoutGap="10px">
+      <div fxLayout="row wrap" fxLayoutAlign="center center"  fxLayoutGap="10px">
         <div fxLayout="column">
           <mat-form-field>
             <input matInput formControlName="hidratosCarbonoForm" placeholder="Hidratos de Carbono (g)" value="{{ referencia.hidratos_carbono | number:'1.1-2' }}">
@@ -54,7 +54,7 @@
       </div>
       <br>
       <!-- TABLA DE SUMATORIAS -->
-      <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div class="bordeado" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <div fxLayout="column">
           <strong>TOTALES</strong>
           <small>Segun Alimentos</small>
@@ -64,9 +64,10 @@
           <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
           <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
         </div>
-        <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}">
+        <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}" matTooltip="% PAVB: {{(100*sumatoriaPAVB)/sumatoriaProteinas | number:'1.1-1' }}%">
           <strong>Proteinas</strong>
-          <small>{{ sumatoriaProteinas | number:'1.1-2' }}</small><small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
+          <div><small>{{ sumatoriaProteinas | number:'1.1-2' }} (PAVB:{{ sumatoriaPAVB | number:'1.1-2' }})</small></div>
+          <small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
         </div>
         <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
           <strong>Grasas</strong>
@@ -197,7 +198,7 @@
   <!-- BOTONES ELIMINAR / CANCELAR -->
   <div fxLayout="column">
     <!-- AGREGAR UN NUEVO ALIMENTO -->
-    <button color="primary" mat-raised-button (click)="agregarAlimento()"><mat-icon>playlist_add</mat-icon>AGREGAR ALIMENTOS A LA DIETA</button>
+    <button color="primary" mat-raised-button (click)="agregarAlimento()"><mat-icon>playlist_add</mat-icon>AGREGAR ALIMENTOS  </button>
     <br>
     <div fxLayout="row" fxLayoutAlign="space-around center">
       <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
