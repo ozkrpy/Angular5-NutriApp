@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 import { DbAPIService } from '../../db-api.service';
 import { AlimentoDetalleComponent } from '../../dialogs/alimento-detalle/alimento-detalle.component';
 import { FormControl, Validators } from '@angular/forms';
-import { ErrorStateMatcher } from '../../model/error-state-matcher';
+// import { ErrorStateMatcher } from '../../model/error-state-matcher';
 
 @Component({
   selector: 'app-agregar-alimento-dieta',
@@ -26,7 +26,7 @@ export class AgregarAlimentoDietaComponent implements OnInit {
     Validators.min(0.1)
   ]);
 
-  matcher = new ErrorStateMatcher();
+  // matcher = new ErrorStateMatcher();
 
   constructor(public thisDialogRef: MatDialogRef<AgregarAlimentoDietaComponent>,
               @Inject(MAT_DIALOG_DATA)
@@ -38,23 +38,18 @@ export class AgregarAlimentoDietaComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.cargarAlimentos();    
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
-  
   ngAfterViewInit() {
-    this.cargarAlimentos();
   }
 
   cargarAlimentos() {
     this.ws.todosLosAlimentos().subscribe(data => {
       this.dataSource.data = data;
-      // console.log(this.dataSource.data);
     });
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
+
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches

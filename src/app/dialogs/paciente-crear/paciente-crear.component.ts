@@ -56,13 +56,13 @@ export class PacienteCrearComponent implements OnInit {
       nacimiento: ['', Validators.required]
     });
     this.secondFormGroup = this._formBuilder.group({
-      talla: ['', Validators.required],
-      actual: ['', Validators.required],
-      habitual: ['', Validators.required],
-      muneca: ['', Validators.required],
-      brazo: ['', Validators.required],
-      cintura1: ['', Validators.required],
-      cintura2: ['', Validators.required],
+      talla: ['', [Validators.required, Validators.min(148), Validators.max(195)]],
+      actual: ['', [Validators.required, Validators.min(0.1)]],
+      habitual: ['', [Validators.required, Validators.min(0.1)]],
+      muneca: ['', [Validators.required, Validators.min(0.1)]],
+      brazo: ['', [Validators.required, Validators.min(0.1)]],
+      cintura1: ['', [Validators.required, Validators.min(0.1)]],
+      cintura2: ['', [Validators.required, Validators.min(0.1)]],
     });
     this.thirdFormGroup = this._formBuilder.group({
       obesidad: [false],
@@ -243,10 +243,14 @@ export class PacienteCrearComponent implements OnInit {
                   return pesoIdeal;
             })
             .subscribe(res => {
-              // this.loading = false;
-              this.calcularPesoAjustadoPorcentaje(this.secondFormGroup.controls.actual.value, pesoIdeal);
-              this.pacienteDetalle();
-              this.showPaciente = true;
+                                // this.loading = false;
+                                this.calcularPesoAjustadoPorcentaje(this.secondFormGroup.controls.actual.value, pesoIdeal);
+                                this.pacienteDetalle();
+                                this.showPaciente = true;
+                              }, 
+                       err => {
+                                this.openSnackbar(PACIENTE.altaCalculosERR);
+                                
             }); 
 
     return pesoIdeal;    
@@ -326,16 +330,17 @@ export class PacienteCrearComponent implements OnInit {
 
   // Alta del paciente creado
   crearPaciente() {
-    // this.loading = true;
+    this.loading = true;
     this.ws.pacienteAlta(this.paciente)
           .subscribe(res => {
                                 // console.log("resultado del subscribe paciente alta");
                                 this.openSnackbar(PACIENTE.altaOK);
-                                // this.loading = false;
+                                this.loading = false;
                                 this.thisDialogRef.close('Alta Paciente OK');
                               }, err => {
                                 console.log("[ERROR] component crearPaciente", err);
                                 this.openSnackbar(PACIENTE.altaERR);
+                                this.loading = false;
                                 this.thisDialogRef.close('Error al registrar paciente');
                               }
                     );

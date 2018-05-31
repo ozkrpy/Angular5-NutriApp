@@ -48,11 +48,12 @@ import { PacienteDetalleComponent } from './dialogs/paciente-detalle/paciente-de
 import { PacienteCrearComponent } from './dialogs/paciente-crear/paciente-crear.component';
 import { AlimentoDetalleComponent } from './dialogs/alimento-detalle/alimento-detalle.component';
 import { AlimentoCrearComponent } from './dialogs/alimento-crear/alimento-crear.component';
-import { SettingsComponent } from './settings/settings.component';
+import { SettingsComponent } from './components/settings/settings.component';
 import { DietaDetalleComponent } from './dialogs/dieta-detalle/dieta-detalle.component';
 import { AgregarAlimentoDietaComponent } from './dialogs/agregar-alimento-dieta/agregar-alimento-dieta.component';
 import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component';
 import { ConfirmacionComponent } from './dialogs/confirmacion/confirmacion.component';
+import { HelpComponent } from './components/help/help.component';
 
 
 
@@ -71,7 +72,8 @@ import { ConfirmacionComponent } from './dialogs/confirmacion/confirmacion.compo
     DietaDetalleComponent,
     AgregarAlimentoDietaComponent,
     DietaCrearComponent,
-    ConfirmacionComponent
+    ConfirmacionComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

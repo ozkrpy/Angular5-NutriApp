@@ -7,14 +7,19 @@
     <!-- 1 -->
     <mat-step [stepControl]="firstFormGroup">
       <form [formGroup]="firstFormGroup">
-        <ng-template matStepLabel>Datos Personales</ng-template>
-        
+        <ng-template matStepLabel>Datos Personales</ng-template>        
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
           <mat-form-field>
-            <input matInput placeholder="Nombres" formControlName="nombre" required>
+            <input matInput placeholder="Nombres" formControlName="nombre" required minlength="3">
+            <mat-error *ngIf="firstFormGroup.get('nombre').hasError('minlength') || firstFormGroup.get('nombre').hasError('required') ">
+              El nombre debe tener al menos 2 caracteres.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Apellidos" formControlName="apellido" required>
+            <input matInput placeholder="Apellidos" formControlName="apellido" required minlength="3">
+            <mat-error *ngIf="firstFormGroup.get('apellido').hasError('minlength') || firstFormGroup.get('apellido').hasError('required')">
+              El apellido debe tener al menos 2 caracteres.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Sexo" formControlName="sexo" required>
@@ -22,6 +27,9 @@
                 {{sexo.facevalue}}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="firstFormGroup.get('sexo').hasError('required') ">
+              Debe seleccionar una opcion.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <mat-select placeholder="Estado civil" formControlName="civil" required>
@@ -29,13 +37,20 @@
                 {{estado.facevalue}}
               </mat-option>
             </mat-select>
+            <mat-error *ngIf="firstFormGroup.get('civil').hasError('required') ">
+              Debe seleccionar una opcion.
+            </mat-error>
           </mat-form-field>
           <mat-form-field>
             <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="nacimiento" required>
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker touchUi="true"></mat-datepicker>
+            <mat-error *ngIf="firstFormGroup.get('nacimiento').hasError('required') ">
+              Debe seleccionar una fecha valida.
+            </mat-error>
           </mat-form-field>
         </div>
+        <br>
         <div fxLayoutAlign="center center">
           <button mat-button matStepperNext>Siguiente
             <mat-icon>keyboard_arrow_right</mat-icon>
@@ -48,28 +63,53 @@
       <form [formGroup]="secondFormGroup">
         <ng-template matStepLabel>Talla, Peso, Biotipo</ng-template>
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-          <mat-form-field>
-            <input matInput placeholder="Talla (cm.)" formControlName="talla" required>
+          <mat-form-field fxFlex="100px">
+            <input matInput placeholder="Talla (cm.)" formControlName="talla" required fxFlex="100px">
+            <mat-error *ngIf="secondFormGroup.get('talla').hasError('min') || secondFormGroup.get('talla').hasError('max')">
+              La talla debe ser mayor a 148 cm. y menor a 195 cm.
+            </mat-error>
+            <mat-error *ngIf="secondFormGroup.get('talla').hasError('required')">
+              La <strong>talla</strong> se debe definir.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Peso Actual (Kg.)" formControlName="actual" required>
+          <mat-form-field fxFlex="140px">
+            <input matInput placeholder="Peso Actual (Kg.)" formControlName="actual" required fxFlex="140px">
+            <mat-error *ngIf="secondFormGroup.get('actual').hasError('min') || secondFormGroup.get('actual').hasError('required')">
+              El <strong>peso</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Peso Habitual (Kg.)" formControlName="habitual">
+          <mat-form-field fxFlex="140px">
+            <input matInput placeholder="Peso Habitual (Kg.)" formControlName="habitual" fxFlex="140px">
+            <mat-error *ngIf="secondFormGroup.get('habitual').hasError('min') || secondFormGroup.get('habitual').hasError('required')">
+              El <strong>peso</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Cia. muñeca (cm.)" formControlName="muneca" required>
+          <mat-form-field fxFlex="150px">
+            <input matInput placeholder="Cia. muñeca (cm.)" formControlName="muneca" required fxFlex="150px">
+            <mat-error *ngIf="secondFormGroup.get('muneca').hasError('min') || secondFormGroup.get('muneca').hasError('required')">
+              La <strong>circunferencia</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Cia. brazo (cm.)" formControlName="brazo" required>
+          <mat-form-field fxFlex="130px">
+            <input matInput placeholder="Cia. brazo (cm.)" formControlName="brazo" required fxFlex="130px">
+            <mat-error *ngIf="secondFormGroup.get('brazo').hasError('min') || secondFormGroup.get('brazo').hasError('required')">
+              La <strong>circunferencia</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required>
+          <mat-form-field fxFlex="150px">
+            <input matInput placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required fxFlex="150px">
+            <mat-error *ngIf="secondFormGroup.get('cintura1').hasError('min') || secondFormGroup.get('cintura1').hasError('required')">
+              La <strong>circunferencia</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
-          <mat-form-field>
-            <input matInput placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required>
+          <mat-form-field fxFlex="150px">
+            <input matInput placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required fxFlex="150px">
+            <mat-error *ngIf="secondFormGroup.get('cintura2').hasError('min') || secondFormGroup.get('cintura2').hasError('required')">
+              La <strong>circunferencia</strong> debe ser mayor a cero.
+            </mat-error>
           </mat-form-field>
         </div>
+        <br>
         <div fxLayoutAlign="center center">
           <button mat-button matStepperPrevious>
             <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
@@ -81,16 +121,16 @@
     </mat-step>
     <!-- 3 -->
     <mat-step [stepControl]="thirdFormGroup">
-      <form [formGroup]="thirdFormGroup">
+      <form [formGroup]="thirdFormGroup" fxLayout="column" fxLayoutAlign="space-around center">
         <ng-template matStepLabel>Antecedentes, medicacion</ng-template>
-        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-          <section fxLayout="column" fxLayoutAlign="space-between">
+        <div fxLayout="row wrap" fxLayout.xs="column">
+          <section fxLayout="column" fxLayoutAlign="space-between" fxFlex.gt-sm="200px">
             <mat-checkbox formControlName="obesidad">Obesidad</mat-checkbox>
             <mat-checkbox formControlName="cardiopatias">Cardiopatias</mat-checkbox>
             <mat-checkbox formControlName="hta">HTA</mat-checkbox>
             <mat-checkbox formControlName="diabetes">Diabetes</mat-checkbox>
           </section>
-          <div fxLayout="column" fxLayoutAlign="space-evenly center">
+          <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutGap="20px">
             <mat-form-field>
               <input matInput formControlName="medicacion" maxlength="1000" placeholder="Medicacion" #medicacion>
               <mat-hint align="start">
@@ -192,6 +232,7 @@
             <input matInput placeholder="HBA" formControlName="hba">
           </mat-form-field>
         </div>  
+        <br>
         <div fxLayoutAlign="center center">
           <button mat-button matStepperPrevious>
             <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>
@@ -207,7 +248,7 @@
       <div fxLayout="column" fxLayoutAlign="space-evenly center">
         <strong>Carga del paciente completada.</strong>
         <p>Favor verifique que los datos sean correctos</p>
-        <!-- <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner> -->
+        <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
         <div fxLayout="row" *ngIf="showPaciente">
           <div fxLayout="column wrap" fxLayoutAlign="center center">
             <strong>Informacion personal</strong>
@@ -306,6 +347,7 @@
           </div>
         </div>
       </div>
+      <br>
       <div fxLayoutAlign="center center">
         <button mat-button matStepperPrevious>
           <mat-icon>keyboard_arrow_left</mat-icon>Anterior</button>

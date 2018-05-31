@@ -116,6 +116,7 @@ export const PACIENTE = {
     updateLaboratorioOK: 'Los datos de laboratorio del paciente han sido actualizados.',
     altaOK: 'El paciente ha sido registrado exitosamente.',
     altaERR: 'El paciente no ha sido registrado, consulte con SOPORTE.',
+    altaCalculosERR: 'Los datos ingresados generaron un error, consulte el manual de ayuda.'
 };
 
 export const DIETA = {

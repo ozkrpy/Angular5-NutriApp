@@ -1,0 +1,56 @@
+<h1>AYUDA / INFORMACION UTIL</h1>
+<h2>PACIENTES</h2>
+<h3>
+  En la carga de un paciente se tienen en cuenta los siguientes parametros principales.
+  <div>El sexo y la edad son items de referencia para los calculos que son realizados por la aplicacion, donde se destacan los siguientes:</div>
+</h3>
+<h4>
+  * El calculo del biotipo o contextura se realiza solo para pacientes de mas de 25 años.
+  (Primeramente la aplicacion divide la talla con la circunferencia de muñeca).
+  <h5>
+    - Si es HOMBRE: de acuerdo al resultado de la division, si es mayor a cero y: 
+    <div>a.) es mayor a 10.4: su contextura se define como pequeña.</div>
+    <div>b.) es mayor a 9.6 y menor o igual a 10.4: la contextura es mediana.</div> 
+    <div>c.) es menor a 9.6: la contextura es grande.</div>
+    <div>*.) Sino, la contextura es indefinida.</div>
+  </h5>
+  <h5>
+    - Si es MUJER: de acuerdo al resultado de la division, si es mayor a cero y: 
+    <div>a.) es mayor a 11: su contextura se define como pequeña.</div>
+    <div>b.) es mayor a 10.1 y menor o igual a 11: la contextura es mediana.</div>
+    <div>c.) es menor a 10.1: la contextura es grande.</div>
+    <div>*.) Sino, la contextura es indefinida.</div>
+  </h5>
+</h4>
+<h4>
+  * El calculo del IMC se realiza diviendo el  peso actual y talla (calculada automaticamente a mts. por la aplicacion).
+  <div>El IMC define los siguientes criterios:</div>
+  <div>- Si es menor a 18.5: Delgadez.</div>
+  <div>- Si es mayor o igual a 18.5 y menor o igual a 24.9: Normal o sano.</div>
+  <div>- Si es mayor o igual a 25 y menor o igual a 29.9: Sobrepeso.</div>
+  <div>- Si es mayor o igual a 30 y menor o igual a 34.9: Obesidad grado I.</div>
+  <div>- Si es mayor o igual a 35 y menor o igual a 39.9: Obesidad grado II.</div>
+  <div>- Si es mayor a 40: Obesidad morbida.</div>
+</h4>
+<h4>
+  * El calculo del Peso Ideal se realiza mediante los campos edad, biotipo, sexo y talla.
+  <div>- Segun el sexo y talla se consulta la tabla de equivalencias para pesos ideales.</div>
+  <h5>
+    <div>HOMBRE: la talla debe ser de al menos 153 cm., y maximo 195 cm.</div>
+    <div>MUJER: la talla debe ser de al menos 148 cm., maximo 184 cm.</div>
+    Si la edad del paciente es:
+    <div>a.) de 0 a 19 años se utiliza la equivalencia de la tabla para edad17_19.</div>
+    <div>b.) de 20 a 24 años se utiliza la equivalencia de la tabla para edad20_24.</div>
+    <div>c.) de 25 años y su contextura es pequeña se utiliza la equivalencia de la tabla para pequeña.</div>
+    <div>c.) de 25 años y su contextura es mediana se utiliza la equivalencia de la tabla para mediana.</div>
+    <div>c.) de 25 años y su contextura es grande se utiliza la equivalencia de la tabla para grande.</div>
+    El peso ideal se utiliza tambien como peso saludable.
+  </h5>
+</h4>
+<h4>
+  * El calculo de porcentaje de peso ideal y peso ajustado, se realiza con el peso actual y con el peso ideal.
+  <h5>
+    <div>- Peso ajustado: Peso actual menos peso ideal, multiplicado por 0.25 y al resultado se le suma el peso ideal.</div>
+    <div>- Porcentaje peso ideal: Peso actual divido peso ideal, multiplicado por 100.</div>
+  </h5>
+</h4>

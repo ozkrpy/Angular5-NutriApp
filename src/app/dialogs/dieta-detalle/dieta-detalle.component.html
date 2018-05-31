@@ -198,11 +198,11 @@
     <div fxShow.xs fxHide.gt-sm matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
         <mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="descripcion">
-              <mat-header-cell *matHeaderCellDef> Cant. </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> Alimento </mat-header-cell>
               <mat-cell *matCellDef="let detalle"> {{ detalle.alimento.descripcion_alimento }} </mat-cell>
           </ng-container>
           <ng-container matColumnDef="distribucion">
-              <mat-header-cell *matHeaderCellDef> Distribucion </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef> Datos </mat-header-cell>
               <mat-cell *matCellDef="let detalle">  
                 <div><strong>Cant: </strong>{{ detalle.cantidad_alimento }}</div>
                 <div><strong>HC: </strong>{{ detalle.alimento.hidratos_carbono }}</div>
