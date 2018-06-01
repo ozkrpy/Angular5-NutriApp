@@ -9,18 +9,14 @@
                 <mat-form-field>
                     <input matInput #filter (keyup)="applyFilter($event.target.value)" placeholder="Buscar Alimento">
                 </mat-form-field>
-                <mat-form-field class="example-full-width">
+                <mat-form-field>
                     <input matInput
                             #cantidad  
                             placeholder="Cantidad del Alimento*" 
                             [formControl]="cantidadFormControl"
-                            [errorStateMatcher]="matcher"
                             autofocus>
-                    <mat-error *ngIf="cantidadFormControl.hasError('min') && !cantidadFormControl.hasError('required')">
-                        La cantidad debe ser mayor a cero.
-                    </mat-error>
-                    <mat-error *ngIf="cantidadFormControl.hasError('required')">
-                        La <strong>cantidad</strong> se debe definir.
+                    <mat-error *ngIf="cantidadFormControl.errors?.min || cantidadFormControl.errors?.required">
+                        La <strong>cantidad</strong> debe ser mayor a cero.
                     </mat-error>
                 </mat-form-field>
             </div>
@@ -98,7 +94,12 @@
                 <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="detalleAlimento(alimento.codigo_alimento)" matTooltip="Ver detalles del Alimento">
                     <mat-icon>info</mat-icon>
                 </button> 
-                <button fxFlex="45px" fxLayoutAlign="center center" color="primary" mat-raised-button (click)="agregarAlimento(alimento.codigo_alimento, cantidad.value)" matTooltip="Agregar este alimento a la dieta">
+                <button fxFlex="45px" 
+                        fxLayoutAlign="center center" 
+                        color="primary" 
+                        mat-raised-button
+                        (click)="agregarAlimento(alimento.codigo_alimento, cantidad.value)" 
+                        matTooltip="Agregar este alimento a la dieta">
                     <mat-icon>playlist_add</mat-icon>
                 </button>
             </mat-cell>

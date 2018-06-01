@@ -148,14 +148,12 @@ export class DietaDetalleComponent implements OnInit {
   }
 
   agregarAlimento() {
-    // console.log("agregar alimento")
     let dialogRef = this.AddFoodDialog.open( 
                                               AgregarAlimentoDietaComponent, 
                                               { width: '70%', height: '70%', data: this.entrada}
                                             );
     dialogRef.afterClosed()
               .subscribe(result => {
-                                    // console.log(`Dialogo cerrado: ${result}`);
                                     this.dialogAddFoodResult = result;
                                     this.recuperaReferenciasDieta();
     });    

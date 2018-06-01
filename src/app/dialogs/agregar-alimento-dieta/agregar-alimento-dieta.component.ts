@@ -20,13 +20,7 @@ export class AgregarAlimentoDietaComponent implements OnInit {
   displayedColumns = ['codigo', 'descripcion', 'tipo', 'medida', 'hidratos', 'proteinas', 'grasas', 'fibras', 'edicion'];
   displayedColumnsMobile = ['descripcion', 'distribucion', 'eliminar'];
   private alimentos: Observable<AlimentoDetalle[]>;
-
-  cantidadFormControl = new FormControl('0.0', [
-    Validators.required,
-    Validators.min(0.1)
-  ]);
-
-  // matcher = new ErrorStateMatcher();
+  cantidadFormControl: FormControl;
 
   constructor(public thisDialogRef: MatDialogRef<AgregarAlimentoDietaComponent>,
               @Inject(MAT_DIALOG_DATA)
@@ -35,9 +29,14 @@ export class AgregarAlimentoDietaComponent implements OnInit {
               public snackbar: MatSnackBar, 
               public dialog: MatDialog,
               public AddFoodDialog: MatDialog
-  ) { }
+  ) { 
+  }
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  
   ngOnInit() {
+    this.cantidadFormControl = new FormControl('1.0', [Validators.required, Validators.min(0.1)]);
     this.cargarAlimentos();    
   }
 
@@ -48,32 +47,30 @@ export class AgregarAlimentoDietaComponent implements OnInit {
     this.ws.todosLosAlimentos().subscribe(data => {
       this.dataSource.data = data;
     });
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim(); // Remove whitespace
-    filterValue = filterValue.toLowerCase(); // Datasource defaults to lowercase matches
+    filterValue = filterValue.trim();
+    filterValue = filterValue.toLowerCase();
     this.dataSource.filter = filterValue;
   }
 
   detalleAlimento(codigo: number) {
-    // console.log("metodo para detalle de alimento: " + codigo);
     let dialogRef = this.dialog.open( 
                                       AlimentoDetalleComponent, 
                                       { width: '90%', height: '', data: codigo}
     );
     dialogRef.afterClosed().subscribe(result => {
-                                        // console.log(`Dialogo cerrado: ${result}`);
                                         this.AddFoodDialog = result;
                                         this.cargarAlimentos();
     });
   }
 
   agregarAlimento(alimento: number, cantidad: number) {
-    // console.log("DIETA:", this.dieta, "ALIMENTO:", alimento, "CANTIDAD:", cantidad)
     this.ws.dietasAgregarAlimento(this.dieta, alimento, cantidad)
            .subscribe(res => {
-                              // console.log(res);
                               this.openSnackbar(DIETA.addAlimentoOK + this.dieta);
                               this.thisDialogRef.close('OK');});
   }
