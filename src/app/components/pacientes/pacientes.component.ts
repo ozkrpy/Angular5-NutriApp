@@ -19,6 +19,7 @@ import { PacienteDetalle } from '../../model/paciente-detalle';
 export class PacientesComponent implements OnInit {
 
   loading: boolean = false;
+  pacientesEmpty: boolean;
   dialogResult: string = "";
   
   todosLosPacientes: PacienteDetalle[];
@@ -59,11 +60,15 @@ export class PacientesComponent implements OnInit {
 
   actualizaListaPacientes() {
     this.loading = true;    
+    this.pacientesEmpty = false;
     this.ws.todosLosPacientes()
            .subscribe(res => {
                               // console.log(res);
                               this.todosLosPacientes = res;
                               this.loading = false;
+                              if (res.length == 0) {
+                                this.pacientesEmpty = !this.pacientesEmpty;
+                              };
                       }, err => {
                                   console.log(err);
                                   this.openSnackbar(err);

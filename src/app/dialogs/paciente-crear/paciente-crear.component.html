@@ -10,13 +10,13 @@
         <ng-template matStepLabel>Datos Personales</ng-template>        
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
           <mat-form-field>
-            <input matInput placeholder="Nombres" formControlName="nombre" required minlength="3">
+            <input matInput placeholder="Nombres" formControlName="nombre" required minlength="2">
             <mat-error *ngIf="firstFormGroup.get('nombre').hasError('minlength') || firstFormGroup.get('nombre').hasError('required') ">
               El nombre debe tener al menos 2 caracteres.
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Apellidos" formControlName="apellido" required minlength="3">
+            <input matInput placeholder="Apellidos" formControlName="apellido" required minlength="2">
             <mat-error *ngIf="firstFormGroup.get('apellido').hasError('minlength') || firstFormGroup.get('apellido').hasError('required')">
               El apellido debe tener al menos 2 caracteres.
             </mat-error>

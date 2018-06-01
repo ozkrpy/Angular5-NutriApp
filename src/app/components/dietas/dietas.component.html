@@ -4,6 +4,7 @@
     <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
+    <h3 [fxShow]="dietasEmpty">Aun no hay dietas registradas en el sistema.</h3>
     <mat-card class="card-padding mat-elevation-z4" *ngFor="let d of todasDietas" fxLayout="column" >
       <mat-card-header fxLayout="column">
           <mat-divider></mat-divider>

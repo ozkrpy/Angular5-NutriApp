@@ -10,6 +10,7 @@ import { DietaCrearComponent } from '../../dialogs/dieta-crear/dieta-crear.compo
 
 import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
 import { AFIRMATIVO, NEGATIVO, DIETA } from '../../model/datos-varios';
+import { Logs } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-dietas',
@@ -18,11 +19,11 @@ import { AFIRMATIVO, NEGATIVO, DIETA } from '../../model/datos-varios';
 })
 export class DietasComponent implements OnInit {
 
-  // todasDietas: Observable<ReferenciaDieta[]>;
   todasDietas: ReferenciaDieta[];
   dialogResult: string = "";
   loading: boolean = false;
-  
+  dietasEmpty: boolean;
+
   constructor(private ws: DbAPIService, 
               public dialog: MatDialog,
               public snackbar: MatSnackBar) { }
@@ -32,13 +33,15 @@ export class DietasComponent implements OnInit {
   }
 
   recuperaDietas() {
-    this.loading = true;    
-    
-    // this.todasDietas = this.ws.todasDietasReferencia();
+    this.loading = true; 
+    this.dietasEmpty = false;    
     this.ws.todasDietasReferencia()
            .subscribe(res => {
                               this.todasDietas = res;
                               this.loading = false;
+                              if (res.length == 0) {
+                                this.dietasEmpty = !this.dietasEmpty;
+                              };
                       }, err => {
                                   console.log(err);                                  
                                   this.openSnackbar(err);
@@ -47,7 +50,6 @@ export class DietasComponent implements OnInit {
   }
 
   verDetallesDieta(codigo: number) {
-    // console.log("detalles de la dieta: " + codigo);
     let dialogRef = this.dialog.open( 
                                       DietaDetalleComponent, 
                                       { width: '', height: '100%', data: codigo}

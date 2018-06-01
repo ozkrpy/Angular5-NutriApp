@@ -50,8 +50,8 @@ export class DietaCrearComponent implements OnInit {
                                                   this.dietaFormGroup.controls.fibras.value,
                                                   this.dietaFormGroup.controls.paciente.value)
                                      .subscribe(res => {
-                                                          console.log(res);
-                                                          this.openSnackbar(DIETA.altaOK + codigoDieta);
+                                                          // console.log(res);
+                                                          this.openSnackbar(DIETA.altaOK);
                                                           this.thisDialogRef.close('OK');}
                                                        ); 
     });
@@ -66,13 +66,13 @@ export class DietaCrearComponent implements OnInit {
   }
   
   agregarPaciente() {
-    console.log("agregar nuevo paciente");
+    // console.log("agregar nuevo paciente");
     let dialogRef = this.dialog.open( 
                                      PacienteCrearComponent, 
                                      { width: '80%', height: ''}
     );
     dialogRef.afterClosed().subscribe(result => {
-                                        console.log(`Dialogo cerrado: ${result}`);
+                                        // console.log(`Dialogo cerrado: ${result}`);
                                         this.dialogResult = result;
                                         this.pacientes = this.ws.todosLosPacientes();
     });

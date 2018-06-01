@@ -436,7 +436,11 @@ export class DbAPIService {
 
   dietasAlta(codigoDieta: number, hidratos: number, proteinas: number, grasas: number, fibras: number, paciente: number) {
     let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasAgregar;
-    let body: any = {codigoDietaParam: codigoDieta,
+    let dieta = 1;
+    if(codigoDieta != null) {
+      dieta = codigoDieta;
+    }    
+    let body: any = {codigoDietaParam: dieta,
                       hidratosParam: hidratos,
                       proteinasParam: proteinas,
                       grasasParam: grasas,

@@ -123,7 +123,7 @@ export const DIETA = {
     deleteOK: 'La dieta se ha eliminado correctamente',
     deleteERR: 'Ocurrio un error, favor contactar al soporte.',
     updateDatosOK: '',
-    altaOK: 'Nueva dieta creada, codigo: ',
+    altaOK: 'Nueva dieta creada exitosamente.',
     altaERR: '',
     addAlimentoOK: 'Se agrego correctamente el alimento a la dieta: ',
     delAlimentoOK: 'El alimento ha sido dado eliminado correctamente.',
