@@ -1,32 +1,40 @@
-<div fxLayout="column" fxLayoutAlign="space-evenly center" fxLayoutGap="10px">
-  <div fxLayout="row">
-    <button color="primary" mat-raised-button (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
-  </div>
+<div fxLayout="column" fxLayoutAlign="space-evenly center">
+  <button color="primary" mat-raised-button (click)="agregarPaciente()">AGREGAR NUEVO PACIENTE</button>
   <div>
     <mat-progress-spinner *ngIf="loading" mode="indeterminate"></mat-progress-spinner>
   </div>
   <div fxLayout="row wrap" fxLayoutGap="10px" fxLayoutAlign="center center">
     <h3 [fxShow]="pacientesEmpty">Aun no hay pacientes registrados en el sistema.</h3>
     <mat-card class="card-padding mat-elevation-z4" *ngFor="let p of todosLosPacientes">
-        <mat-card-header fxLayoutAlign="center center">
-          <mat-icon mat-card-avatar>accessibility</mat-icon>
-          <mat-card-title><h3><strong>{{ p.apellido | uppercase }}, {{ p.nombre | uppercase }}</strong></h3></mat-card-title>
-          <mat-card-subtitle><strong>Talla: </strong>{{ p.talla }} cm., <strong>IMC: </strong>{{ p.imc | number:'1.1-2'}}</mat-card-subtitle>
-          <mat-card-subtitle><strong>Biotipo: </strong>{{ p.biotipo }}</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content fxLayout="column" fxLayoutAlign="center center">
+      <mat-icon>insert_emoticon</mat-icon>
+      <mat-card-header fxLayout="column">
+        <mat-divider></mat-divider>          
+        <mat-card-title>
+          <h3><strong>{{ p.apellido | uppercase }}, {{ p.nombre | uppercase }}</strong></h3>
+        </mat-card-title>
+        <mat-card-subtitle>
+          <div><strong>Talla: </strong>{{ p.talla }} cm., <strong>IMC: </strong>{{ p.imc | number:'1.1-2'}}</div>
+          <div><strong>Biotipo: </strong>{{ p.biotipo }}</div>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-divider></mat-divider>                  
+        <div fxLayout="column" fxLayoutAlign="center center">
           <h4>PESOS</h4>
           <div><strong>Actual: </strong>{{ p.peso_actual | number:'1.1-2' }} kg.</div>
           <div><strong>Habitual: </strong>{{ p.peso_habitual | number:'1.1-2' }} kg.</div>
           <div><strong>Ajustado: </strong>{{ p.peso_ajusta | number:'1.1-2' }} kg.</div>
           <div><strong>Saludable: </strong>{{ p.peso_saludable | number:'1.1-1' }} kg.</div>
-          <div><strong>% de PI: </strong>{{ p.porcentaje_peso_ideal | number:'1.1-2' }}%.</div>
-        </mat-card-content>
-        <mat-card-actions fxLayoutAlign="center center">
-          <button mat-button color="accent" (click)="verDetallesPaciente(p.codigo_paciente)">Toda la informacion...</button>
-          <br>
-        </mat-card-actions>
-        
-    </mat-card> 
+          <div><strong>% de PI: </strong>{{ p.porcentaje_peso_ideal | number:'1.1-2' }}%.</div>            
+        </div>
+      </mat-card-content>
+      <mat-divider></mat-divider>          
+      
+      <mat-card-actions fxLayoutAlign="center center">
+        <button mat-button color="accent" (click)="verDetallesPaciente(p.codigo_paciente)">Toda la informacion...</button>
+        <br>
+      </mat-card-actions>
+          
+      </mat-card> 
   </div>
 </div>
