@@ -204,6 +204,14 @@ export class DbAPIService {
                .catch((error:any) => Observable.throw(error.json() || 'catch en la API Server error')); 
   }
 
+  pacienteHistorial(codigoPaciente: number): Observable<any> {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.pacienteHistorial + codigoPaciente;
+    return this.httpRequest
+               .get(apiURL)
+               .map((r: Response) => r.json() as PacienteDetalle) 
+               .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
+
   todosLosAlimentos(): Observable<AlimentoDetalle[]> {
     let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.alimentos;
     console.log("metodo recupera todos los alimentos: " + apiURL);

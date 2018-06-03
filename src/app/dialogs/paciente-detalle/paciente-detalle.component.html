@@ -80,6 +80,7 @@
           </mat-form-field>
         </div>
         <mat-action-row>
+          <button mat-button (click)="verHistorial(detalle.codigo_paciente, detalle.peso_actual, detalle.peso_habitual, detalle.peso_ajusta, detalle.peso_saludable)"><mat-icon>insert_chart_outlined</mat-icon>Historial</button>
           <button mat-button (click)="editPesoPaciente(detalle.codigo_paciente, detalle.peso_actual, actual.value, detalle.peso_habitual, habitual.value)"><mat-icon>{{ statusEditPeso ? 'edit' : 'save' }}</mat-icon> {{ statusEditPeso ? 'Editar' : 'Guardar' }} </button>
         </mat-action-row>
       </mat-expansion-panel>

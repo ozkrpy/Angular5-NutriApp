@@ -54,7 +54,9 @@ import { AgregarAlimentoDietaComponent } from './dialogs/agregar-alimento-dieta/
 import { DietaCrearComponent } from './dialogs/dieta-crear/dieta-crear.component';
 import { ConfirmacionComponent } from './dialogs/confirmacion/confirmacion.component';
 import { HelpComponent } from './components/help/help.component';
+import { PacienteHistorialComponent } from './dialogs/paciente-historial/paciente-historial.component';
 
+import { ChartModule } from 'angular2-chartjs';
 
 
 @NgModule({
@@ -73,7 +75,8 @@ import { HelpComponent } from './components/help/help.component';
     AgregarAlimentoDietaComponent,
     DietaCrearComponent,
     ConfirmacionComponent,
-    HelpComponent
+    HelpComponent,
+    PacienteHistorialComponent
   ],
   imports: [
     BrowserModule,
@@ -106,6 +109,7 @@ import { HelpComponent } from './components/help/help.component';
     MatSortModule,
     MatTooltipModule,
     MatDividerModule,
+    ChartModule,
     RouterModule.forRoot(RutasNavegacion, { useHash: true })
   ],
   providers: [
@@ -119,7 +123,8 @@ import { HelpComponent } from './components/help/help.component';
     DietaDetalleComponent,
     AgregarAlimentoDietaComponent,
     DietaCrearComponent,
-    ConfirmacionComponent
+    ConfirmacionComponent,
+    PacienteHistorialComponent
   ],
   bootstrap: [AppComponent]
 })

@@ -11,6 +11,7 @@ import { PacienteDetalle } from '../../model/paciente-detalle';
 import { SexosArray, EstadoCivil } from '../../model/datos-varios';
 
 import { ConfirmacionComponent } from '../../dialogs/confirmacion/confirmacion.component';
+import { PacienteHistorialComponent } from '../../dialogs/paciente-historial/paciente-historial.component';
 import { AFIRMATIVO, NEGATIVO, PACIENTE } from '../../model/datos-varios';
 
 @Component({
@@ -233,6 +234,24 @@ export class PacienteDetalleComponent implements OnInit {
 
   onCloseCancel() {
     this.thisDialogRef.close('Cancel');
+  }
+
+  verHistorial(codigo: number, actual: number, habitual: number, ajustado: number, saludable: number) {
+    console.log("historial");
+    let dialogRef = this.dialog.open( 
+                                      PacienteHistorialComponent, 
+                                      { 
+                                        width: '70%', 
+                                        height: '', 
+                                        data: {codigo, actual, habitual, ajustado, saludable}
+                                      });
+    dialogRef.afterClosed()
+    .subscribe(result => {
+      console.log("cerrado");
+      
+    // this.dialogAddFoodResult = result;
+    // this.recuperaReferenciasDieta();
+    });  
   }
 
 }
