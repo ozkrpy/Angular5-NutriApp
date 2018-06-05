@@ -68,7 +68,7 @@ export class AlimentosComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(result => {
                                         this.dialogResult = result;
-                                        this.cargarAlimentos();
+                                        this.cargarAlimentos();            
     });
   }
 
@@ -79,6 +79,7 @@ export class AlimentosComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(result => {
             this.dialogResult = result;
+            this.cargarAlimentos();            
     });    
   }
 

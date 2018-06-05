@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { DbAPIService } from '../../db-api.service';
+import { PACIENTE } from '../../model/datos-varios';
 
 @Component({
   selector: 'app-paciente-historial',
@@ -27,7 +28,6 @@ export class PacienteHistorialComponent implements OnInit {
   ngOnInit() {
     this.ws.pacienteHistorial(this.datosEntrada.codigo)
            .subscribe(res => {
-                              
                               // EN CASO QUE HAYAN RESULTADOS, INCLUIRLOS EN LA LISTA.
                               for (let entry of res) {
                                 this.pesosActuales.push(entry.peso_actual);
@@ -52,31 +52,31 @@ export class PacienteHistorialComponent implements OnInit {
       labels: this.fechas,
       datasets: [
         {
-          label: "Peso Actual.",
+          label: PACIENTE.graficoTitulos.pesoActual,
           data: this.pesosActuales,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255,99,132,1)',
+          backgroundColor: PACIENTE.graficoColores.fondoRojo,
+          borderColor: PACIENTE.graficoColores.bordeRojo,
           borderWidth: 1
         },
         {
-          label: "Peso Habitual.",
+          label: PACIENTE.graficoTitulos.pesoHabitual,
           data: this.pesosHabituales,
-          backgroundColor: 'rgba(54, 162, 235, 0.2)',
-          borderColor: 'rgba(54, 162, 235, 1)',
+          backgroundColor: PACIENTE.graficoColores.fondoCeleste,
+          borderColor: PACIENTE.graficoColores.bordeCeleste,
           borderWidth: 1
         },
         {
-          label: "Peso Ajustado.",
+          label: PACIENTE.graficoTitulos.pesoAjustado,
           data: this.pesosAjustados,
-          backgroundColor: 'rgba(75, 192, 192, 0.2)',
-          borderColor: 'rgba(75, 192, 192, 1)',
+          backgroundColor: PACIENTE.graficoColores.fondoVerde,
+          borderColor: PACIENTE.graficoColores.bordeVerde,
           borderWidth: 1
         },
         {
-          label: "Peso Saludable.",
+          label: PACIENTE.graficoTitulos.pesoSaludable,
           data: this.pesosSaludables,
-          backgroundColor: 'rgba(153, 102, 255, 0.2)',
-          borderColor: 'rgba(153, 102, 255, 1)',
+          backgroundColor: PACIENTE.graficoColores.fondoVioleta,
+          borderColor: PACIENTE.graficoColores.bordeVioleta,
           borderWidth: 1
         }
       ]
@@ -86,24 +86,6 @@ export class PacienteHistorialComponent implements OnInit {
       maintainAspectRatio: false
     };
   }
-
-  // generarGrafico2() {
-  //   this.type = 'line';
-  //   this.data = {
-  //               labels: ["January", "February", "March", "April", "May", "June", "July"],
-  //               datasets: [
-  //                           {
-  //                             label: "My First dataset",
-  //                             data: [65, 59, 80, 81, 56, 55, 40]
-  //                           }
-  //                         ]
-  //   };
-  //   this.options = {
-  //     responsive: true,
-  //     maintainAspectRatio: false
-  //   };
-
-  // }
 
   onCloseCancel() {
     this.thisDialogRef.close('Cancel');

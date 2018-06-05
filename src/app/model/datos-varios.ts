@@ -116,7 +116,23 @@ export const PACIENTE = {
     updateLaboratorioOK: 'Los datos de laboratorio del paciente han sido actualizados.',
     altaOK: 'El paciente ha sido registrado exitosamente.',
     altaERR: 'El paciente no ha sido registrado, consulte con SOPORTE.',
-    altaCalculosERR: 'Los datos ingresados generaron un error, consulte el manual de ayuda.'
+    altaCalculosERR: 'Los datos ingresados generaron un error, consulte el manual de ayuda.',
+    graficoTitulos: {
+        pesoActual: 'Peso Actual.',
+        pesoHabitual: 'Peso Habitual.',
+        pesoAjustado: 'Peso Ajustado.',
+        pesoSaludable: 'Peso Saludable.',
+    },
+    graficoColores: {
+        fondoRojo: 'rgba(255, 99, 132, 0.2)',
+        bordeRojo: 'rgba(255,99,132,1)',
+        fondoCeleste: 'rgba(54, 162, 235, 0.2)',
+        bordeCeleste: 'rgba(54, 162, 235, 1)',
+        fondoVerde: 'rgba(75, 192, 192, 0.2)',
+        bordeVerde: 'rgba(75, 192, 192, 1)',
+        fondoVioleta: 'rgba(153, 102, 255, 0.2)',
+        bordeVioleta: 'rgba(153, 102, 255, 1)',
+    }
 };
 
 export const DIETA = {

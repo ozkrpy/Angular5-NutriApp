@@ -18,7 +18,7 @@ import { SexosArray, EstadoCivil, Contextura, PACIENTE } from '../../model/datos
 })
 export class PacienteCrearComponent implements OnInit {
   
-  private loading: boolean = false;
+  public loading: boolean = false;
   public showPaciente: boolean = false;
   private paciente: PacienteDetalle = null;
 
