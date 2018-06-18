@@ -64,7 +64,7 @@
         <ng-template matStepLabel>Talla, Peso, Biotipo</ng-template>
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
           <mat-form-field fxFlex="100px">
-            <input matInput placeholder="Talla (cm.)" formControlName="talla" required fxFlex="100px">
+            <input matInput type="number" placeholder="Talla (cm.)" formControlName="talla" required fxFlex="100px">
             <mat-error *ngIf="secondFormGroup.get('talla').hasError('min') || secondFormGroup.get('talla').hasError('max')">
               La talla debe ser mayor a 148 cm. y menor a 195 cm.
             </mat-error>
@@ -73,37 +73,37 @@
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="140px">
-            <input matInput placeholder="Peso Actual (Kg.)" formControlName="actual" required fxFlex="140px">
+            <input matInput type="number" placeholder="Peso Actual (Kg.)" formControlName="actual" required fxFlex="140px">
             <mat-error *ngIf="secondFormGroup.get('actual').hasError('min') || secondFormGroup.get('actual').hasError('required')">
               El <strong>peso</strong> debe ser mayor a cero.
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="140px">
-            <input matInput placeholder="Peso Habitual (Kg.)" formControlName="habitual" fxFlex="140px">
+            <input matInput type="number" placeholder="Peso Habitual (Kg.)" formControlName="habitual" fxFlex="140px">
             <mat-error *ngIf="secondFormGroup.get('habitual').hasError('min') || secondFormGroup.get('habitual').hasError('required')">
               El <strong>peso</strong> debe ser mayor a cero.
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="150px">
-            <input matInput placeholder="Cia. muñeca (cm.)" formControlName="muneca" required fxFlex="150px">
+            <input matInput type="number" placeholder="Cia. muñeca (cm.)" formControlName="muneca" required fxFlex="150px">
             <mat-error *ngIf="secondFormGroup.get('muneca').hasError('min') || secondFormGroup.get('muneca').hasError('required')">
               La <strong>circunferencia</strong> debe ser mayor a cero.
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="130px">
-            <input matInput placeholder="Cia. brazo (cm.)" formControlName="brazo" required fxFlex="130px">
+            <input matInput type="number" placeholder="Cia. brazo (cm.)" formControlName="brazo" required fxFlex="130px">
             <mat-error *ngIf="secondFormGroup.get('brazo').hasError('min') || secondFormGroup.get('brazo').hasError('required')">
               La <strong>circunferencia</strong> debe ser mayor a cero.
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="150px">
-            <input matInput placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required fxFlex="150px">
+            <input matInput type="number" placeholder="Cia. cintura 1 (cm.)" formControlName="cintura1" required fxFlex="150px">
             <mat-error *ngIf="secondFormGroup.get('cintura1').hasError('min') || secondFormGroup.get('cintura1').hasError('required')">
               La <strong>circunferencia</strong> debe ser mayor a cero.
             </mat-error>
           </mat-form-field>
           <mat-form-field fxFlex="150px">
-            <input matInput placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required fxFlex="150px">
+            <input matInput type="number" placeholder="Cia. cintura 2 (cm.)" formControlName="cintura2" required fxFlex="150px">
             <mat-error *ngIf="secondFormGroup.get('cintura2').hasError('min') || secondFormGroup.get('cintura2').hasError('required')">
               La <strong>circunferencia</strong> debe ser mayor a cero.
             </mat-error>
@@ -172,64 +172,64 @@
         <ng-template matStepLabel>Datos Laboratoriales</ng-template>
         <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
           <mat-form-field>
-            <input matInput placeholder="Glicemia Basal" formControlName="glicemiaBasal">
+            <input matInput type="number" placeholder="Glicemia Basal" formControlName="glicemiaBasal">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Creatinina" formControlName="creatinina">
+            <input matInput type="number" placeholder="Creatinina" formControlName="creatinina">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Proteinas totales" formControlName="proteinasTotales">
+            <input matInput type="number" placeholder="Proteinas totales" formControlName="proteinasTotales">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Urea" formControlName="urea">
+            <input matInput type="number" placeholder="Urea" formControlName="urea">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Acido urico" formControlName="acidoUrico">
+            <input matInput type="number" placeholder="Acido urico" formControlName="acidoUrico">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Proteinura" formControlName="proteinura">
+            <input matInput type="number" placeholder="Proteinura" formControlName="proteinura">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Albumina" formControlName="albumina">
+            <input matInput type="number" placeholder="Albumina" formControlName="albumina">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Trigliceridos" formControlName="trigliceridos">
+            <input matInput type="number" placeholder="Trigliceridos" formControlName="trigliceridos">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="LDL" formControlName="ldl">
+            <input matInput type="number" placeholder="LDL" formControlName="ldl">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="HDL" formControlName="hdl">
+            <input matInput type="number" placeholder="HDL" formControlName="hdl">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Colesterol total" formControlName="colesterolTotal">
+            <input matInput type="number" placeholder="Colesterol total" formControlName="colesterolTotal">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Glucosa" formControlName="glucosa">
+            <input matInput type="number" placeholder="Glucosa" formControlName="glucosa">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="HB" formControlName="hb">
+            <input matInput type="number" placeholder="HB" formControlName="hb">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Hematocrito" formControlName="hematocrito">
+            <input matInput type="number" placeholder="Hematocrito" formControlName="hematocrito">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Gobulos rojos" formControlName="globulosRojos">
+            <input matInput type="number" placeholder="Gobulos rojos" formControlName="globulosRojos">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Globulos blancos" formControlName="globulosBlancos">
+            <input matInput type="number" placeholder="Globulos blancos" formControlName="globulosBlancos">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Potasio" formControlName="potasio">
+            <input matInput type="number" placeholder="Potasio" formControlName="potasio">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="CI" formControlName="ci">
+            <input matInput type="number" placeholder="CI" formControlName="ci">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="Sodio" formControlName="sodio">
+            <input matInput type="number" placeholder="Sodio" formControlName="sodio">
           </mat-form-field>
           <mat-form-field>
-            <input matInput placeholder="HBA" formControlName="hba">
+            <input matInput type="number" placeholder="HBA" formControlName="hba">
           </mat-form-field>
         </div>  
         <br>

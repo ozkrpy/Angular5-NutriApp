@@ -1,4 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DbAPIService } from '../../db-api.service';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
@@ -15,70 +16,86 @@ import { AFIRMATIVO, NEGATIVO, ALIMENTO } from '../../model/datos-varios';
 })
 export class AlimentoDetalleComponent implements OnInit {
 
-  detalleAlimentoObservable: Observable<AlimentoDetalle>;
-  modificarAlimento: boolean = true;
+  detalleAlimentoObservable: AlimentoDetalle;
+  // modificarAlimento: boolean = true;
   tipos = TipoAlimento;
   dialogResult: string = "";
-  
+  formulario: FormGroup;
+
   constructor(
     public thisDialogRef: MatDialogRef<AlimentoDetalleComponent>,
     @Inject(MAT_DIALOG_DATA)
     public data: number,
     private ws: DbAPIService,
     public snackbar: MatSnackBar, 
-    public dialog: MatDialog) { }
+    public dialog: MatDialog,
+    private _formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.actualizaDatosAlimento();
+    this.actualizaDatosAlimento();   
   }
 
   onCloseCancel() {
     this.thisDialogRef.close('Cancel');
   }
 
-  editarAlimento(alimento: AlimentoDetalle, descripcion: string, tipo: number, casera: string,real: number,hidrato: number,proteina: number,grasa: number,sodio: number,potasio: number,fosforo: number,calcio: number,hierro: number,colesterol: number,purinas:number,fibra: number,agua: number,calorias: number) {
-    console.log("metodo para editar detalle de alimento: " + alimento.codigo_alimento, alimento.tipo_alimento);
-    console.log("descripcion:'"+ descripcion + "'", "tipo:'"+ tipo + "'", "casera:'"+ casera + "'", "real:'"+ real + "'", 
-                "hidrato:'"+ hidrato + "'", "proteina:'"+ proteina + "'", "grasa:'"+ grasa + "'", "sodio:'"+ sodio + "'", 
-                "potasio:'"+ potasio + "'", "fosforo:'"+ fosforo + "'", "calcio:'"+ calcio + "'", "hierro:'"+ hierro + "'", 
-                "colesterol:'"+ colesterol + "'", "purinas:'"+ purinas + "'", "fibra:'"+ fibra + "'","agua:'"+ agua + "'", 
-                "calorias:'"+ calorias + "'");
-    if (descripcion != alimento.descripcion_alimento 
-        || tipo != alimento.tipo_alimento
-        || casera != alimento.medida_casera
-        || real != alimento.medida_real
-        || hidrato != alimento.hidratos_carbono
-        || proteina != alimento.proteina
-        || grasa != alimento.grasa
-        || sodio != alimento.sodio
-        || potasio != alimento.potasio
-        || fosforo != alimento.fosforo
-        || calcio != alimento.calcio
-        || hierro != alimento.hierro
-        || colesterol != alimento.colesterol
-        || purinas != alimento.purinas
-        || fibra != alimento.fibra
-        || agua != alimento.agua
-        || calorias != alimento.calorias) {
-        console.log("existen datos con diferencias");
-        this.ws.alimentoEdit(alimento.codigo_alimento,descripcion,tipo,casera,real,hidrato,proteina,grasa,sodio,potasio,fosforo,calcio,hierro,colesterol,purinas,fibra,agua,calorias)
-              .subscribe(res => {
-                this.openSnackbar(ALIMENTO.updateDatosOK);
-                this.actualizaDatosAlimento();
-              });
-    }
-    this.modificarAlimento = !this.modificarAlimento;
-    
+  editarAlimento() {
+    this.formulario.enable();
+      if (!!this.formulario && this.formulario.dirty) {//asegura que formulario no sea nulo y que no se haya modificado
+        this.ws.alimentoEdit(this.data,
+                             this.formulario.controls.descripcion.value,
+                             this.formulario.controls.tipo.value,
+                             this.formulario.controls.casera.value,
+                             this.formulario.controls.real.value,
+                             this.formulario.controls.hidratos.value,
+                             this.formulario.controls.proteinas.value,
+                             this.formulario.controls.grasas.value,
+                             this.formulario.controls.sodio.value,
+                             this.formulario.controls.potasio.value,
+                             this.formulario.controls.fosforo.value,
+                             this.formulario.controls.calcio.value,
+                             this.formulario.controls.hierro.value,
+                             this.formulario.controls.colesterol.value,
+                             this.formulario.controls.purinas.value,
+                             this.formulario.controls.fibras.value,
+                             this.formulario.controls.agua.value,
+                             this.formulario.controls.calorias.value)
+               .subscribe(res => {
+                                  this.openSnackbar(ALIMENTO.updateDatosOK);
+                                  this.actualizaDatosAlimento();
+                                  this.formulario.disable();
+                                }, err => {
+                                            console.log(err);                                  
+                                            this.openSnackbar(ALIMENTO.updateDatosERR);
+                                });    
+      }    
   }
 
   actualizaDatosAlimento() {
-    // console.log("entro a recuperar informacion del alimento: " + this.data)
-    this.detalleAlimentoObservable = this.ws.alimentoPorCodigo(this.data)
-      .map(res => {
-        // console.log("tipo alimento:", res[0]["tipo_alimento"]);
-        return res;
-      });
-
+    this.ws.alimentoPorCodigo(this.data)
+           .subscribe(res => {
+                              this.detalleAlimentoObservable = res;    
+                              this.formulario = this._formBuilder.group({
+                                                  descripcion: [res[0].descripcion_alimento, Validators.required],
+                                                  tipo: [res[0].tipo_alimento, Validators.required],
+                                                  casera: [res[0].medida_casera, Validators.required],
+                                                  real: [res[0].medida_real, Validators.required],
+                                                  hidratos: [res[0].hidratos_carbono, [Validators.required, Validators.min(0.0)]],
+                                                  proteinas: [res[0].proteina, [Validators.required, Validators.min(0.0)]],
+                                                  grasas: [res[0].grasa, [Validators.required, Validators.min(0.0)]],
+                                                  sodio: [res[0].sodio, [Validators.required, Validators.min(0.0)]],
+                                                  potasio: [res[0].potasio, [Validators.required, Validators.min(0.0)]],
+                                                  fosforo: [res[0].fosforo, [Validators.required, Validators.min(0.0)]],
+                                                  calcio: [res[0].calcio, [Validators.required, Validators.min(0.0)]],
+                                                  hierro: [res[0].hierro, [Validators.required, Validators.min(0.0)]],
+                                                  colesterol: [res[0].colesterol, [Validators.required, Validators.min(0.0)]],
+                                                  purinas: [res[0].purinas, [Validators.required, Validators.min(0.0)]],
+                                                  fibras: [res[0].fibra, [Validators.required, Validators.min(0.0)]],
+                                                  agua: [res[0].agua, [Validators.required, Validators.min(0.0)]],
+                                                  calorias: [res[0].calorias, [Validators.required, Validators.min(0.0)]]
+                              });
+                              this.formulario.disable();
+           }); 
   }
 
   openSnackbar(message: string) {
@@ -101,7 +118,7 @@ export class AlimentoDetalleComponent implements OnInit {
                                                                 this.openSnackbar(ALIMENTO.deleteOK);
                                                                 this.thisDialogRef.close('Delete food OK');
                                                               }, err => {
-                                                                console.log("[ERROR] component PacienteDetalle", err);
+                                                                console.log("[ERROR] component AlimentoDetalleComponent", err);
                                                                 this.openSnackbar(ALIMENTO.deleteERR);
                                                                 this.thisDialogRef.close('Delete food ERR');
                                                               });
@@ -111,6 +128,15 @@ export class AlimentoDetalleComponent implements OnInit {
 
 
     
+  }
+
+  /* WORKAROUND PARA QUE MAT-SELECT SETEE EL VALOR RECUPERADO DE LA LISTA */
+  compareByValue = true;
+  compareObjectsByValue(d1: {value: string}, d2: {value: string}) {
+    return d1 && d2 && d1.value === d2.value;
+  }
+  compareByReference(o1: any, o2: any) {
+    return o1 === o2;
   }
 
 }

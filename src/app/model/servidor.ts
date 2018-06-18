@@ -1,8 +1,8 @@
 export const Servidor = [
     {
         server: {
-            // host: 'localhost',
-            host: '186.2.196.162', //compilar para produccion
+            host: 'localhost',
+            // host: '186.2.196.162', //compilar para produccion
             port: '9092',
             typeGET: 'GET',
             typePOST: 'POST',

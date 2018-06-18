@@ -1,159 +1,144 @@
-<div *ngFor="let alimento of detalleAlimentoObservable | async" 
-      fxLayout="column" 
-      fxLayoutGap="10px"
-      fxLayoutAlign="center center">
-  <h2 mat-dialog-title>
-    <strong>DETALLES NUTRITIVOS DEL ALIMENTO Cod. {{ alimento.codigo_alimento }}</strong>
-  </h2>
-  <mat-dialog-content>
-    <div fxLayoutAlign="space-evenly center" fxLayout.xs="column">
-      <mat-form-field fxFlex.gt-sm="400px">
-        <input  matInput
-                placeholder="Descripcion" 
-                #descripcion 
-                value="{{ alimento.descripcion_alimento }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-      <mat-form-field  >
-          <mat-select 
-                      placeholder="Tipo de Alimento" 
-                      #tipo
-                      [disabled]="modificarAlimento"
-                      value="{{ alimento.tipo_alimento }}">
-            <mat-option *ngFor="let tipo of tipos" [value]="tipo.valor">
-              {{tipo.facevalue}}
+<div *ngFor="let alimento of detalleAlimentoObservable">
+  <form fxLayout="column" 
+        fxLayoutGap="10px"
+        fxLayoutAlign="center center"
+        [formGroup]="formulario">      
+      
+    <h2 mat-dialog-title>
+      <strong>DETALLES NUTRITIVOS DEL ALIMENTO Cod. {{ alimento.codigo_alimento }}</strong>
+    </h2>
+    <mat-dialog-content>
+      <div fxLayoutAlign="space-evenly center" fxLayout.xs="column">
+        <mat-form-field fxFlex.gt-sm="400px">
+          <input  matInput
+                  placeholder="Descripcion" 
+                  formControlName="descripcion">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select placeholder="Tipo de Alimento" 
+                      formControlName="tipo"
+                      [compareWith]="compareByValue ? compareObjectsByValue : compareByReference">
+            <mat-option *ngFor="let t of tipos" [value]="t.valor" >
+              {{t.facevalue}}
             </mat-option>
           </mat-select>
         </mat-form-field>
-    </div>
-    <div fxLayoutAlign="space-evenly center" fxLayout="row wrap">
-      <mat-form-field>
-        <input  matInput
-                placeholder="Medida casera ({{ alimento.medida_casera_unidad }})" 
-                #casera
-                value="{{ alimento.medida_casera }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input  matInput
-                placeholder="Medida unitaria ({{ alimento.medida_real_unidad }})" 
-                #real
-                value="{{ alimento.medida_real }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+      </div>
+      <div fxLayoutAlign="space-evenly center" fxLayout="row wrap">
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Medida casera ({{ alimento.medida_casera_unidad }})" 
+                  type="number"
+                  formControlName="casera">
+        </mat-form-field>
         
-      <mat-form-field>
-        <input  matInput
-                placeholder="Hidratos de Carbono ({{ alimento.unidad_medida_hidratos_carbono }})" 
-                #hidrato
-                value="{{ alimento.hidratos_carbono }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Medida unitaria ({{ alimento.medida_real_unidad }})" 
+                  type="number"
+                  formControlName="real">
+        </mat-form-field>
+          
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Hidratos de Carbono ({{ alimento.unidad_medida_hidratos_carbono }})" 
+                  type="number"
+                  formControlName="hidratos">
+        </mat-form-field>
 
-      <mat-form-field>
-        <input  matInput
-                placeholder="Proteinas ({{ alimento.unidad_medida_proteina }})" 
-                #proteina
-                value="{{ alimento.proteina }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input  matInput
-                placeholder="Grasas ({{ alimento.unidad_medida_grasa }})" 
-                #grasa
-                value="{{ alimento.grasa }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-              
-      <mat-form-field>
-        <input  matInput
-                placeholder="Sodio ({{ alimento.unidad_medida_sodio }})"
-                #sodio
-                value="{{ alimento.sodio }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>        
-
-      <mat-form-field>
-        <input  matInput
-                placeholder="Potasio ({{ alimento.unidad_medida_potasio }})" 
-                #potasio
-                value="{{ alimento.potasio }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input  matInput
-                placeholder="Fosforo ({{ alimento.unidad_medida_fosforo }})" 
-                #fosforo
-                value="{{ alimento.fosforo }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-      
-      <mat-form-field>
-        <input  matInput
-                placeholder="Calcio ({{ alimento.unidad_medida_calcio }})" 
-                #calcio
-                value="{{ alimento.calcio }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-
-      <mat-form-field>
-        <input  matInput
-                placeholder="Hierro ({{ alimento.unidad_medida_hierro }})" 
-                #hierro
-                value="{{ alimento.hierro }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Proteinas ({{ alimento.unidad_medida_proteina }})" 
+                  type="number"
+                  formControlName="proteinas">
+        </mat-form-field>
         
-      <mat-form-field>
-        <input  matInput
-                placeholder="Colesterol ({{ alimento.unidad_medida_colesterol }})" 
-                #colesterol
-                value="{{ alimento.colesterol }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Grasas ({{ alimento.unidad_medida_grasa }})" 
+                  type="number"
+                  formControlName="grasas">
+        </mat-form-field>
+                
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Sodio ({{ alimento.unidad_medida_sodio }})"
+                  type="number"
+                  formControlName="sodio">
+        </mat-form-field>        
 
-      <mat-form-field>
-        <input  matInput
-                placeholder="Purinas ({{ alimento.unidad_medida_purinas }})" 
-                #purinas
-                value="{{ alimento.purinas }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Potasio ({{ alimento.unidad_medida_potasio }})" 
+                  type="number"
+                  formControlName="potasio">
+        </mat-form-field>
 
-      <mat-form-field>
-        <input  matInput
-                placeholder="Fibra ({{ alimento.unidad_medida_fibra }})" 
-                #fibra
-                value="{{ alimento.fibra }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Fosforo ({{ alimento.unidad_medida_fosforo }})" 
+                  type="number"
+                  formControlName="fosforo">
+        </mat-form-field>
+        
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Calcio ({{ alimento.unidad_medida_calcio }})" 
+                  type="number"
+                  formControlName="calcio">
+        </mat-form-field>
 
-      <mat-form-field>
-        <input  matInput
-                placeholder="Agua ({{ alimento.unidad_medida_agua }})" 
-                #agua
-                value="{{ alimento.agua }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Hierro ({{ alimento.unidad_medida_hierro }})" 
+                  type="number"
+                  formControlName="hierro">
+        </mat-form-field>
+          
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Colesterol ({{ alimento.unidad_medida_colesterol }})" 
+                  type="number"
+                  formControlName="colesterol">
+        </mat-form-field>
 
-      <mat-form-field>
-        <input  matInput
-                placeholder="Calorias" 
-                #calorias
-                value="{{ alimento.calorias }}" 
-                [disabled]="modificarAlimento">
-      </mat-form-field>
-    </div>
-  </mat-dialog-content>
-  <mat-dialog-actions fxLayout="column">
-    <div fxLayout="row"> 
-      <button mat-raised-button color="primary" (click)="editarAlimento(alimento, descripcion.value, tipo.value, casera.value, real.value, hidrato.value, proteina.value, grasa.value, sodio.value, potasio.value, fosforo.value, calcio.value, hierro.value, colesterol.value, purinas.value, fibra.value, agua.value, calorias.value )"><mat-icon> {{ modificarAlimento ? 'edit' : 'save' }} </mat-icon> {{ modificarAlimento ? 'Editar' : 'Guardar' }} </button>
-      <button mat-raised-button color="accent" (click)="eliminarAlimento(alimento.codigo_alimento)"><mat-icon>delete</mat-icon>Eliminar</button>
-    </div>
-    <br>
-    <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
-  </mat-dialog-actions>
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Purinas ({{ alimento.unidad_medida_purinas }})" 
+                  type="number"
+                  formControlName="purinas">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Fibra ({{ alimento.unidad_medida_fibra }})" 
+                  type="number"
+                  formControlName="fibras">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Agua ({{ alimento.unidad_medida_agua }})" 
+                  type="number"
+                  formControlName="agua">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input  matInput
+                  placeholder="Calorias" 
+                  type="number"
+                  formControlName="calorias">
+        </mat-form-field>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="column">
+      <div fxLayout="row"> 
+        <button mat-raised-button color="primary" (click)="editarAlimento()"><mat-icon> {{ formulario.pristine ? 'edit' : 'save' }} </mat-icon> {{ formulario.pristine ? 'Editar' : 'Guardar' }} </button>
+        <button mat-raised-button color="accent" (click)="eliminarAlimento(alimento.codigo_alimento)"><mat-icon>delete</mat-icon>Eliminar</button>
+      </div>
+      <br>
+      <button mat-raised-button (click)="onCloseCancel()"><mat-icon>close</mat-icon>Cerrar</button>
+    </mat-dialog-actions>
+  </form>
+  
 </div>

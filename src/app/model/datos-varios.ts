@@ -150,6 +150,7 @@ export const ALIMENTO = {
     deleteOK: 'El alimento ha sido eliminado correctamente.',
     deleteERR: 'El alimento existe en dietas activas, no se puede eliminar.',
     updateDatosOK: 'Los datos del alimento han sido actualizados.',
+    updateDatosERR: 'Los datos modificados no son correctos, favor verifique.',
     altaOK: 'Se dio de alta el alimento: ',
     altaERR: '',
 };
