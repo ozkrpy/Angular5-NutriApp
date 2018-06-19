@@ -179,7 +179,12 @@
         </ng-container>
         <ng-container matColumnDef="calorias">
             <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calorias </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calorias }} {{ detalle.alimento.unidad_medida_calorias }}</mat-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
+              <div>
+                 <div>{{ detalle.alimento.calorias }}</div>
+                 <div matTooltip="Total de Calorias por alimento">({{ detalle.alimento.calorias * detalle.cantidad_alimento }} {{ detalle.alimento.unidad_medida_calorias }})</div>
+              </div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="eliminar">
           <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>

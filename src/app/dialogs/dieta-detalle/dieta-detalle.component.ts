@@ -89,7 +89,6 @@ export class DietaDetalleComponent implements OnInit {
                                                                   this.referenciasFormGroup.controls.grasasForm.value,  
                                                                   this.referenciasFormGroup.controls.fibrasForm.value)
                                           .subscribe(res => {
-                                            // console.log("se actualizaron las referencias");
                                             this.recuperaReferenciasDieta();
                                           });  
                                   }
