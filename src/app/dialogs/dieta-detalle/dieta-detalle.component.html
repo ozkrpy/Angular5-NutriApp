@@ -118,8 +118,19 @@
     <div fxShow fxHide.xs fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="cantidad_alimento">
-            <mat-header-cell *matHeaderCellDef fxFlex="40px"> Cant. </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="40px"> {{ detalle.cantidad_alimento }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Cant. </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="60px" fxLayout="row"> 
+              <!-- {{ detalle.cantidad_alimento }}  -->
+              <mat-form-field fxFlex="30px">
+                  <input matInput
+                         type="number"
+                         #nuevaCantidad
+                         value="{{ detalle.cantidad_alimento }}">
+              </mat-form-field>
+              <button color="primary" mat-icon-button (click)="actualizarCantidad(nuevaCantidad.value, detalle.numero_item)">
+                <mat-icon>edit</mat-icon>
+              </button>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="descripcion">
             <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
@@ -182,14 +193,14 @@
             <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
               <div>
                  <div>{{ detalle.alimento.calorias }}</div>
-                 <div matTooltip="Total de Calorias por alimento">({{ detalle.alimento.calorias * detalle.cantidad_alimento }} {{ detalle.alimento.unidad_medida_calorias }})</div>
+                 <div matTooltip="Total de Calorias por alimento">({{ detalle.alimento.calorias * detalle.cantidad_alimento }})</div>
               </div>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="eliminar">
           <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
           <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
-            <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
+            <button fxFlex="45px" fxLayoutAlign="center center" mat-icon-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
               <mat-icon>delete</mat-icon>
             </button>
           </mat-cell>
@@ -219,7 +230,7 @@
           <ng-container matColumnDef="eliminar">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let detalle"> 
-              <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
+              <button fxFlex="45px" fxLayoutAlign="center center" mat-icon-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
                 <mat-icon>delete</mat-icon>
               </button>
             </mat-cell>

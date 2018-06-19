@@ -34,7 +34,8 @@ export const Servidor = [
                 dietasEliminarAlimento: '/dietasEliminarAlimento',
                 dietasEliminar: '/dietasEliminar',
                 dietasAgregar: '/dietasAgregar',
-                dietasSecuencia: '/dietasSecuencia'
+                dietasSecuencia: '/dietasSecuencia',
+                dietasEditarCantidad: '/dietasEditarCantidad'
 
             }
         }

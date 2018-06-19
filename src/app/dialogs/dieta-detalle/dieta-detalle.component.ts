@@ -1,6 +1,6 @@
 import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatDialog } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
@@ -258,5 +258,11 @@ export class DietaDetalleComponent implements OnInit {
       return 'lightblue';
     }
     
+  }
+
+  actualizarCantidad(cantidad: number, item: number) {
+    console.log("actualizar con la cantidad:", cantidad, "referencia:", item);
+    this.ws.dietasEditarCantidad(this.entrada, item, cantidad)
+           .subscribe(res => { this.recuperaReferenciasDieta(); });
   }
 }

@@ -12,6 +12,7 @@
                 <mat-form-field>
                     <input matInput
                             #cantidad  
+                            type="number"
                             placeholder="Cantidad del Alimento*" 
                             [formControl]="cantidadFormControl"
                             autofocus>
@@ -59,10 +60,10 @@
             <ng-container matColumnDef="edicion">
                 <mat-header-cell *matHeaderCellDef fxFlex="95px"> Detalles </mat-header-cell>
                 <mat-cell *matCellDef="let alimento" fxLayout="row" fxFlex="95px"> 
-                    <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-raised-button (click)="detalleAlimento(alimento.codigo_alimento)" matTooltip="Ver detalles del Alimento">
+                    <button fxFlex="45px" fxLayoutAlign="center center" color="accent" mat-icon-button (click)="detalleAlimento(alimento.codigo_alimento)" matTooltip="Ver detalles del Alimento">
                         <mat-icon>info</mat-icon>
                     </button> 
-                    <button fxFlex="45px" fxLayoutAlign="center center" color="primary" mat-raised-button (click)="agregarAlimento(alimento.codigo_alimento, cantidad.value)" matTooltip="Agregar este alimento a la dieta">
+                    <button fxFlex="45px" fxLayoutAlign="center center" color="primary" mat-icon-button (click)="agregarAlimento(alimento.codigo_alimento, cantidad.value)" matTooltip="Agregar este alimento a la dieta">
                         <mat-icon>playlist_add</mat-icon>
                     </button>
                 </mat-cell>

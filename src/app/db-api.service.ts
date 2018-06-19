@@ -468,4 +468,13 @@ export class DbAPIService {
                 .map(res => { return res.json(); });
   }
 
+  dietasEditarCantidad(codigoDietaParam: number, itemParam: number, cantidadParam: number) {
+    let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.dietasEditarCantidad;
+    let body: any = {codigoDieta: codigoDietaParam, 
+                     item: itemParam,
+                     cantidad: cantidadParam};
+    console.log("metodo que actualiza cantidad de alimento para dieta: " + codigoDietaParam + ", URL: " + apiURL + " Body: " + body.json);
+    return this.httpRequest.post(apiURL, body)
+    ;
+  }
 }
