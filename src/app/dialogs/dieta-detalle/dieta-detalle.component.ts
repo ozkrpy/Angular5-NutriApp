@@ -32,7 +32,7 @@ export class DietaDetalleComponent implements OnInit {
   dialogAddFoodResult: string = "";
 
   dataSource = new MatTableDataSource<DietaAlimentos>();
-  displayedColumns = ['cantidad_alimento','descripcion','tipo','hidratos','proteinas','grasas','fibras','sodio','potasio','fosforo','calcio','hierro','colesterol','purinas','agua','calorias','eliminar'];
+  displayedColumns = ['cantidad_alimento','tipo','descripcion','hidratos','grasas','sodio','fosforo','hierro','colesterol','calorias','eliminar'];
   displayedColumnsMobile = ['descripcion', 'distribucion', 'eliminar'];
   
   sumatoriaHC: number;

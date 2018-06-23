@@ -118,88 +118,86 @@
     <div fxShow fxHide.xs fxFlex="1 1 100%" matTooltip="Los alimentos con Alto Valor Biologico estan resaltados.">
       <mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="cantidad_alimento">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Cant. </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px" fxLayout="row"> 
-              <!-- {{ detalle.cantidad_alimento }}  -->
+            <mat-header-cell *matHeaderCellDef fxFlex="70px"> Cant. </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="70px"> 
               <mat-form-field fxFlex="30px">
-                  <input matInput
+                <div fxLayout="row"> 
+                  <input fxFlex="35px"
+                         matInput
                          type="number"
                          #nuevaCantidad
                          value="{{ detalle.cantidad_alimento }}">
+                  <button fxFlexAlign="start" fxFlex="30px" color="primary" mat-icon-button (click)="actualizarCantidad(nuevaCantidad.value, detalle.numero_item)">
+                    <mat-icon>edit</mat-icon>
+                  </button>
+                </div>
               </mat-form-field>
-              <button color="primary" mat-icon-button (click)="actualizarCantidad(nuevaCantidad.value, detalle.numero_item)">
-                <mat-icon>edit</mat-icon>
-              </button>
             </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="descripcion">
-            <mat-header-cell *matHeaderCellDef> Descripcion </mat-header-cell>
-            <mat-cell *matCellDef="let detalle"> {{ detalle.alimento.descripcion_alimento }} </mat-cell>
-        </ng-container>
         <ng-container matColumnDef="tipo">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Tipo </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.descripcion_tipo_alimento }} </mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="85px"> Tipo </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="85px"> {{ detalle.alimento.descripcion_tipo_alimento }} </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef fxFlex="200px"> Descripcion </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="200px"> 
+              <div>{{ detalle.alimento.descripcion_alimento }}</div>
+              <div>({{ detalle.alimento.medida_casera * detalle.cantidad_alimento }} {{ detalle.alimento.medida_casera_unidad }}: {{ detalle.alimento.medida_real * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.medida_real_unidad }}) </div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="hidratos">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hidratos </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hidratos_carbono }} {{ detalle.alimento.unidad_medida_hidratos_carbono }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="proteinas">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Proteinas </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.proteina }}  {{ detalle.alimento.unidad_medida_proteina }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="110px"> Hidratos/Proteinas </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="110px"> 
+              <div><strong>Hidratos: </strong>{{ detalle.alimento.hidratos_carbono * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_hidratos_carbono }}</div>
+              <div><strong>Proteinas: </strong>{{ detalle.alimento.proteina * detalle.cantidad_alimento | number:'1.1-2' }}  {{ detalle.alimento.unidad_medida_proteina }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="grasas">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Grasas </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.grasa }} {{ detalle.alimento.unidad_medida_grasa }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="fibras">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fibras </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fibra }} {{ detalle.alimento.unidad_medida_fibra }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="90px"> Grasas/Fibras </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="90px"> 
+              <div><strong>Grasas: </strong>{{ detalle.alimento.grasa * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_grasa }}</div>
+              <div><strong>Fibras: </strong>{{ detalle.alimento.fibra * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_fibra }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="sodio">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Sodio </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.sodio }} {{ detalle.alimento.unidad_medida_sodio }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="potasio">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Potasio </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.potasio }} {{ detalle.alimento.unidad_medida_potasio }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="120px"> Sodio/Potasio </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="120px"> 
+              <div><strong>Sodio: </strong>{{ detalle.alimento.sodio * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_sodio }}</div>
+              <div><strong>Potasio: </strong>{{ detalle.alimento.potasio * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_potasio }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="fosforo">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Fosforo </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.fosforo }} {{ detalle.alimento.unidad_medida_fosforo }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="calcio">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calcio </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.calcio }} {{ detalle.alimento.unidad_medida_calcio }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="120px"> Fosforo/Calcio </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="120px"> 
+              <div><strong>Fosforo: </strong>{{ detalle.alimento.fosforo * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_fosforo }}</div>
+              <div><strong>Calcio: </strong>{{ detalle.alimento.calcio * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_calcio }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="hierro">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Hierro </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.hierro }} {{ detalle.alimento.unidad_medida_hierro }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="110px"> Hierro/Purinas </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="110px"> 
+              <div><strong>Hierro: </strong>{{ detalle.alimento.hierro * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_hierro }}</div>
+              <div><strong>Purinas: </strong>{{ detalle.alimento.purinas * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_purinas }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="colesterol">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Colesterol </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.colesterol }} {{ detalle.alimento.unidad_medida_colesterol }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="purinas">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Purinas </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.purinas }} {{ detalle.alimento.unidad_medida_purinas }}</mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="agua">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Agua </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> {{ detalle.alimento.agua }} {{ detalle.alimento.unidad_medida_agua }}</mat-cell>
+            <mat-header-cell *matHeaderCellDef fxFlex="110px"> Colesterol/Agua </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="110px"> 
+              <div><strong>Colest.: </strong>{{ detalle.alimento.colesterol * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_colesterol }}</div>
+              <div><strong>Agua: </strong>{{ detalle.alimento.agua * detalle.cantidad_alimento | number:'1.1-2' }} {{ detalle.alimento.unidad_medida_agua }}</div>
+            </mat-cell>
         </ng-container>
         <ng-container matColumnDef="calorias">
-            <mat-header-cell *matHeaderCellDef fxFlex="60px"> Calorias </mat-header-cell>
-            <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
+            <mat-header-cell *matHeaderCellDef fxFlex="50px"> Calorias </mat-header-cell>
+            <mat-cell *matCellDef="let detalle" fxFlex="50px"> 
               <div>
-                 <div>{{ detalle.alimento.calorias }}</div>
-                 <div matTooltip="Total de Calorias segun cantidad">({{ detalle.alimento.calorias * detalle.cantidad_alimento }})</div>
+                 <div>{{ detalle.alimento.calorias * detalle.cantidad_alimento }}</div>
               </div>
             </mat-cell>
         </ng-container>
         <ng-container matColumnDef="eliminar">
-          <mat-header-cell *matHeaderCellDef fxFlex="60px"></mat-header-cell>
-          <mat-cell *matCellDef="let detalle" fxFlex="60px"> 
+          <mat-header-cell *matHeaderCellDef></mat-header-cell>
+          <mat-cell *matCellDef="let detalle"> 
             <button fxFlex="45px" fxLayoutAlign="center center" mat-icon-button (click)="quitarAlimento(detalle.numero_item)" matTooltip="Quitar este alimento a la dieta">
               <mat-icon>delete</mat-icon>
             </button>
