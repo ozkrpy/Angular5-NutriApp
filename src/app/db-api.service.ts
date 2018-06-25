@@ -16,9 +16,25 @@ import { DietaAlimentos } from './model/dieta-alimentos';
 @Injectable()
 export class DbAPIService {
 
-  apiRoot = 'http://' + Servidor[0].server.host + ':' + Servidor[0].server.port;
+  public apiRoot = 'http://' + Servidor[0].server.host + ':' + Servidor[0].server.port;
   
   constructor(private httpRequest: Http) { }
+
+  setApiRoot(newIP: string) {
+    // console.log("se intenta cambiar la IP:", newIP);
+    this.apiRoot = 'http://' + newIP + ':' + Servidor[0].server.port;
+    // console.log(this.apiRoot);
+    return "Se actualizo correctamente la IP.";
+  }
+
+  testAPI(): Observable<any> {
+    console.log("conexion a la API");
+      let apiURL = `${this.apiRoot}` + '/helloworld';
+      return this.httpRequest
+                 .get(apiURL)
+                 .map(res => {return res['_body']}) 
+                 .catch((error:any) => Observable.throw(error.json().error || 'Server error'));
+  }
 
   todosLosPacientes(): Observable<PacienteDetalle[]> {
     let apiURL = `${this.apiRoot}` + Servidor[0].server.methods.pacientes;

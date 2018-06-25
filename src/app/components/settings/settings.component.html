@@ -1,4 +1,14 @@
-<p>
- aca tenes que crear un abm para diferentes tipos de medidas caseras por ejemplo.
-
-</p>
+<div fxLayout="column">
+    <mat-form-field>
+        <input matInput 
+               placeholder="Cambiar la direccion API"
+               value="localhost"
+               #ip>
+        <mat-hint align="start">
+          <strong>Recomendado:</strong>186.2.196.162
+        </mat-hint>
+      </mat-form-field>
+      <button mat-button color="accent" (click)="actualizaIP(ip.value)"><mat-icon>edit</mat-icon>ACTUALIZAR</button>
+      <button mat-button color="primary" (click)="pruebaAPI()"><mat-icon>check</mat-icon>PROBAR LA CONFIGURACION</button>
+    <div><strong>{{ retorno }}</strong></div>
+</div>
