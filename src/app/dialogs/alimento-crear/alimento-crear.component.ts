@@ -99,4 +99,8 @@ export class AlimentoCrearComponent implements OnInit {
   openSnackbar(message: string) {
     this.snackbar.open(message, "OK", { duration: 4000 });
   }
+
+  onCloseCancel() {
+    this.thisDialogRef.close('Cancel');
+  }
 }

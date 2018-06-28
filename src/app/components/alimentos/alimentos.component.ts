@@ -64,7 +64,7 @@ export class AlimentosComponent implements OnInit {
   detalleAlimento(codigo: number) {
     let dialogRef = this.dialog.open( 
                                       AlimentoDetalleComponent, 
-                                      { width: '80%', height: '', data: codigo}
+                                      { width: '', height: '', data: codigo}
     );
     dialogRef.afterClosed().subscribe(result => {
                                         this.dialogResult = result;

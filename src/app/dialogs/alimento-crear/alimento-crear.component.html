@@ -1,4 +1,4 @@
-<div fxLayout="column" fxLayoutAlign="space-around center" fxFlex="100%">
+<div fxLayout="column" fxLayoutAlign="space-around center">
   <h2 mat-dialog-title>
     <strong>DETALLES NUTRITIVOS DEL ALIMENTO</strong>
   </h2>
@@ -29,7 +29,7 @@
             </mat-form-field>
             <mat-form-field fxFlex="20%">
               <mat-select placeholder="Unid." formControlName="caseraMedida" required>
-                <mat-option *ngFor="let medida of medidasCaseras" [value]="medida.valor">
+                <mat-option *ngFor="let medida of medidasCaseras" [value]="medida.facevalue">
                   {{medida.facevalue}}
                 </mat-option>
               </mat-select>
@@ -42,7 +42,7 @@
             </mat-form-field>
             <mat-form-field fxFlex="20%">
               <mat-select placeholder="Unid." formControlName="realMedida" required>
-                <mat-option *ngFor="let medida of medidasReal" [value]="medida.valor">
+                <mat-option *ngFor="let medida of medidasReal" [value]="medida.facevalue">
                   {{medida.facevalue}}
                 </mat-option>
               </mat-select>
@@ -50,94 +50,100 @@
           </div>
         </div>
         <!-- PARTE 3 -->
-        <div fxLayout="row wrap" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
-          <!-- HIDRATOS CARBONO -->
-          <mat-form-field>
-            <input matInput placeholder="Hidratos de Carbono" formControlName="hidratos" required>
-            <mat-hint align="start">
-              <strong>(en gramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- PROTEINAS -->
-          <mat-form-field>
-            <input matInput placeholder="Proteinas" formControlName="proteinas" required>
-            <mat-hint align="start">
-              <strong>(en gramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- GRASAS -->
-          <mat-form-field>
-            <input matInput placeholder="Grasas" formControlName="grasas" required>
-            <mat-hint align="start">
-              <strong>(en gramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- SODIO -->
-          <div fxLayout="row">
+        <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="space-evenly center">
+          <div fxLayout.xs="column" fxLayoutGap="10px">
+            <!-- HIDRATOS CARBONO -->
+            <mat-form-field>
+              <input matInput placeholder="Hidratos de Carbono" formControlName="hidratos" required>
+              <mat-hint align="start">
+                <strong>(en gramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- PROTEINAS -->
+            <mat-form-field>
+              <input matInput placeholder="Proteinas" formControlName="proteinas" required>
+              <mat-hint align="start">
+                <strong>(en gramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- GRASAS -->
+            <mat-form-field>
+              <input matInput placeholder="Grasas" formControlName="grasas" required>
+              <mat-hint align="start">
+                <strong>(en gramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout.xs="column" fxLayoutGap="10px">
+            <!-- SODIO -->
             <mat-form-field>
               <input matInput placeholder="Sodio" formControlName="sodio" required>
               <mat-hint align="start">
                 <strong>(en miligramos)</strong>
               </mat-hint>
             </mat-form-field>      
+            <!-- POTASIO -->
+            <mat-form-field>
+              <input matInput placeholder="Potasio" formControlName="potasio" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- FOSFORO -->
+            <mat-form-field>
+              <input matInput placeholder="Fosforo" formControlName="fosforo" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
           </div>
-          <!-- POTASIO -->
-          <mat-form-field>
-            <input matInput placeholder="Potasio" formControlName="potasio" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- FOSFORO -->
-          <mat-form-field>
-            <input matInput placeholder="Fosforo" formControlName="fosforo" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- CALCIO -->
-          <mat-form-field>
-            <input matInput placeholder="Calcio" formControlName="calcio" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- HIERRO -->
-          <mat-form-field>
-            <input matInput placeholder="Hierro" formControlName="hierro" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- COLESTEROL -->
-          <mat-form-field>
-            <input matInput placeholder="Colesterol" formControlName="colesterol" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- PURINAS -->
-          <mat-form-field>
-            <input matInput placeholder="Purinas" formControlName="purinas" required>
-            <mat-hint align="start">
-              <strong>(en miligramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- FIBRA -->
-          <mat-form-field>
-            <input matInput placeholder="Fibra" formControlName="fibras" required>
-            <mat-hint align="start">
-              <strong>(en gramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- AGUA -->
-          <mat-form-field>
-            <input matInput placeholder="Agua" formControlName="agua" required>
-            <mat-hint align="start">
-              <strong>(en gramos)</strong>
-            </mat-hint>
-          </mat-form-field>
-          <!-- AGUA -->
+          <div fxLayout.xs="column" fxLayoutGap="10px">
+            <!-- CALCIO -->
+            <mat-form-field>
+              <input matInput placeholder="Calcio" formControlName="calcio" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- HIERRO -->
+            <mat-form-field>
+              <input matInput placeholder="Hierro" formControlName="hierro" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- COLESTEROL -->
+            <mat-form-field>
+              <input matInput placeholder="Colesterol" formControlName="colesterol" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <div fxLayout.xs="column" fxLayoutGap="10px">
+            <!-- PURINAS -->
+            <mat-form-field>
+              <input matInput placeholder="Purinas" formControlName="purinas" required>
+              <mat-hint align="start">
+                <strong>(en miligramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- FIBRA -->
+            <mat-form-field>
+              <input matInput placeholder="Fibra" formControlName="fibras" required>
+              <mat-hint align="start">
+                <strong>(en gramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+            <!-- AGUA -->
+            <mat-form-field>
+              <input matInput placeholder="Agua" formControlName="agua" required>
+              <mat-hint align="start">
+                <strong>(en gramos)</strong>
+              </mat-hint>
+            </mat-form-field>
+          </div>
+          <!-- CALORIAS -->
           <mat-form-field>
             <input matInput placeholder="Calorias" formControlName="calorias" required>
           </mat-form-field>
@@ -149,7 +155,7 @@
     <div fxLayout.xs="column" fxLayoutAlign="center center">
       <button mat-button (click)="agregarAlimento()">
         <mat-icon>restaurant_menu</mat-icon>Guardar Alimento</button>
-      <button mat-button>
+      <button mat-button (click)="onCloseCancel()">
         <mat-icon>cancel</mat-icon>Cancelar</button>
     </div>
   </mat-dialog-actions>
