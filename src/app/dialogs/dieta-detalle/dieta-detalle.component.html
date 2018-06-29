@@ -54,65 +54,71 @@
       </div>
       <br>
       <!-- TABLA DE SUMATORIAS -->
-      <div class="bordeado" fxLayout="row wrap" fxLayoutAlign="space-evenly center" fxLayoutGap="12px" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
+      <div class="bordeado" fxLayout="row" fxLayoutAlign="space-evenly center" matTooltip="Verde: dentro del rango, Azul: por debajo, Rojo: por encima">
         <div fxLayout="column">
           <strong>TOTALES</strong>
           <small>Segun Alimentos</small>
         </div>
-        <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}">
-          <strong>Hidratos</strong>
-          <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
-          <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
-        </div>
-        <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}" matTooltip="% PAVB: {{(100*sumatoriaPAVB)/sumatoriaProteinas | number:'1.1-1' }}%">
-          <strong>Proteinas</strong>
-          <div><small>{{ sumatoriaProteinas | number:'1.1-2' }} (PAVB:{{ sumatoriaPAVB | number:'1.1-2' }})</small></div>
-          <small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
-        </div>
-        <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
-          <strong>Grasas</strong>
-          <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
-        </div>
-        <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}">
-          <strong>Fibras</strong>
-          <small>{{ sumatoriaFibras | number:'1.1-2' }}</small>
-        </div>
         <div fxLayout="column">
-          <strong>Sodio</strong>
-          <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Potasio</strong>
-          <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Fosforo</strong>
-          <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Calcio</strong>
-          <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Hierro</strong>
-          <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Colesterol</strong>
-          <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Purinas</strong>
-          <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-          <strong>Agua</strong>
-          <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
-        </div>
-        <div fxLayout="column">
-            <strong>Calorias</strong>
-            <small>{{ sumatoriaCalorias | number:'1.1-2' }}</small>
+          <div fxLayout="row wrap" fxLayoutAlign="space-around center">
+            <div fxLayout="column" [ngStyle]="{'color': calculaColorHidrato(referencia.hidratos_carbono)}">
+              <strong>Hidratos</strong>
+              <small>{{ sumatoriaHC | number:'1.1-2' }}</small> 
+              <small>({{ kcalHC | number:'1.1-2' }} kcal)</small>
+            </div>
+            <div fxLayout="column" [ngStyle]="{'color': calculaColorProteina(referencia.proteinas)}" matTooltip="% PAVB: {{(100*sumatoriaPAVB)/sumatoriaProteinas | number:'1.1-1' }}%">
+              <strong>Proteinas</strong>
+              <div><small>{{ sumatoriaProteinas | number:'1.1-2' }} (PAVB:{{ sumatoriaPAVB | number:'1.1-2' }})</small></div>
+              <small>({{ kcalProteinas | number:'1.1-2' }} kcal)</small>
+            </div>
+            <div fxLayout="column" [ngStyle]="{'color': calculaColorGrasa(referencia.grasas)}">
+              <strong>Grasas</strong>
+              <small>{{ sumatoriaGrasas | number:'1.1-2' }}</small><small>({{ kcalGrasas | number:'1.1-2' }} kcal)</small>
+            </div>
+            <div fxLayout="column" [ngStyle]="{'color': calculaColorFibra(referencia.fibras)}">
+              <strong>Fibras</strong>
+              <small>{{ sumatoriaFibras | number:'1.1-2' }}</small><small>({{ kcalFibras | number:'1.1-2' }} kcal)</small>
+            </div>
           </div>
+          <div fxLayout="row wrap" fxLayoutGap="12px">
+            <div fxLayout="column" fxLayoutAlign="space-evenly center">
+              <strong>Sodio</strong>
+              <small>{{ sumatoriaSodio | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Potasio</strong>
+              <small>{{ sumatoriaPotasio | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Fosforo</strong>
+              <small>{{ sumatoriaFosforo | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Calcio</strong>
+              <small>{{ sumatoriaCalcio | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Hierro</strong>
+              <small>{{ sumatoriaHierro | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Colesterol</strong>
+              <small>{{ sumatoriaColesterol | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Purinas</strong>
+              <small>{{ sumatoriaPurinas | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Agua</strong>
+              <small>{{ sumatoriaAgua | number:'1.1-2' }}</small>
+            </div>
+            <div fxLayout="column">
+              <strong>Calorias</strong>
+              <small>{{ sumatoriaCalorias | number:'1.1-2' }}</small>
+            </div>
+          </div>
+        </div>
       </div>
       <br>
     </form>
